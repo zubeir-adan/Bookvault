@@ -17,7 +17,6 @@ input[type="text"] {
     padding: 15px;
     border-radius: 10px;
     font-size: 16px;
-    
 }
 
 button {
@@ -93,11 +92,13 @@ button {
     z-index: 99;
     top: 100%;
     left: 0;
-    right: 0;
+    right: 4%;
     background-color: #fff;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     border-radius: 0 0 10px 10px;
     overflow: hidden;
+    max-width: 520px; /* Limit the width of the suggestion box */
+    margin: 0 auto; /* Center the suggestion box */
 }
 .autocomplete-items div {
     padding: 10px;
@@ -112,13 +113,22 @@ button {
 .autocomplete-items .autocomplete-active {
     background-color: #d4d4d4;
 }
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+.book-list {
+    flex: 1;
+}
+
 </style>
 </head>
 <body>
 <?php include("body/header.php"); ?>
 <div class="book-list">
 <form method="get" action="">
-    <input type="text" name="search" id="search-input" placeholder="Search for a book">
+    <input type="text" name="search" id="search-input" placeholder="Search for a book" autocomplete="off">
     <button type="submit" name="submit-search"><i class="fa-solid fa-search"></i></button>
     <div id="autocomplete-list" class="autocomplete-items"></div>
 </form>
@@ -167,19 +177,19 @@ if (isset($_GET['search']) && !empty($_GET['search'])) {
 
             }
             if (isset($book['volumeInfo']['title'])) {
-                echo "<h3>" . htmlspecialchars($book['volumeInfo']['title']) . "</h3>";
+                echo "<h4>" . htmlspecialchars($book['volumeInfo']['title']) . "</h4>";
             } else {
-                echo "<h3>Title Not Available</h3>";
+                echo "<h4>Title Not Available</h4>";
             }
             if (isset($book['volumeInfo']['authors'])) {
-                echo "<p>Author(s): " . implode(", ", array_map('htmlspecialchars', $book['volumeInfo']['authors'])) . "</p>";
+                echo "<h6>Author(s): " . implode(", ", array_map('htmlspecialchars', $book['volumeInfo']['authors'])) . "</h6>";
             } else {
-                echo "<p>Author(s): Unknown</p>";
+                echo "<h6>Author(s): Unknown</h6>";
             }
             if (isset($book['volumeInfo']['publishedDate'])) {
-                echo "<p>Publish Year: " . htmlspecialchars($book['volumeInfo']['publishedDate']) . "</p>";
+                echo "<h6>Publish Year: " . htmlspecialchars($book['volumeInfo']['publishedDate']) . "</h6>";
             } else {
-                echo "<p>Publish Year: Unknown</p>";
+                echo "<h6>Publish Year: Unknown</h6>";
             }
             echo "</div>";
         }
@@ -258,9 +268,7 @@ function showBookDetails(bookId) {
 }
 </script>
 
-
-
-
 <?php include("body/footer.php"); ?>
+
 </body>
 </html>
