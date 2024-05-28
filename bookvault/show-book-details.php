@@ -37,9 +37,11 @@
             $bookPublishedDate = isset($bookData['volumeInfo']['publishedDate']) ? $bookData['volumeInfo']['publishedDate'] : 'Unknown';
             $bookDescription = isset($bookData['volumeInfo']['description']) ? $bookData['volumeInfo']['description'] : 'No description available';
     ?>
-    <div class="flex-none relative w-52">
-        <img src="<?php echo $bookImage; ?>" alt="Book Cover" class="absolute w-auto h-auto object-cover" loading="lazy" />
-    </div>
+<div class="flex-none relative w-50">
+    <img src="<?php echo $bookImage; ?>" alt="Book Cover" class="object-cover w-70% h-50% ml-[-40px]" loading="lazy" />
+</div>
+
+
     <div class="flex-auto p-6">
         <h1 class="mb-3 text-2xl leading-none text-slate-900"><?php echo $bookTitle; ?></h1>
         <div class="text-lg font-medium text-slate-500"><?php echo $bookAuthors; ?></div>
