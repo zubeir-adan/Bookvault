@@ -38,13 +38,15 @@
 
         // Display book details
         if ($bookData) {
-            $bookImage = isset($bookData['volumeInfo']['imageLinks']['thumbnail']) ? $bookData['volumeInfo']['imageLinks']['thumbnail'] : 'default_image_icon.jpg';
+            $bookImage = isset($bookData['volumeInfo']['imageLinks']['thumbnail']) ? $bookData['volumeInfo']['imageLinks']['thumbnail'] : 'img/default.jpg';
             $bookTitle = isset($bookData['volumeInfo']['title']) ? $bookData['volumeInfo']['title'] : 'Title Not Available';
             $bookAuthors = isset($bookData['volumeInfo']['authors']) ? implode(', ', $bookData['volumeInfo']['authors']) : 'Unknown';
             $bookPublishedDate = isset($bookData['volumeInfo']['publishedDate']) ? $bookData['volumeInfo']['publishedDate'] : 'Unknown';
             $bookDescription = isset($bookData['volumeInfo']['description']) ? $bookData['volumeInfo']['description'] : 'No description available';
             $bookRating = isset($bookData['volumeInfo']['averageRating']) ? $bookData['volumeInfo']['averageRating'] : null;
-            $ratingsCount = isset($bookData['volumeInfo']['ratingsCount']) ? $bookData['volumeInfo']['ratingsCount'] : 'No ratings';
+            $ratingsCount = isset($bookData['volumeInfo']['ratingsCount']) ? $bookData['volumeInfo']['ratingsCount'] : 'No ';
+            $bookISBN = isset($bookData['volumeInfo']['industryIdentifiers'][0]['identifier']) ? $bookData['volumeInfo']['industryIdentifiers'][0]['identifier'] : 'ISBN Not Available';
+            $bookPageCount = isset($bookData['volumeInfo']['pageCount']) ? $bookData['volumeInfo']['pageCount'] : 'Number of Pages Not Available';
         
             // Check if $bookRating is numeric
             if (is_numeric($bookRating)) {
@@ -78,8 +80,10 @@
 
     <div class="flex-auto p-6">
         <h1 class="mb-3 text-2xl leading-none text-slate-900"><?php echo $bookTitle; ?></h1>
-        <div class="text-lg font-medium text-slate-500"><?php echo $bookAuthors; ?></div>
-        <div class="text-xs leading-6 font-medium uppercase text-slate-500"><?php echo $bookPublishedDate; ?></div>
+        <div class="text-lg font-medium text-slate-500"><?php echo $bookAuthors; ?></div><br>
+        <div class="text-xs leading-6 font-medium  text-slate-500">Publication Date : <?php echo $bookPublishedDate; ?></div><br>
+        <p class="text-sm text-slate-500"><p>ISBN: <?php echo $bookISBN; ?></p><br>
+        <p class="text-sm text-slate-500"><p>Number of Pages: <?php echo $bookPageCount; ?></p><br>
         <p class="text-sm text-slate-500"><?php echo $bookDescription; ?></p>
         <br><br>
         <div class="flex items-center space-x-4 mb-5 text-sm font-medium">
@@ -97,43 +101,40 @@
             </form>
 
             <form id="haveReadForm" action="haveread-pass.php" method="post">
-                <input type="hidden" name="bookImage" value="<?php echo htmlspecialchars($bookImage); ?>">
-                <input type="hidden" name="bookTitle" value="<?php echo htmlspecialchars($bookTitle); ?>">
-                <input type="hidden" name="bookAuthors" value="<?php echo htmlspecialchars($bookAuthors); ?>">
-                <input type="hidden" name="bookPublishedDate" value="<?php echo htmlspecialchars($bookPublishedDate); ?>">
-                <button onclick="submitFormAndRedirect('haveReadForm', 'haveread-view.php')" 
-                    class="flex-none w-32 h-32 border border-green-500 rounded-xl p-4 transform transition-transform duration-200 hover:scale-110" 
-                    type="button">
-                    <img src="img/haveread.png" alt="Have read" class="mx-auto h-8 w-8" />
-                    <div class="text-center font-bold">Have read</div>
-                </button>
-            </form>
-
-            <form id="FavouriteForm" action="favourite.php" method="post">
-                <input type="hidden" name="bookImage" value="<?php echo htmlspecialchars($bookImage); ?>">
-                <input type="hidden" name="bookTitle" value="<?php echo htmlspecialchars ($bookTitle); ?>">
-                <input type="hidden" name="bookAuthors" value="<?php echo htmlspecialchars($bookAuthors); ?>">
-                <input type="hidden" name="bookPublishedDate" value="<?php echo htmlspecialchars($bookPublishedDate); ?>">
-                <button onclick="submitFormAndRedirect('FavouriteForm', 'favourite.php')" 
-                    class="flex-none w-32 h-32 border border-red-500 rounded-xl p-4 transform transition-transform duration-200 hover:scale-110" 
-                    type="button">
-                    <img src="img/fav.png" alt="Favourite" class="mx-auto h-8 w-8" />
-                    <div class="text-center font-bold">Favourite</div>
-                </button>
-            </form>
-        </div>
+                <input type="hidden" name="bookImage" value="<?php echo htmlspecialchars ($bookImage); ?>">
+<input type="hidden" name="bookTitle" value="<?php echo htmlspecialchars($bookTitle); ?>">
+<input type="hidden" name="bookAuthors" value="<?php echo htmlspecialchars($bookAuthors); ?>">
+<input type="hidden" name="bookPublishedDate" value="<?php echo htmlspecialchars($bookPublishedDate); ?>">
+<button onclick="submitFormAndRedirect('haveReadForm', 'haveread-view.php')" 
+                 class="flex-none w-32 h-32 border border-green-500 rounded-xl p-4 transform transition-transform duration-200 hover:scale-110" 
+                 type="button">
+<img src="img/haveread.png" alt="Have read" class="mx-auto h-8 w-8" />
+<div class="text-center font-bold">Have read</div>
+</button>
+</form>
+<form id="FavouriteForm" action="favourite.php" method="post">
+            <input type="hidden" name="bookImage" value="<?php echo htmlspecialchars($bookImage); ?>">
+            <input type="hidden" name="bookTitle" value="<?php echo htmlspecialchars ($bookTitle); ?>">
+            <input type="hidden" name="bookAuthors" value="<?php echo htmlspecialchars($bookAuthors); ?>">
+            <input type="hidden" name="bookPublishedDate" value="<?php echo htmlspecialchars($bookPublishedDate); ?>">
+            <button onclick="submitFormAndRedirect('FavouriteForm', 'favourite.php')" 
+                class="flex-none w-32 h-32 border border-red-500 rounded-xl p-4 transform transition-transform duration-200 hover:scale-110" 
+                type="button">
+                <img src="img/fav.png" alt="Favourite" class="mx-auto h-8 w-8" />
+                <div class="text-center font-bold">Favourite</div>
+            </button>
+        </form>
     </div>
-    <?php
-        } else {
-            echo '<p class="flex-auto p-6">Book details not found.</p>';
-        }
-    } else {
-        echo '<p class="flex-auto p-6">No book selected.</p>';
-    }
-    ?>
 </div>
-
+<?php
+    } else {
+        echo '<p class="flex-auto p-6">Book details not found.</p>';
+    }
+} else {
+    echo '<p class="flex-auto p-6">No book selected.</p>';
+}
+?>
+</div>
 <?php include("body/footer.php"); ?>
 </body>
 </html>
-
