@@ -1,0 +1,134 @@
+article,
+aside,
+details,
+figcaption,
+figure,
+header,
+hgroup,
+nav,
+section,
+summary {
+    display: block;
+}
+
+.header:after {
+    content: "";
+    height: 10px;
+    display: block;
+    visibility: hidden;
+    clear: both;
+}
+
+.header {
+    background: #f7f7f8;
+    border-bottom: 3px solid  #87CEEB;
+}
+/*
+*/
+
+.header .branding-title {
+    float: left;
+    margin: 0;
+    font: 0/0 serif;
+    text-shadow: none; 
+    color: transparent; 
+    width: 120px; 
+    height: 100px; 
+    background: url(../img/book-vault-logo.png) 0px no-repeat; 
+    background-size: 119px auto; 
+    padding: 0;
+    cursor: pointer; 
+}
+
+.header .branding-title a {
+    display: block;
+    width: 100%;
+    height: 100%; 
+;
+}
+
+.header .nav {
+    float: right;
+    top: 10;
+    right: 0;
+    margin: 0;
+    position: relative;
+    left: 0px;
+    z-index: 99999999;
+    white-space: nowrap; 
+}
+
+.header .nav li {
+    display: inline-block;
+    margin: 0;
+    list-style: none;
+    margin-right: 20px;
+}
+
+
+
+
+.header .nav li.books:hover a,
+.header .nav li.books a:active,
+.header .nav li.movies:hover a,
+.header .nav li.movies a:active,
+.header .nav li.music:hover a,
+.header .nav li.music a:active,
+.header .nav li.muzic:hover a,
+.header .nav li.muzic a:active,
+.header .nav li.suggest:hover a,
+.header .nav li.suggest a:active {
+    opacity: 0.2; 
+}
+
+
+.books a {
+    float: right; 
+    margin-left: 70px; 
+}
+.movies a {
+    float: right; 
+    margin-left: 70px;
+}
+.music a {
+    float: right; 
+    margin-left: 70px; 
+}
+.muzic a {
+    float: right; 
+    margin-left: 70px;
+}
+.suggest a {
+    float: right;
+    margin-left: 70px; 
+}
+
+
+
+
+
+
+.fa-solid {font-family: 'Font Awesome 5 Free'; font-weight: 900; font-size: 20px;}
+
+
+
+.wrapper {width: 980px; margin: 0 auto;}
+
+#content {padding: 20px 0 80px;}
+
+
+body {font-family: 'Open Sans', sans-serif; background:#f0eeed; color: #676767;}
+
+
+html {
+    position: relative;
+    min-height: 100%;
+  }
+  
+  body {
+    margin-bottom: 60px; /* Adjust the margin-bottom value as needed */
+  }
+  
+  
+
+
