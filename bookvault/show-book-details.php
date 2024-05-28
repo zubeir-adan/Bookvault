@@ -7,6 +7,13 @@
     <link rel="stylesheet" href="css/style.css" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .star-rating {
+            font-size: 1.5rem;
+            color: #FFD700;
+            margin-top: 10px;
+        }
+    </style>
 </head>
 <script>
     function submitFormAndRedirect(formId, redirectUrl) {
@@ -30,17 +37,44 @@
         $bookData = json_decode($response, true);
 
         // Display book details
-        if($bookData) {
+        if ($bookData) {
             $bookImage = isset($bookData['volumeInfo']['imageLinks']['thumbnail']) ? $bookData['volumeInfo']['imageLinks']['thumbnail'] : 'default_image_icon.jpg';
             $bookTitle = isset($bookData['volumeInfo']['title']) ? $bookData['volumeInfo']['title'] : 'Title Not Available';
             $bookAuthors = isset($bookData['volumeInfo']['authors']) ? implode(', ', $bookData['volumeInfo']['authors']) : 'Unknown';
             $bookPublishedDate = isset($bookData['volumeInfo']['publishedDate']) ? $bookData['volumeInfo']['publishedDate'] : 'Unknown';
             $bookDescription = isset($bookData['volumeInfo']['description']) ? $bookData['volumeInfo']['description'] : 'No description available';
+            $bookRating = isset($bookData['volumeInfo']['averageRating']) ? $bookData['volumeInfo']['averageRating'] : null;
+            $ratingsCount = isset($bookData['volumeInfo']['ratingsCount']) ? $bookData['volumeInfo']['ratingsCount'] : 'No ratings';
+        
+            // Check if $bookRating is numeric
+            if (is_numeric($bookRating)) {
+                $starWidth = ($bookRating / 5) * 100;
+            } else {
+                // If $bookRating is not numeric, set starWidth to 0
+                $starWidth = 0;
+            }
     ?>
-<div class="flex-none relative w-50">
-    <img src="<?php echo $bookImage; ?>" alt="Book Cover" class="object-cover w-70% h-50% ml-[-40px]" loading="lazy" />
-</div>
-
+    <div class="flex-none relative w-50">
+        <img src="<?php echo $bookImage; ?>" alt="Book Cover" class="object-cover w-70% h-50% ml-[-40px]" loading="lazy" />
+        <div class="mt-3">
+            <p class="text-sm text-slate-500"><b>Rating</b><br> 
+                <span class="star-rating">
+                    <?php 
+                    $filledStars = floor($bookRating);
+                    $emptyStars = 5 - $filledStars;
+                    for ($i = 0; $i < $filledStars; $i++) {
+                        echo '<i class="fas fa-star"></i>';
+                    }
+                    for ($i = 0; $i < $emptyStars; $i++) {
+                        echo '<i class="far fa-star"></i>';
+                    }
+                    ?>
+                </span> 
+                <br>
+                <?php echo $bookRating; ?>/5 stars <br> <?php echo $ratingsCount; ?> ratings
+            </p>
+        </div>
+    </div>
 
     <div class="flex-auto p-6">
         <h1 class="mb-3 text-2xl leading-none text-slate-900"><?php echo $bookTitle; ?></h1>
@@ -77,7 +111,7 @@
 
             <form id="FavouriteForm" action="favourite.php" method="post">
                 <input type="hidden" name="bookImage" value="<?php echo htmlspecialchars($bookImage); ?>">
-                <input type="hidden" name="bookTitle" value="<?php echo htmlspecialchars($bookTitle); ?>">
+                <input type="hidden" name="bookTitle" value="<?php echo htmlspecialchars ($bookTitle); ?>">
                 <input type="hidden" name="bookAuthors" value="<?php echo htmlspecialchars($bookAuthors); ?>">
                 <input type="hidden" name="bookPublishedDate" value="<?php echo htmlspecialchars($bookPublishedDate); ?>">
                 <button onclick="submitFormAndRedirect('FavouriteForm', 'favourite.php')" 
@@ -102,3 +136,4 @@
 <?php include("body/footer.php"); ?>
 </body>
 </html>
+
