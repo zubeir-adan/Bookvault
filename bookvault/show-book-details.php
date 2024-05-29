@@ -35,29 +35,55 @@
         $url = 'https://www.googleapis.com/books/v1/volumes/' . $bookId;
         $response = file_get_contents($url);
         $bookData = json_decode($response, true);
+          // Fetch book ratings from Open Library API
+    $bookTitle = isset($bookData['volumeInfo']['title']) ? urlencode($bookData['volumeInfo']['title']) : '';
+    $openLibraryUrl = "https://openlibrary.org/search.json?title={$bookTitle}";
+    $openLibraryResponse = file_get_contents($openLibraryUrl);
+    $openLibraryData = json_decode($openLibraryResponse, true);
 
-        // Display book details
-        if ($bookData) {
-            $bookImage = isset($bookData['volumeInfo']['imageLinks']['thumbnail']) ? $bookData['volumeInfo']['imageLinks']['thumbnail'] : 'img/default.jpg';
-            $bookTitle = isset($bookData['volumeInfo']['title']) ? $bookData['volumeInfo']['title'] : 'Title Not Available';
-            $bookAuthors = isset($bookData['volumeInfo']['authors']) ? implode(', ', $bookData['volumeInfo']['authors']) : 'Unknown';
-            $bookPublishedDate = isset($bookData['volumeInfo']['publishedDate']) ? $bookData['volumeInfo']['publishedDate'] : 'Unknown';
-            $bookDescription = isset($bookData['volumeInfo']['description']) ? $bookData['volumeInfo']['description'] : 'No description available';
-            $bookRating = isset($bookData['volumeInfo']['averageRating']) ? $bookData['volumeInfo']['averageRating'] : null;
-            $ratingsCount = isset($bookData['volumeInfo']['ratingsCount']) ? $bookData['volumeInfo']['ratingsCount'] : 'No ';
-            $bookISBN = isset($bookData['volumeInfo']['industryIdentifiers'][0]['identifier']) ? $bookData['volumeInfo']['industryIdentifiers'][0]['identifier'] : 'ISBN Not Available';
-            $bookPageCount = isset($bookData['volumeInfo']['pageCount']) ? $bookData['volumeInfo']['pageCount'] : 'Number of Pages Not Available';
-        
-            // Check if $bookRating is numeric
-            if (is_numeric($bookRating)) {
-                $starWidth = ($bookRating / 5) * 100;
-            } else {
-                // If $bookRating is not numeric, set starWidth to 0
-                $starWidth = 0;
+    $ratingsCount = 0;
+    $averageRating = 0;
+    if ($openLibraryData && isset($openLibraryData['docs']) && count($openLibraryData['docs']) > 0) {
+        // Iterate through the search results to find matching book and retrieve ratings
+        foreach ($openLibraryData['docs'] as $book) {
+            if (isset($book['title']) && strtolower($book['title']) === strtolower($bookData['volumeInfo']['title'])) {
+                // If the title matches, retrieve ratings data
+                $ratingsCount = isset($book['rating_count']) ? $book['rating_count'] : 0;
+                $averageRating = isset($book['average_rating']) ? $book['average_rating'] : 0;
+                break;
             }
+        }
+    }
+
+  // Display book details
+if ($bookData) {
+    $bookImage = isset($bookData['volumeInfo']['imageLinks']['thumbnail']) ? $bookData['volumeInfo']['imageLinks']['thumbnail'] : 'img/default.jpg';
+    $bookTitle = isset($bookData['volumeInfo']['title']) ? $bookData['volumeInfo']['title'] : 'Title Not Available';
+    $bookAuthors = isset($bookData['volumeInfo']['authors']) ? implode(', ', $bookData['volumeInfo']['authors']) : 'Unknown';
+    $bookPublishedDate = isset($bookData['volumeInfo']['publishedDate']) ? $bookData['volumeInfo']['publishedDate'] : 'Unknown';
+    $bookDescription = isset($bookData['volumeInfo']['description']) ? $bookData['volumeInfo']['description'] : 'No description available';
+    $bookRating = isset($bookData['volumeInfo']['averageRating']) ? $bookData['volumeInfo']['averageRating'] : null;
+    $ratingsCount = isset($bookData['volumeInfo']['ratingsCount']) ? $bookData['volumeInfo']['ratingsCount'] : 'No ';
+    $bookISBN = isset($bookData['volumeInfo']['industryIdentifiers'][0]['identifier']) ? $bookData['volumeInfo']['industryIdentifiers'][0]['identifier'] : 'ISBN Not Available';
+    $bookPageCount = isset($bookData['volumeInfo']['pageCount']) ? $bookData['volumeInfo']['pageCount'] : 'Number of Pages Not Available';
+
+    // Check if $bookRating is numeric
+    if (is_numeric($bookRating)) {
+        $starWidth = ($bookRating / 5) * 100;
+    } else {
+        // If $bookRating is not numeric, set starWidth to 0
+        $starWidth = 0;
+    }
+
+    // Check if the image is the default one and add styles accordingly
+    if ($bookImage === 'img/default.jpg') {
+        $imageTag = '<img src="' . $bookImage . '" alt="Book Cover" style="width:100px;height:150px;" loading="lazy" />';
+    } else {
+        $imageTag = '<img src="' . $bookImage . '" alt="Book Cover" class="object-cover w-70% h-50% ml-[-40px]" loading="lazy" />';
+    }
     ?>
     <div class="flex-none relative w-50">
-        <img src="<?php echo $bookImage; ?>" alt="Book Cover" class="object-cover w-70% h-50% ml-[-40px]" loading="lazy" />
+        <?php echo $imageTag; ?>
         <div class="mt-3">
             <p class="text-sm text-slate-500"><b>Rating</b><br> 
                 <span class="star-rating">
