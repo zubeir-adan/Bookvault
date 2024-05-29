@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <style>
 form {
-    position: relative; /* Make sure the form is positioned relative */
+    position: relative;
     text-align: center;
     margin-top: 30px;
 }
@@ -18,7 +18,6 @@ input[type="text"] {
     border-radius: 10px;
     font-size: 16px;
 }
-
 button {
     padding: 15px 10px;
     background-color: #708ee6;
@@ -28,7 +27,7 @@ button {
     margin-left: 10px;
 }
 .book-container {
-    position: relative; /* Make sure the container is positioned */
+    position: relative;
     display: inline-block;
     border: 1px solid #ccc;
     border-radius: 10px;
@@ -40,50 +39,105 @@ button {
     overflow: hidden;
     vertical-align: top;
     text-align: center;
-    transition: all 0.3s ease; /* Smooth transition for hover effects */
+    transition: all 0.3s ease;
 }
-
 .book-container img {
-    width: 40%; /* Adjust image width to fit container */
+    width: 40%;
     height: auto;
-    transition: transform 0.3s ease; /* Smooth transition for scale effect */
+    transition: transform 0.3s ease;
 }
-
 .book-container:hover img {
-    transform: scale(1.1); /* Slightly scale up the image on hover */
+    transform: scale(1.1);
 }
-
 .book-info {
-    position: absolute; /* Position the book details absolutely within the container */
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent background */
+    background-color: rgba(255, 255, 255, 0.9);
     color: #333;
-    visibility: hidden; /* Start with info hidden */
+    visibility: hidden;
     opacity: 0;
     transition: visibility 0s, opacity 0.3s linear;
 }
-
 .book-container:hover .book-info {
-    visibility: visible; /* Make details visible on hover */
+    visibility: visible;
     opacity: 1;
 }
-
-.loader {
-    border: 6px solid lightcyan;
-    border-top: 6px solid #3498db;
-    border-radius: 70%;
-    width: 30px;
-    height: 30px;
-    animation: spin 1s linear infinite;
-    margin: 0 auto;
+.loader-container {
     display: none;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.8);
+    z-index: 1000;
 }
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+.loader-spanne-20 {
+    position: relative;
+    width: 100px;
+    height: 30px;
+    padding: 0;
+}
+.loader-spanne-20 > span {
+    position: absolute;
+    right: 0;
+    width: 3px;
+    height: 30px;
+    background-color: rgb(116, 204, 197);
+    display: block;
+    border-radius: 3px;
+    transform-origin: 50% 100%;
+    animation: move 2.8s linear infinite;
+}
+.loader-spanne-20 > span:nth-child(1) {
+    animation-delay: -0.4s;
+}
+.loader-spanne-20 > span:nth-child(2) {
+    animation-delay: -0.8s;
+}
+.loader-spanne-20 > span:nth-child(3) {
+    animation-delay: -1.2s;
+}
+.loader-spanne-20 > span:nth-child(4) {
+    animation-delay: -1.6s;
+}
+.loader-spanne-20 > span:nth-child(5) {
+    animation-delay: -2s;
+}
+.loader-spanne-20 > span:nth-child(6) {
+    animation-delay: -2.4s;
+}
+.loader-spanne-20 > span:nth-child(7) {
+    animation-delay: -2.8s;
+}
+@keyframes move {
+    0% {
+        opacity: 0;
+        transform: translateX(0px) rotate(0deg);
+    }
+    20% {
+        opacity: 1;
+    }
+    40% {
+        transform: translateX(-40px) rotate(0deg);
+    }
+    50% {
+        opacity: 1;
+        transform: translateX(-50px) rotate(22deg);
+    }
+    85% {
+        opacity: 1;
+        transform: translateX(-85px) rotate(60deg);
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(-100px) rotate(65deg);
+    }
 }
 .autocomplete-items {
     position: absolute;
@@ -97,8 +151,8 @@ button {
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     border-radius: 0 0 10px 10px;
     overflow: hidden;
-    max-width: 520px; /* Limit the width of the suggestion box */
-    margin: 0 auto; /* Center the suggestion box */
+    max-width: 520px;
+    margin: 0 auto;
 }
 .autocomplete-items div {
     padding: 10px;
@@ -121,20 +175,30 @@ body {
 .book-list {
     flex: 1;
 }
-
 </style>
 </head>
 <body>
 <?php include("body/header.php"); ?>
 <div class="book-list">
-<form method="get" action="">
-    <input type="text" name="search" id="search-input" placeholder="Search for a book" autocomplete="off">
-    <button type="submit" name="submit-search"><i class="fa-solid fa-search"></i></button>
-    <div id="autocomplete-list" class="autocomplete-items"></div>
-</form>
+    <form method="get" action="">
+        <input type="text" name="search" id="search-input" placeholder="Search for a book" autocomplete="off">
+        <button type="submit" name="submit-search"><i class="fa-solid fa-search"></i></button>
+        <div id="autocomplete-list" class="autocomplete-items"></div>
+    </form>
 
-<div class="loader"></div>
-<div class='book-info'>
+    <div class="loader-container">
+        <div class="loader-spanne-20">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+
+    <div class='book-info'>
         <h3>${htmlspecialchars($book['volumeInfo']['title'])}</h3>
         <p>Author(s): ${implode(", ", array_map('htmlspecialchars', $book['volumeInfo']['authors']))}</p>
         <p>Publish Year: ${htmlspecialchars($book['volumeInfo']['publishedDate'])}</p>
@@ -174,7 +238,6 @@ if (isset($_GET['search']) && !empty($_GET['search'])) {
                 echo "<img src='" . htmlspecialchars($book['volumeInfo']['imageLinks']['thumbnail']) . "' alt='Book Cover'>";
             } else {
                 echo "<img src='img/default.jpg' alt='Book image not found!' width='100' height='150'>";
-
             }
             if (isset($book['volumeInfo']['title'])) {
                 echo "<h4>" . htmlspecialchars($book['volumeInfo']['title']) . "</h4>";
@@ -195,11 +258,9 @@ if (isset($_GET['search']) && !empty($_GET['search'])) {
         }
         echo "</div>";
     }
-    echo "<script>document.querySelector('.loader').style.display = 'none';</script>";
+    echo "<script>document.querySelector('.loader-container').style.display = 'none';</script>";
 }
 ?>
-
-
 </div>
 
 <script>
@@ -207,7 +268,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const searchInput = document.getElementById('search-input');
     const autocompleteList = document.getElementById('autocomplete-list');
     const searchForm = document.querySelector('form');
-    const loader = document.querySelector('.loader'); // Get the loader element
+    const loaderContainer = document.querySelector('.loader-container');
+
+    // Ensure loader is hidden on initial page load
+    loaderContainer.style.display = 'none';
 
     // Listener for input on the search box
     searchInput.addEventListener('input', function() {
@@ -220,14 +284,14 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         // Display the loader when starting to fetch data
-        loader.style.display = 'block';
-        console.log("Fetching books for:", input); // Debug log for input
+        loaderContainer.style.display = 'flex';
+        console.log("Fetching books for:", input);
 
         // Fetch data from Google Books API
         fetch(`https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(input)}&maxResults=5`)
         .then(response => response.json())
         .then(data => {
-            console.log("Data received:", data); // Debug log for fetched data
+            console.log("Data received:", data);
             let books = data.items || [];
             autocompleteList.innerHTML = '';
 
@@ -237,20 +301,21 @@ document.addEventListener('DOMContentLoaded', function() {
                 let div = document.createElement('div');
                 div.textContent = title;
                 div.onclick = function() {
-                    console.log("Book clicked:", title); // Debug log for clicked book title
+                    console.log("Book clicked:", title);
                     searchInput.value = title;
                     autocompleteList.innerHTML = '';
-                    searchForm.submit(); // Automatically submit the form on click
+                    loaderContainer.style.display = 'flex'; // Show the loader when a book is clicked
+                    searchForm.submit();
                 };
                 autocompleteList.appendChild(div);
             });
 
             // Hide the loader after processing data
-            loader.style.display = 'none';
+            loaderContainer.style.display = 'none';
         })
         .catch(error => {
             console.error('Error fetching autocomplete suggestions:', error);
-            loader.style.display = 'none'; // Ensure loader is hidden on fetch error
+            loaderContainer.style.display = 'none'; // Ensure loader is hidden on fetch error
         });
     });
 
@@ -260,15 +325,23 @@ document.addEventListener('DOMContentLoaded', function() {
             autocompleteList.innerHTML = '';
         }
     });
+
+    // Stop the loader when navigating back to the page
+    window.addEventListener('pageshow', function(event) {
+        if (event.persisted) {
+            loaderContainer.style.display = 'none';
+        }
+    });
 });
 
 // Function to redirect to show book details page
 function showBookDetails(bookId) {
+    const loaderContainer = document.querySelector('.loader-container');
+    loaderContainer.style.display = 'flex'; // Show the loader when a book is clicked
     window.location.href = 'show-book-details.php?bookId=' + bookId;
 }
 </script>
 
 <?php include("body/footer.php"); ?>
-
 </body>
 </html>
