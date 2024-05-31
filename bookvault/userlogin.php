@@ -130,6 +130,26 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         <?php endif; ?>
         <input type="submit" value="Submit">
     </form>
+    <script>
+  function logInWithGoogle() {
+    var provider = new firebase.auth.GoogleAuthProvider();
+
+    firebase.auth().signInWithPopup(provider)
+      .then((result) => {
+        // Logged in
+        var user = result.user;
+        console.log('User logged in with Google:', user);
+      })
+      .catch((error) => {
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        console.error('Error logging in with Google:', errorCode, errorMessage);
+      });
+  }
+</script>
+
+<button onclick="logInWithGoogle()">Log In with Google</button>
+
     <a href="usersignup.html"
      style="display: block; 
      text-align: left; 
@@ -138,5 +158,17 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
       text-decoration: none;
       " onmouseover="this.style.color='black'"
        onmouseout="this.style.color='white'">Don't have an account? Register here</a>
+       <script>
+  firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+      // User is signed in
+      console.log('User is signed in:', user);
+    } else {
+      // No user is signed in
+      console.log('No user is signed in');
+    }
+  });
+</script>
+
 </body>
 </html>

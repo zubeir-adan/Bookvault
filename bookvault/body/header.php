@@ -28,6 +28,30 @@
 
         </style>
 </head>
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyDQb9CSLW7L066B4XxPkEzLn4rxpFmVfnY",
+    authDomain: "bookvault-d3402.firebaseapp.com",
+    databaseURL: "https://bookvault-d3402-default-rtdb.firebaseio.com",
+    projectId: "bookvault-d3402",
+    storageBucket: "bookvault-d3402.appspot.com",
+    messagingSenderId: "707835170990",
+    appId: "1:707835170990:web:0d52971293bc2e6cad1d3f",
+    measurementId: "G-568P1C3MZW"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+</script>
 
 <body>
 
