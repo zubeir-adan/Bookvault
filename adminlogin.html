@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Login</title>
+    <style>
+        body {
+            background-color: #e4d9d9;
+            font-family: 'Times New Roman', Times, serif;
+        }
+        h2 {
+            color: white;
+            text-align: center;
+            text-indent: -420px;
+        }
+        form {
+            width: 300px;
+            margin-left: 300px;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        input[type="text"],
+        input[type="password"] {
+            width: 200px;
+            padding: 5px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+        }
+        input[type="submit"] {
+            background-color: burlywood;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #4c7f1e;
+        }
+        body {
+            background-image: url('img/6use.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+    </style>
+</head>
+<body>
+    <h2>Admin Login</h2>
+    <form action="adminlogin.php" method="POST">
+        <label for="admin_name" style="color: whitesmoke;">Username</label>
+        <input type="text" id="admin_name" name="admin_name" required>
+        <br>
+        <br>
+        <label for="password" style="color: whitesmoke;">Password</label>
+        <input type="password" id="password" name="password" required>
+        <br>
+        <br>
+        <input type="submit" value="Submit">
+    </form>
+    <a href="adminsignup.html" style="display: block; text-align: left; margin-left: 300px; color: cornsilk; text-decoration: none;" onmouseover="this.style.color='black'" onmouseout="this.style.color='white'">Don't have an account? Register here</a>
+</body>
+</html>
