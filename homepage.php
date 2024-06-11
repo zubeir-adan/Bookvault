@@ -400,7 +400,7 @@
             window.location.href = "discover.php";
         });
         document.getElementById("login").addEventListener("click", function() {
-            window.location.href = "userlogin.html";
+            window.location.href = "choice.html";
         });
         document.getElementById("sign-up").addEventListener("click", function() {
             window.location.href = "usersignup.html";

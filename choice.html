@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login as:</title>
+    <style>
+        
+        body {
+          background-color: #e4d9d9;
+          font-family:'Times New Roman', Times, serif;
+        
+        }
+        
+        h2 {
+        color: white;
+        text-align:center;
+          text-indent: -420px; 
+        }
+        
+        
+        form {
+            width: 300px; /* Adjust width as needed */
+            margin-left: 300px; /* Move the form to the left */
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        label {
+        display: block;
+        margin-bottom: 10px;
+        color: #333;
+        }
+        
+        input[type="text"],
+        input[type="password"] {
+        width: 200px;
+        padding: 5px;
+        border: 1px solid #ddd;
+        border-radius: 3px;
+        }
+        
+        
+        input[type="submit"] {
+        background-color: burlywood;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+        }
+        
+        input[type="submit"]:hover {
+          background-color: #4c7f1e;
+        }
+        
+          body {
+            background-image: url('img/6use.jpg');
+            background-size: cover;
+            background-position: center;
+          }
+         
+        .container label {
+            display: block;
+            margin-bottom: 10px;
+            color: white;
+        }
+            </style>
+ </head>
+ <body>
+    <div class="container">
+        <h2>Login as:</h2>
+        <form id="redirectForm">
+            <label>
+                <input type="radio" name="option" value="userlogin.html">
+            Reader 
+            </label>
+            <label>
+                <input type="radio" name="option" value="adminlogin.html">
+              Admin
+            </label>
+            <button type="button" onclick="redirectToPage()">Go</button>
+        </form>
+    </div>
+
+    <script>
+        function redirectToPage() {
+            const form = document.getElementById('redirectForm');
+            const selectedOption = form.querySelector('input[name="option"]:checked');
+            if (selectedOption) {
+                window.location.href = selectedOption.value;
+            } else {
+                alert('Please select an option.');
+            }
+        }
+    </script>
+ </body>
+</html>
