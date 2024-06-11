@@ -21,7 +21,7 @@
             height: 70px;
         }
         .logo {
-            height: 50px;
+            height: 65px;
             margin-top: -20px;
         }
         .menu {
