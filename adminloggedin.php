@@ -212,7 +212,11 @@ $conn->close();
     }
 </script>
 
-
+ <!-- Logout Button -->
+ <div class="container" style="text-align: center; margin-top: 20px;">
+        <form method="post" action="userlogout.php">
+          <input type="submit" value="Logout" style="background-color: #007bff; color: #fff; padding: 10px 20px; text-decoration: none; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;">
+        </form>
 </body>
 </html>
 <?php include("body/footer.php"); ?>

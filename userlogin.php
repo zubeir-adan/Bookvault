@@ -26,8 +26,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         if(empty($username) || empty($password)){
             $errorUsername = "All fields are required";
         }else{
-            $sql = "SELECT * FROM users WHERE username ='$username'";
-            $result = $conn->query($sql);
+            $sql = "SELECT * FROM users WHERE username = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("s", $username);
+            $stmt->execute();
+            $result = $stmt->get_result();
+
             if($result->num_rows === 1){
                 $row = $result->fetch_assoc();
                 // Verify hashed password
@@ -52,69 +56,65 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> User login</title>
+    <title>User login</title>
     <style>
-        
         body {
-          background-color: #e4d9d9;
-          font-family:'Times New Roman', Times, serif;
-        
+            background-color: #e4d9d9;
+            font-family: 'Times New Roman', Times, serif;
         }
-        
+
         h2 {
-        color: white;
-        text-align:center;
-          text-indent: -420px; 
+            color: white;
+            text-align: center;
+            text-indent: -420px;
         }
-        
-        
+
         form {
-            width: 300px; /* Adjust width as needed */
-            margin-left: 300px; /* Move the form to the left */
+            width: 300px;
+            margin-left: 300px;
             padding: 20px;
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-        
+
         label {
-        display: block;
-        margin-bottom: 10px;
-        color: #333;
+            display: block;
+            margin-bottom: 10px;
+            color: #333;
         }
-        
+
         input[type="text"],
         input[type="password"] {
-        width: 200px;
-        padding: 5px;
-        border: 1px solid #ddd;
-        border-radius: 3px;
+            width: 200px;
+            padding: 5px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
         }
-        
-        
+
         input[type="submit"] {
-        background-color: burlywood;
-        color: #fff;
-        padding: 10px 20px;
-        border: none;
-        border-radius: 3px;
-        cursor: pointer;
+            background-color: burlywood;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
         }
-        
+
         input[type="submit"]:hover {
-          background-color: #4c7f1e;
+            background-color: #4c7f1e;
         }
-        
-          body {
+
+        body {
             background-image: url('img/6use.jpg');
             background-size: cover;
             background-position: center;
-          }
-            </style>
+        }
+    </style>
 </head>
 <body>
     <h2>Login</h2>
     <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-        <label for="username" style="color: whitesmoke;">Username </label>
+        <label for="username" style="color: whitesmoke;">Username</label>
         <input type="text" id="username" name="username" required>
         <br>
         <br>
@@ -130,45 +130,5 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         <?php endif; ?>
         <input type="submit" value="Submit">
     </form>
-    <script>
-  function logInWithGoogle() {
-    var provider = new firebase.auth.GoogleAuthProvider();
-
-    firebase.auth().signInWithPopup(provider)
-      .then((result) => {
-        // Logged in
-        var user = result.user;
-        console.log('User logged in with Google:', user);
-      })
-      .catch((error) => {
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        console.error('Error logging in with Google:', errorCode, errorMessage);
-      });
-  }
-</script>
-
-<button onclick="logInWithGoogle()">Log In with Google</button>
-
-    <a href="usersignup.html"
-     style="display: block; 
-     text-align: left; 
-     margin-left: 300px; 
-     color: cornsilk;
-      text-decoration: none;
-      " onmouseover="this.style.color='black'"
-       onmouseout="this.style.color='white'">Don't have an account? Register here</a>
-       <script>
-  firebase.auth().onAuthStateChanged((user) => {
-    if (user) {
-      // User is signed in
-      console.log('User is signed in:', user);
-    } else {
-      // No user is signed in
-      console.log('No user is signed in');
-    }
-  });
-</script>
-
 </body>
 </html>

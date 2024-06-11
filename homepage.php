@@ -18,10 +18,10 @@
             padding: 10px 20px;
             background-color: #f1f1f1;
             border-bottom: 2px solid #ddd;
-            height: 100px;
+            height: 70px;
         }
         .logo {
-            height: 70px;
+            height: 50px;
             margin-top: -20px;
         }
         .menu {
@@ -58,20 +58,53 @@
         .Intro {
             position: relative;
             background: url('img/vaultimg.png') no-repeat center center/cover;
-            height: 100vh;
-            color: black;
+            height: 75vh;
+            color: white;
             text-align: left;
             display: flex;
             justify-content: center;
             align-items: center;
         }
+        .Intro .content {
+            width: 80%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
         .Intro h1 {
             font-size: 3em;
-            margin-bottom: 10px;
+            margin-bottom: 200px;
         }
-        .Intro p {
+        .Intro .paragraph-container1 {
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+            gap: 100px;
+            margin-bottom: 250px;
+        }
+        .Intro .paragraph-container1 p {
             font-size: 1.2em;
             line-height: 1.5;
+            width: 45%;
+            margin-right: 300px;
+            margin-bottom: 300px;
+            margin: 0;
+        }
+        .Intro .paragraph-container2 {
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+            gap: 100px;
+            margin-left: 900px;
+            margin-bottom: 300px;
+        }
+        .Intro .paragraph-container2 p{
+            font-size: 1.2em;
+            line-height: 1.5;
+            width: 45%;
+            margin-left: 900px;
+            margin-bottom: 300px;
+            margin: 0;
         }
         .about-us {
             padding: 50px 20px;
@@ -90,6 +123,8 @@
             display: flex;
             justify-content: center;
             padding: 20px;
+            margin-top: -40px;
+           
         }
         .sign-up button {
             background-color: green;
@@ -103,6 +138,8 @@
         }
         .sign-up button:hover {
             background-color: darkgreen;
+            margin-top: -20px;
+            margin-bottom: 30px;;
         }
         .carousel-container {
             margin-bottom: 100px;
@@ -231,6 +268,12 @@
             margin-top: 15px;
             font-weight: bold;
         }
+        .p2{
+            margin-left: 200px;
+        }
+        .content h2{
+            margin-bottom:200px;   
+        text-align: center;    }
     </style>
 </head>
 <body>
@@ -248,16 +291,25 @@
             <button type="button" id="login">Log In</button>
         </div>
     </div>
-
     <section class="Intro">
         <div class="content">
-            <h1>Welcome to BookVault</h1>
-            <p>
-                Discover a world of books at your fingertips. Join us to explore and enjoy an extensive collection of books.
-            </p>
+           
+            <div class="paragraph-container1">
+                <p >
+                Discover a world of books at your fingertips
+                </p>
+            </div>
+            <div class="paragraph-container2">
+            <p class="p2">
+                   Join us in making your literary journey one for the books!
+                </p>
+            </div>    
         </div>
     </section>
-
+    <div class="sign-up">
+        <button id="sign-up">Embark</button>
+    </div>
+   
     <section class="about-us">
         <h1>About Us</h1>
         <p>
@@ -265,9 +317,7 @@
         </p>
     </section>
 
-    <div class="sign-up">
-        <button id="sign-up">Embark</button>
-    </div>
+    
 
     <div class="carousel-container">
         <h1>Why BookVault?</h1>
