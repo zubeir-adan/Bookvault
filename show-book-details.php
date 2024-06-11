@@ -24,7 +24,12 @@
     }
 </script>
 <body>
-<?php include("body/header.php"); ?>
+<div class="header">
+    <div class="wrapper">
+        <img src="img/book-vault-logo.png" alt="Book Vault Logo" style="width: 250px; height: auto;">
+    
+    </div>
+</div>
 
 <div class="flex font-serif max-w-xl mx-auto">
     <?php

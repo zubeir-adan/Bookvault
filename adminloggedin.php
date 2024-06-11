@@ -137,8 +137,8 @@ $conn->close();
 <body>
 <div class="header">
     <div class="wrapper">
-        <img src="img/book-vault-logo.png" alt="Book Vault Logo" style="width: 100px; height: auto;">
-        <h4 style="text-align: left; margin: 0;">Revolutionize Reading!</h4>
+        <img src="img/book-vault-logo.png" alt="Book Vault Logo" style="width: 200px; height: auto; float: left;">
+     
     </div>
     <div class="welcome">
         Welcome, Admin <?php echo htmlspecialchars($adminName); ?>

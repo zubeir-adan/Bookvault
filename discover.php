@@ -114,8 +114,8 @@ function fetchBooksByGenre($genre) {
 <body>
 <div class="header">
     <div class="wrapper">
-        <img src="img/book-vault-logo.png" alt="Book Vault Logo" style="width: 100px; height: auto;">
-        <h4 style="text-align: left;">Revolutionize Reading!</h4>
+        <img src="img/book-vault-logo.png" alt="Book Vault Logo" style="width: 250px; height: auto;">
+    
     </div>
 </div>
 
