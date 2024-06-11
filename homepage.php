@@ -75,41 +75,32 @@
             font-size: 3em;
             margin-bottom: 200px;
         }
-        .Intro .paragraph-container1 {
+        .paragraph-container {
             display: flex;
             width: 100%;
             justify-content: space-between;
-            gap: 100px;
             margin-bottom: 250px;
+            margin-top: 100px;
         }
-        .Intro .paragraph-container1 p {
-            font-size: 1.2em;
+        .paragraph-container .left {
+            font-size: 2em;
             line-height: 1.5;
             width: 45%;
-            margin-right: 300px;
-            margin-bottom: 300px;
-            margin: 0;
+            text-align: left;
         }
-        .Intro .paragraph-container2 {
-            display: flex;
-            width: 100%;
-            justify-content: space-between;
-            gap: 100px;
-            margin-left: 900px;
-            margin-bottom: 300px;
-        }
-        .Intro .paragraph-container2 p{
-            font-size: 1.2em;
+        .paragraph-container .right {
+            font-size: 2em;
             line-height: 1.5;
             width: 45%;
-            margin-left: 900px;
-            margin-bottom: 300px;
-            margin: 0;
+            text-align: right;
+            margin-left: 50px;
         }
         .about-us {
             padding: 50px 20px;
             text-align: center;
+            margin-top: 40px;
             background-color: #f9f9f9;
+            border-radius: round;
         }
         .about-us h1 {
             font-size: 2.5em;
@@ -124,7 +115,6 @@
             justify-content: center;
             padding: 20px;
             margin-top: -40px;
-           
         }
         .sign-up button {
             background-color: green;
@@ -138,8 +128,7 @@
         }
         .sign-up button:hover {
             background-color: darkgreen;
-            margin-top: -20px;
-            margin-bottom: 30px;;
+          
         }
         .carousel-container {
             margin-bottom: 100px;
@@ -268,12 +257,17 @@
             margin-top: 15px;
             font-weight: bold;
         }
-        .p2{
+        .p2 {
             margin-left: 200px;
         }
-        .content h2{
-            margin-bottom:200px;   
-        text-align: center;    }
+        .content h2 {
+            margin-bottom: 200px;   
+            text-align: center;
+        }
+        .Intro .sign-up{
+            margin-top: 10px;
+            align-items: center;
+        }
     </style>
 </head>
 <body>
@@ -293,32 +287,30 @@
     </div>
     <section class="Intro">
         <div class="content">
-           
-            <div class="paragraph-container1">
-                <p >
-                Discover a world of books at your fingertips
+            <div class="paragraph-container">
+                <p class="left">
+                    Discover a world of books
+                    <br> at your fingertips
+                </p>
+                <p class="right">
+                    Join us in making your literary journey
+                     one for the books!
                 </p>
             </div>
-            <div class="paragraph-container2">
-            <p class="p2">
-                   Join us in making your literary journey one for the books!
-                </p>
-            </div>    
+            <div class="sign-up">
+        <button id="sign-up">JOIN NOW!!</button>
+         </div>
         </div>
+        
+        
     </section>
-    <div class="sign-up">
-        <button id="sign-up">Embark</button>
-    </div>
    
-    <section class="about-us">
+    <div class="about-us">
         <h1>About Us</h1>
-        <p>
-            BookVault is designed to be your personal assistant in enhancing and tracking your literary journey. Designed by two avid readers, we know your thirsts, and exactly how to quench them.
+        <p style="border-radius: 20px; padding: 20px; background-color: #f9f9f9;">
+        BookVault is designed to be your personal assistant in enhancing and tracking your literary journey. Founded by two avid readers with a deep passion for literature, we understand the joys and challenges that come with a love for books. We created BookVault to quench the thirst for knowledge and adventure that every reader possesses. Our platform is built to cater to every aspect of your reading life.
         </p>
-    </section>
-
-    
-
+    </div>
     <div class="carousel-container">
         <h1>Why BookVault?</h1>
         <div class="container-xl">
@@ -330,7 +322,7 @@
                             <li data-target="#whyBookVaultCarousel" data-slide-to="0" class="active"></li>
                             <li data-target="#whyBookVaultCarousel" data-slide-to="1"></li>
                             <li data-target="#whyBookVaultCarousel" data-slide-to="2"></li>
-                        </ol>   
+                        </ol>
                         <!-- Wrapper for carousel items -->
                         <div class="carousel-inner">
                             <div class="carousel-item active">
@@ -361,7 +353,6 @@
             </div>
         </div>
     </div>
-
     <div class="testimonial-container">
         <h1>Testimonials</h1>
         <div id="testimonialCarousel" class="carousel slide" data-ride="carousel" data-interval="3000">
@@ -401,11 +392,20 @@
             </a>
         </div>
     </div>
-
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
+    <script>
+        document.getElementById("Discover").addEventListener("click", function() {
+            window.location.href = "discover.php";
+        });
+        document.getElementById("login").addEventListener("click", function() {
+            window.location.href = "userlogin.html";
+        });
+        document.getElementById("sign-up").addEventListener("click", function() {
+            window.location.href = "usersignup.html";
+        });
+    </script>
     <?php include("body/footer.php"); ?>
 </body>
 </html>
