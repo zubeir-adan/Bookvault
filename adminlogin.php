@@ -117,7 +117,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <?php if (!empty($errorPassword)): ?>
             <p style="color: red;"><?php echo $errorPassword; ?></p>
         <?php endif; ?>
-        <input type="submit" value="Submit">
+        <input type="submit" value="Login">
     </form>
     <a href="adminsignup.html" style="display: block; text-align: left; margin-left: 300px; color: cornsilk; text-decoration: none;" onmouseover="this.style.color='black'" onmouseout="this.style.color='white'">Don't have an account? Register here</a>
 </body>
