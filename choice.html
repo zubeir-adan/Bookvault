@@ -64,6 +64,20 @@
             margin-bottom: 10px;
             color: white;
         }
+        .login{
+            text-align: left;
+            margin-left: 300px;
+            margin-top: 50px;
+        }
+        .login button{
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+           background-color: black;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+        }
             </style>
  </head>
  <body>
@@ -71,18 +85,42 @@
         <h2>Login as:</h2>
         <form id="redirectForm">
             <label>
-                <input type="radio" name="option" value="userlogin.html">
+                <input type="radio" name="option" value="userlogin.php">
             Reader 
             </label>
             <label>
-                <input type="radio" name="option" value="adminlogin.html">
+                <input type="radio" name="option" value="adminlogin.php">
               Admin
             </label>
-            <button type="button" onclick="redirectToPage()" onmouseover="this.style.cursor='pointer'; this.style.backgroundColor='green'" onmouseout="this.style.backgroundColor=''">Go</button>
-
+           
         </form>
     </div>
+    <form method="POST">
+     
+        <label for="username" style="color: whitesmoke;">Username </label>
+        <input type="text" id="username" name="username" required>
+        <br>
+        <br>
+        <label for="password" style="color: whitesmoke;">Password</label>
+        <input type="password" id="password" name="password" required>
+        <br>
+        <br>
 
+    </form>
+   
+    <a href="usersignup.html"
+    style="display: block; 
+    text-align: left; 
+    margin-left: 300px; 
+    color: cornsilk;
+     text-decoration: none;
+     " onmouseover="this.style.color='black'"
+      onmouseout="this.style.color='white'">Don't have an account? Register here</a>
+    <div class="login">
+        <button type="button" onclick="redirectToPage()">Login</button>
+
+    </div>
+     
     <script>
         function redirectToPage() {
             const form = document.getElementById('redirectForm');
@@ -94,5 +132,6 @@
             }
         }
     </script>
+    
  </body>
 </html>
