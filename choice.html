@@ -3,135 +3,134 @@
 <head>
     <title>Login as:</title>
     <style>
-        
         body {
-          background-color: #e4d9d9;
-          font-family:'Times New Roman', Times, serif;
-        
-        }
-        
-        h2 {
-        color: white;
-        text-align:center;
-          text-indent: -420px; 
-        }
-        
-        
-        form {
-            width: 300px; /* Adjust width as needed */
-            margin-left: 300px; /* Move the form to the left */
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        
-        label {
-        display: block;
-        margin-bottom: 10px;
-        color: #333;
-        }
-        
-        input[type="text"],
-        input[type="password"] {
-        width: 200px;
-        padding: 5px;
-        border: 1px solid #ddd;
-        border-radius: 3px;
-        }
-        
-        
-        input[type="submit"] {
-        background-color: burlywood;
-        color: #fff;
-        padding: 10px 20px;
-        border: none;
-        border-radius: 3px;
-        cursor: pointer;
-        }
-        
-        input[type="submit"]:hover {
-          background-color: #4c7f1e;
-        }
-        
-          body {
+            background-color: #e4d9d9;
+            font-family: 'Times New Roman', Times, serif;
             background-image: url('img/6use.jpg');
             background-size: cover;
             background-position: center;
-          }
-         
-        .container label {
+        }
+
+        h2 {
+            color: white;
+            text-align: center;
+        }
+
+        .container {
+            width: 300px;
+            margin: 0 auto;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+        }
+
+        label {
             display: block;
             margin-bottom: 10px;
             color: white;
         }
-        .login{
-            text-align: left;
-            margin-left: 300px;
-            margin-top: 50px;
+
+        input[type="text"],
+        input[type="password"] {
+            width: calc(100% - 22px);
+            padding: 5px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            margin-bottom: 10px;
         }
-        .login button{
+
+        input[type="submit"], .login button {
+            background-color: burlywood;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        input[type="submit"]:hover, .login button:hover {
+            background-color: #4c7f1e;
+        }
+
+        a {
+            display: block;
+            text-align: left;
+            color: cornsilk;
+            text-decoration: none;
+            margin-top: 10px;
+        }
+
+        a:hover {
+            color: black;
+        }
+
+        .login {
+            text-align: left;
+        }
+
+        .login button {
             padding: 10px 20px;
             font-size: 16px;
             border: none;
-           background-color: black;
+            background-color: black;
             color: white;
             cursor: pointer;
             border-radius: 5px;
         }
-            </style>
- </head>
- <body>
+
+        .form-container {
+            display: none;
+        }
+    </style>
+</head>
+<body>
     <div class="container">
         <h2>Login as:</h2>
-        <form id="redirectForm">
+        <form id="loginChoiceForm">
             <label>
-                <input type="radio" name="option" value="userlogin.php">
-            Reader 
+                <input type="radio" name="option" value="user" onclick="showForm('user')"> Reader
             </label>
             <label>
-                <input type="radio" name="option" value="adminlogin.php">
-              Admin
+                <input type="radio" name="option" value="admin" onclick="showForm('admin')"> Admin
             </label>
-           
+        </form>
+
+        <form id="loginForm" class="form-container" method="POST">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required>
+            
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required>
+            
+            <a href="usersignup.html">Don't have an account? Register here</a>
+            
+            <div class="login">
+                <button type="submit" onclick="redirectToPage(event)">Login</button>
+            </div>
         </form>
     </div>
-    <form method="POST">
-     
-        <label for="username" style="color: whitesmoke;">Username </label>
-        <input type="text" id="username" name="username" required>
-        <br>
-        <br>
-        <label for="password" style="color: whitesmoke;">Password</label>
-        <input type="password" id="password" name="password" required>
-        <br>
-        <br>
 
-    </form>
-   
-    <a href="usersignup.html"
-    style="display: block; 
-    text-align: left; 
-    margin-left: 300px; 
-    color: cornsilk;
-     text-decoration: none;
-     " onmouseover="this.style.color='black'"
-      onmouseout="this.style.color='white'">Don't have an account? Register here</a>
-    <div class="login">
-        <button type="button" onclick="redirectToPage()">Login</button>
-
-    </div>
-     
     <script>
-        function redirectToPage() {
-            const form = document.getElementById('redirectForm');
-            const selectedOption = form.querySelector('input[name="option"]:checked');
-            if (selectedOption) {
-                window.location.href = selectedOption.value;
+        function showForm(option) {
+            const form = document.getElementById('loginForm');
+            form.style.display = 'block';
+            form.action = option === 'user' ? 'userlogin.php' : 'adminlogin.php';
+        }
+
+        function redirectToPage(event) {
+            event.preventDefault();
+            const form = document.getElementById('loginForm');
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            if (username && password) {
+                form.submit();
             } else {
-                alert('Please select an option.');
+                alert('Please fill in all fields.');
             }
         }
     </script>
-    
- </body>
+</body>
 </html>
