@@ -23,6 +23,50 @@ if (isset($_SESSION['logging'])) {
       font-size: 20px;
       text-align: center;
     }
+    .header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #f1f1f1;
+            border-bottom: 2px solid #ddd;
+            height: 70px;
+        }
+        .logo {
+            height: 65px;
+            margin-top: -20px;
+        }
+        .menu {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        .menu li {
+            display: inline;
+        }
+        .menu a {
+            text-decoration: none;
+            color: black;
+            padding: 10px;
+        }
+        .header-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        .header-buttons button {
+            background-color: #808080;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        .header-buttons button:hover {
+            background-color: #45a049;
+        }
 
     .container {
       max-width: 800px;
@@ -37,39 +81,82 @@ if (isset($_SESSION['logging'])) {
     a {
       text-decoration: none;
     }
+    .ul {
+      display: flex;
+    }
 
     .welcome {
       position: absolute;
       top: 0;
       right: 0;
     }
+    .toread{
+      margin top: 10px;
+    }
+    .li .suggest{
+      text-align: center;
+      margin-right: 200px;
+    }
+    /* styles.css */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+.header {
+  display: flex;
+  justify-content: center; /* Center the content horizontally */
+  align-items: center; /* Center the content vertically */
+  height: 100px;
+  background-color: #f8f9fa;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.nav {
+  flex: 1; /* Allow the nav to grow and take available space */
+}
+
+.nav-list {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  justify-content: space-between; /* Distribute space between items */
+  align-items: center; /* Center items vertically */
+}
+
+.nav-list li a {
+  text-decoration: none;
+  color: #333;
+  padding: 10px 15px;
+  background-color: #f8f9fa;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.nav-list li a:hover {
+  background-color: #007bff;
+  color: white;
+}
+
+.center-item {
+  flex: 1; /* Allow the centered item to take available space */
+  text-align: center;
+}
+
       </style>
       <title>BookVault - Dashboard</title>
     </head>
     <body>
-      <!-- Navigation Bar -->
-      <header>
-        <nav>
-          <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="search.php">Search</a></li>
-            <li><a href="#">My Books</a></li>
-            <li><a href="#">Profile</a></li>
-          </ul>
-        </nav>
-      </header>
-
+    <?php include("body/header.php"); ?>
       <!-- Welcome Message -->
       <div class="container">
         <h3>Welcome, <?php echo $_SESSION["username"]; ?></h3>
       </div>
 
       <!-- Search Button -->
-      <div class="container">
-        <form method="get" action="search.php">
-          <input type="submit" value="Search">
-        </form>
-      </div>
+     
       
       <!-- Logout Button -->
       <div class="container" style="text-align: center; margin-top: 20px;">
