@@ -45,6 +45,7 @@
         if ($bookData) {
             $bookImage = isset($bookData['volumeInfo']['imageLinks']['thumbnail']) ? $bookData['volumeInfo']['imageLinks']['thumbnail'] : 'img/default.jpg';
             $bookTitle = isset($bookData['volumeInfo']['title']) ? $bookData['volumeInfo']['title'] : 'Title Not Available';
+            $bookGenre = isset($bookData['volumeInfo']['categories']) ? implode(', ', $bookData['volumeInfo']['categories']) : 'Genre Not Available';
             $bookAuthors = isset($bookData['volumeInfo']['authors']) ? implode(', ', $bookData['volumeInfo']['authors']) : 'Unknown';
             $bookPublishedDate = isset($bookData['volumeInfo']['publishedDate']) ? $bookData['volumeInfo']['publishedDate'] : 'Unknown';
             $bookDescription = isset($bookData['volumeInfo']['description']) ? $bookData['volumeInfo']['description'] : 'No description available';
@@ -92,6 +93,7 @@
 
             <div class="flex-auto p-6">
                 <h1 class="mb-3 text-2xl leading-none text-slate-900"><?php echo $bookTitle; ?></h1>
+                <div class="text-lg font-medium text-slate-500"><?php echo $bookGenre; ?></div><br>
                 <div class="text-lg font-medium text-slate-500"><?php echo $bookAuthors; ?></div><br>
                 <div class="text-xs leading-6 font-medium  text-slate-500">Publication Date : <?php echo $bookPublishedDate; ?></div><br>
                 <p class="text-sm text-slate-500"><p>ISBN: <?php echo $bookISBN; ?></p><br>
