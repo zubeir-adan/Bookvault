@@ -175,10 +175,22 @@ body {
 .book-list {
     flex: 1;
 }
+.header {
+    position: sticky;
+    top: 0;
+    background: #f7f7f8;
+    border-bottom: 3px solid #87CEEB;
+    z-index: 1000; /* Ensure it's above other content */
+}
 </style>
 </head>
 <body>
-<?php include("body/header.php"); ?>
+<div class="header">
+    <div class="wrapper">
+        <img src="img/book-vault-logo.png" alt="Book Vault Logo" style="width: 250px; height: auto;">
+    
+    </div>
+</div>
 <div class="book-list">
     <form method="get" action="">
         <input type="text" name="search" id="search-input" placeholder="Search for a book" autocomplete="off">
