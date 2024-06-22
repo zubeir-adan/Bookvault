@@ -9,20 +9,33 @@
             background-image: url('img/6use.jpg');
             background-size: cover;
             background-position: center;
+            margin: 0; /* Remove default margin */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* Ensure full viewport height */
+        }
+
+        .container {
+            width: 300px;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+            transition: transform 0.3s ease; /* Smooth transition */
+            transform: translateX(-50%); /* Initially move off-screen to the left */
+            position: relative; /* Ensure relative positioning for absolute children */
+            left: 1%; /* Center horizontally */
+            text-align: left; /* Align text left */
+        }
+
+        .container.active {
+            transform: translateX(1); /* Move container back to center */
         }
 
         h2 {
             color: white;
             text-align: center;
-        }
-
-        .container {
-            width: 300px;
-            margin: 0 auto;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
         }
 
         label {
@@ -48,6 +61,7 @@
             border-radius: 3px;
             cursor: pointer;
             margin-top: 10px;
+            transition: background-color 0.3s; /* Smooth transition */
         }
 
         input[type="submit"]:hover, .login button:hover {
@@ -97,7 +111,7 @@
             </label>
         </form>
 
-        <form id="loginForm" class="form-container" method="POST">
+        <form id="loginFormUser" class="form-container" method="POST" action="userlogin.php">
             <label for="username">Username</label>
             <input type="text" id="username" name="username" required>
             
@@ -107,29 +121,44 @@
             <a href="usersignup.html">Don't have an account? Register here</a>
             
             <div class="login">
-                <button type="submit" onclick="redirectToPage(event)">Login</button>
+                <button type="submit">Login</button>
+            </div>
+        </form>
+
+        <form id="loginFormAdmin" class="form-container" method="POST" action="adminlogin.php">
+            <label for="admin_name">Admin Username</label>
+            <input type="text" id="admin_name" name="admin_name" required>
+            
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required>
+            
+            <a href="adminsignup.html">Don't have an admin account? Register here</a>
+            
+            <div class="login">
+                <button type="submit">Login</button>
             </div>
         </form>
     </div>
 
     <script>
         function showForm(option) {
-            const form = document.getElementById('loginForm');
-            form.style.display = 'block';
-            form.action = option === 'user' ? 'userlogin.php' : 'adminlogin.php';
-        }
+            const formUser = document.getElementById('loginFormUser');
+            const formAdmin = document.getElementById('loginFormAdmin');
+            const container = document.querySelector('.container');
 
-        function redirectToPage(event) {
-            event.preventDefault();
-            const form = document.getElementById('loginForm');
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-            
-            if (username && password) {
-                form.submit();
-            } else {
-                alert('Please fill in all fields.');
+            if (option === 'user') {
+                formUser.style.display = 'block';
+                formAdmin.style.display = 'none';
+                formUser.classList.add('active');
+                formAdmin.classList.remove('active');
+            } else if (option === 'admin') {
+                formAdmin.style.display = 'block';
+                formUser.style.display = 'none';
+                formAdmin.classList.add('active');
+                formUser.classList.remove('active');
             }
+
+            container.classList.add('active');
         }
     </script>
 </body>

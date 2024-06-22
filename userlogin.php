@@ -112,7 +112,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     </style>
 </head>
 <body>
-    <h2>Login</h2>
+    <h2>User Login</h2>
     <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
         <label for="username" style="color: whitesmoke;">Username</label>
         <input type="text" id="username" name="username" required>

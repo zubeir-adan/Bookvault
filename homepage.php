@@ -55,81 +55,6 @@
         .header-buttons button:hover {
             background-color: #45a049;
         }
-        .Intro {
-            position: relative;
-            background: url('img/vaultimg.png') no-repeat center center/cover;
-            height: 75vh;
-            color: white;
-            text-align: left;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .Intro .content {
-            width: 80%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .Intro h1 {
-            font-size: 3em;
-            margin-bottom: 200px;
-        }
-        .paragraph-container {
-            display: flex;
-            width: 100%;
-            justify-content: space-between;
-            margin-bottom: 250px;
-            margin-top: 100px;
-        }
-        .paragraph-container .left {
-            font-size: 2em;
-            line-height: 1.5;
-            width: 45%;
-            text-align: left;
-        }
-        .paragraph-container .right {
-            font-size: 2em;
-            line-height: 1.5;
-            width: 45%;
-            text-align: right;
-            margin-left: 50px;
-        }
-        .about-us {
-            padding: 50px 20px;
-            text-align: center;
-            margin-top: 40px;
-            background-color: #f9f9f9;
-            border-radius: round;
-        }
-        .about-us h1 {
-            font-size: 2.5em;
-            margin-bottom: 20px;
-        }
-        .about-us p {
-            font-size: 1.2em;
-            line-height: 1.5;
-        }
-        .sign-up {
-            display: flex;
-            justify-content: center;
-            padding: 20px;
-            margin-top: -40px;
-        }
-        .sign-up button {
-            background-color: green;
-            border: none;
-            color: white;
-            padding: 10px 30px;
-            font-size: 24px;
-            cursor: pointer;
-            border-radius: 4px;
-            transition: background-color 0.3s;
-        }
-        .sign-up button:hover {
-            background-color: darkgreen;
-          
-        }
         .carousel-container {
             margin-bottom: 100px;
         }
@@ -264,10 +189,97 @@
             margin-bottom: 200px;   
             text-align: center;
         }
-        .Intro .sign-up{
-            margin-top: 10px;
+        .sign-up {
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+            margin-top: 3%;
+          
+        }
+        .sign-up button {
+            background-color: green;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            font-size: 20px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        .sign-up button:hover {
+            background-color: darkgreen;
+          
+        }
+          .Intro {
+            position: relative;
+            background: url('img/vaultimg.png') no-repeat center center/cover;
+            height: 75vh;
+            color: white;
+            text-align: left;
+            display: flex;
+            justify-content: center;
             align-items: center;
         }
+        .Intro .content {
+            width: 80%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .Intro h1 {
+            font-size: 3em;
+            margin-bottom: 200px;
+        }
+        .paragraph-container {
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+            margin-bottom: 150px;
+          
+        }
+        .paragraph-container .left {
+            font-size: 2em;
+            line-height: 1.5;
+            width: 45%;
+            text-align: left;
+        }
+        .paragraph-container .right {
+            font-size: 2em;
+            line-height: 1.5;
+            width: 45%;
+            text-align: right;
+            margin-left: 50px;
+        }
+        .about-us {
+            padding: 50px 20px;
+            text-align: center;
+            margin-top: 40px;
+            background-color: #f9f9f9;
+            border-radius: round;
+        }
+        .about-us h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+        .about-us p {
+            font-size: 1.2em;
+            line-height: 1.5;
+        }
+        #search-button {
+    background-color: #808080;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+#search-button:hover {
+    background-color: #a6a6a6;
+}
+
     </style>
 </head>
 <body>
@@ -275,9 +287,9 @@
         <img src="img/book-vault-logo.png" alt="Book Vault" class="logo">
         <ul class="menu">
             <li class="suggest">
-                <a href="search.php">
+                <button id="search-button">
                     <i class="fas fa-search"></i> Search Book
-                </a>
+                </button>
             </li>
         </ul>
         <div class="header-buttons">
@@ -285,6 +297,7 @@
             <button type="button" id="login">Log In</button>
         </div>
     </div>
+
     <section class="Intro">
         <div class="content">
             <div class="paragraph-container">
@@ -395,12 +408,15 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script>
+   <script>
         document.getElementById("Discover").addEventListener("click", function() {
             window.location.href = "discover.php";
         });
         document.getElementById("login").addEventListener("click", function() {
             window.location.href = "choice.html";
+        });
+        document.getElementById("search-button").addEventListener("click", function() {
+            window.location.href = "search.php";
         });
         document.getElementById("sign-up").addEventListener("click", function() {
             window.location.href = "usersignup.html";
