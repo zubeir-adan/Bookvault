@@ -13,6 +13,18 @@
             color: #FFD700;
             margin-top: 10px;
         }
+        .buttons{
+            padding: 10px 20px;
+            background-color: grey;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: green;
+        }
     </style>
 </head>
 <script>
@@ -33,6 +45,7 @@
 
 <div class="flex font-serif max-w-xl mx-auto">
     <?php
+    require('connection.php');
     if(isset($_GET['bookId'])) {
         $bookId = $_GET['bookId'];
 
@@ -114,25 +127,28 @@ type="button">
 </button>
 </form>
 <?php else: ?>
-<a href="userlogin.html" class="flex-none w-32 h-32 border border-blue-900 rounded-xl p-4 transform transition-transform duration-200 hover:scale-110">
+<a href="userlogin.html" id="want" class="flex-none w-32 h-32 border border-blue-900 rounded-xl p-4 transform transition-transform duration-200 hover:scale-110" onclick="addwant()">
 <img src="img/wanttoread.png" alt="Want to read" class="mx-auto h-8 w-8" />
 <div class="text-center font-bold">Want to read</div>
+<button id="want" class="buttons">Add</button>
 </a>
 <?php endif; ?>
 <?php if(isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] === true): ?>
                     <!-- Similar logic for other buttons (Have read and Favourite) -->
                 <?php else: ?>
                     <!-- Redirect to login page if not logged in -->
-                    <a href="userlogin.html" class="flex-none w-32 h-32 border border-green-500 rounded-xl p-4 transform transition-transform duration-200 hover:scale-110">
+                    <a id="have" class="flex-none w-32 h-32 border border-green-500 rounded-xl p-4 transform transition-transform duration-200 hover:scale-110" onclick="addhave()">
                         <img src="img/haveread.png" alt="Have read" class="mx-auto h-8 w-8" />
                         <div class="text-center font-bold">Have read</div>
+                        <button id="have" class="buttons">Add</button>
                     </a>
-                    <a href="userlogin.html" class="flex-none w-32 h-32 border border-red-500 rounded-xl p-4 transform transition-transform duration-200 hover:scale-110">
+                    <a  id="fav" class="flex-none w-32 h-32 border border-red-500 rounded-xl p-4 transform transition-transform duration-200 hover:scale-110" onclick="addfave()">
                         <img src="img/fav.png" alt="Favourite" class="mx-auto h-8 w-8" />
                         <div class="text-center font-bold">Favourite</div>
+                        <button id="fave" class="buttons">Add</button>
                     </a>
                 <?php endif; ?>
-            </div>
+                </div>
         </div>
     <?php
         } else {
@@ -143,6 +159,15 @@ type="button">
     }
     ?>
 </div>
+<script>
+const have=document.getElementById('have');
+const fave=document.getElementById('fave');
+const want=document.getElementById('want');
+
+function addhave(){
+    body.alert('Book successfully added to Have Read');
+}
+</script>
 <?php include("body/footer.php"); ?>
 </body>
 </html>
