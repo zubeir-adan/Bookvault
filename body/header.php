@@ -118,7 +118,7 @@
             </a>
         </li>
         <li class="suggest">
-            <a href="search.php">
+            <a href="search2.php">
                 <i class="fa-solid fa-magnifying-glass"></i> Search Book
             </a>
         </li>
