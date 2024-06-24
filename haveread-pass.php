@@ -2,6 +2,14 @@
 
 include_once 'connection.php';
 
+session_start();
+
+if (isset($_SESSION['logging'])) {
+    include_once 'connection.php';
+
+    // Retrieve the user's ID from the session
+    $userId = $_SESSION['user_id'];
+   
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   
@@ -10,10 +18,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $bookAuthors = $_POST['bookAuthors'];
     $bookPublishedDate = $_POST['bookPublishedDate'];
 
-  
-    $sql = "INSERT INTO `haveread` (`book-img`, `book-title`, `book-author`, `book-date`, `timestamp`) VALUES (?, ?, ?, ?, CURRENT_TIMESTAMP)";
+
+    $sql = "INSERT INTO `haveread` (`book_img`, `book_title`, `book_author`, `book_date`, `timestamp`, `user_id`) VALUES (?, ?, ?, ?, CURRENT_TIMESTAMP, ?)";
+
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssss", $bookImage, $bookTitle, $bookAuthors, $bookPublishedDate);
+    $stmt->bind_param("ssssi", $bookImage, $bookTitle, $bookAuthors, $bookPublishedDate,$userId);
 
     if ($stmt->execute()) {
       
@@ -28,5 +37,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     
     $conn->close();
+}
 }
 ?>

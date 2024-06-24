@@ -2,6 +2,14 @@
 
 include_once 'connection.php';
 
+session_start();
+
+if (isset($_SESSION['logging'])) {
+    include_once 'connection.php';
+
+    // Retrieve the user's ID from the session
+    $userId = $_SESSION['user_id'];
+   
 // Check if form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Get the book details from the form
@@ -21,10 +29,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       
         echo "This book is already in your favorites.";
     } else {
-       
-        $sql_insert = "INSERT INTO favorite_books (book_img, book_title, book_author, book_date) VALUES (?, ?, ?, ?)";
+        $sql_insert= "INSERT INTO `favorite_books` (`book_img`, `book_title`, `book_author`, `book_date`, `user_id`) VALUES (?, ?, ?, ?,?)";
         $stmt_insert = $conn->prepare($sql_insert);
-        $stmt_insert->bind_param("ssss", $bookImage, $bookTitle, $bookAuthor, $bookDate);
+        $stmt_insert->bind_param("ssssi", $bookImage, $bookTitle, $bookAuthor, $bookDate,$userId);
 
         if ($stmt_insert->execute()) {
           
@@ -42,6 +49,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt_check->close();
 }
 
-
 $conn->close();
+}
+
+
 ?>

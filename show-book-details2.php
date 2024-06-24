@@ -127,26 +127,45 @@ type="button">
 </button>
 </form>
 <?php else: ?>
-<a href="userlogin.html" id="want" class="flex-none w-32 h-32 border border-blue-900 rounded-xl p-4 transform transition-transform duration-200 hover:scale-110" onclick="addwant()">
-<img src="img/wanttoread.png" alt="Want to read" class="mx-auto h-8 w-8" />
-<div class="text-center font-bold">Want to read</div>
-<button id="want" class="buttons">Add</button>
-</a>
+    <form id="wantToReadForm" action="toread-pass.php" method="post">
+    <input type="hidden" name="bookImage" value="<?php echo htmlspecialchars($bookImage); ?>">
+    <input type="hidden" name="bookTitle" value="<?php echo htmlspecialchars($bookTitle); ?>">
+    <input type="hidden" name="bookAuthors" value="<?php echo htmlspecialchars($bookAuthors); ?>">
+    <input type="hidden" name="bookPublishedDate" value="<?php echo htmlspecialchars($bookPublishedDate); ?>">
+    </form>
+    <a  onclick="submitFormAndRedirect('wantToReadForm', 'toread-view.php')" id="want" class="flex-none w-32 h-32 border border-blue-900 rounded-xl p-4 transform transition-transform duration-200 hover:scale-110" onclick="addwant()">
+    <img src="img/wanttoread.png" alt="Want to read" class="mx-auto h-8 w-8" />
+    <div class="text-center font-bold">Want to read</div>
+
+    </a>
 <?php endif; ?>
 <?php if(isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] === true): ?>
                     <!-- Similar logic for other buttons (Have read and Favourite) -->
                 <?php else: ?>
                     <!-- Redirect to login page if not logged in -->
-                    <a id="have" class="flex-none w-32 h-32 border border-green-500 rounded-xl p-4 transform transition-transform duration-200 hover:scale-110" onclick="addhave()">
+                    <form id="haveReadForm" action="haveread-pass.php" method="post">
+                      <input type="hidden" name="bookImage" value="<?php echo htmlspecialchars($bookImage); ?>">
+                          <input type="hidden" name="bookTitle" value="<?php echo htmlspecialchars($bookTitle); ?>">
+                            <input type="hidden" name="bookAuthors" value="<?php echo htmlspecialchars($bookAuthors); ?>">
+                         <input type="hidden" name="bookPublishedDate" value="<?php echo htmlspecialchars($bookPublishedDate); ?>">
+                    </form>
+                    <a id="have" onclick="submitFormAndRedirect('haveReadForm', 'haveread-view.php')" class="flex-none w-32 h-32 border border-green-500 rounded-xl p-4 transform transition-transform duration-200 hover:scale-110" onclick="addhave()">
                         <img src="img/haveread.png" alt="Have read" class="mx-auto h-8 w-8" />
                         <div class="text-center font-bold">Have read</div>
-                        <button id="have" class="buttons">Add</button>
+                    
                     </a>
-                    <a  id="fav" class="flex-none w-32 h-32 border border-red-500 rounded-xl p-4 transform transition-transform duration-200 hover:scale-110" onclick="addfave()">
+                  
+                    <form id="favoriteForm" action="favourite.php" method="post">
+                    <input type="hidden" name="bookImage" value="<?php echo htmlspecialchars($bookImage); ?>">
+                    <input type="hidden" name="bookTitle" value="<?php echo htmlspecialchars($bookTitle); ?>">
+                     <input type="hidden" name="bookAuthors" value="<?php echo htmlspecialchars($bookAuthors); ?>">
+                    <input type="hidden" name="bookPublishedDate" value="<?php echo htmlspecialchars($bookPublishedDate); ?>">
+                   </form>
+                   <a  id="fav" onclick="submitFormAndRedirect('favoriteForm', 'favourite-view.php') " class="flex-none w-32 h-32 border border-red-500 rounded-xl p-4 transform transition-transform duration-200 hover:scale-110" onclick="addfave()">
                         <img src="img/fav.png" alt="Favourite" class="mx-auto h-8 w-8" />
                         <div class="text-center font-bold">Favourite</div>
-                        <button id="fave" class="buttons">Add</button>
                     </a>
+ 
                 <?php endif; ?>
                 </div>
         </div>
@@ -159,15 +178,6 @@ type="button">
     }
     ?>
 </div>
-<script>
-const have=document.getElementById('have');
-const fave=document.getElementById('fave');
-const want=document.getElementById('want');
-
-function addhave(){
-    body.alert('Book successfully added to Have Read');
-}
-</script>
 <?php include("body/footer.php"); ?>
 </body>
 </html>
