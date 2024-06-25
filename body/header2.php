@@ -41,7 +41,7 @@ if (isset($_SESSION['username'])) {
     height: 65px;
 }
 
-.search-icon {
+.search-icon, .discover-icon {
     margin-left: 20px;
     cursor: pointer;
     border: none;
@@ -55,12 +55,12 @@ if (isset($_SESSION['username'])) {
     transition: background-color 0.3s;
 }
 
-.search-icon i {
+.search-icon i, .discover-icon i {
     font-size: 20px;
     color: black;
 }
 
-.search-icon:hover {
+.search-icon:hover, .discover-icon:hover {
     background-color: #e2e2e2;
 }
 
@@ -115,8 +115,6 @@ if (isset($_SESSION['username'])) {
     font-size: 16px;
     color: #333;
 }
-
-
 </style>
 </head>
 <body>
@@ -124,10 +122,14 @@ if (isset($_SESSION['username'])) {
     <div class="logo">
         <a href="homepage.php">
             <img src="img/book-vault-logo.png" alt="Book Vault">
-        </a><br>
+        </a>
         <button class="search-icon" onclick="window.location.href='search2.php'">
             <i class="fa-solid fa-magnifying-glass"></i>
             <br><div>Search</div>
+        </button>
+        <button class="discover-icon" onclick="window.location.href='discover2.php'">
+            <i class="fa-solid fa-compass"></i>
+            <br><div>Discover</div>
         </button>
     </div>
     <ul class="nav">
