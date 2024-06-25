@@ -1,9 +1,9 @@
 <?php
-
 include_once 'connection.php';
 session_start();
 
-if (isset($_SESSION['logging'])) {
+// Check if user is logged in and has the correct session
+if (isset($_SESSION['logging']) && isset($_SESSION['user_id'])) {
     // Retrieve the user's ID from the session
     $userId = $_SESSION['user_id'];
 
@@ -30,7 +30,13 @@ if (isset($_SESSION['logging'])) {
 
         // Close statement and connection
         $stmt->close();
-        $conn->close();
     }
+} else {
+    // Redirect user to login if not authenticated
+    header("Location: userlogin.html");
+    exit();
 }
+
+// Close database connection
+$conn->close();
 ?>

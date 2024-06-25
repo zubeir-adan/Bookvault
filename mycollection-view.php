@@ -1,8 +1,53 @@
 <?php
-
-
-// Include header file
+// Include header file which might have session_start()
 include_once 'body/header2.php';
+
+// Check if session is active
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+// Check if user is logged in
+if (!isset($_SESSION['user_id'])) {
+    header("Location: userlogin.html");
+    exit();
+}
+
+// Get user ID from session
+$userId = $_SESSION['user_id'];
+
+// Include database connection
+include_once 'connection.php';
+
+// Function to fetch books from a specified table
+function fetchBooks($conn, $userId, $tableName) {
+    $sql = "SELECT * FROM `$tableName` WHERE `user_id` = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $userId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    $books = [];
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $books[] = $row;
+        }
+    }
+
+    return $books;
+}
+
+// Fetch books from favorite_books table
+$favoriteBooks = fetchBooks($conn, $userId, 'favorite_books');
+
+// Fetch books from haveread table
+$haveReadBooks = fetchBooks($conn, $userId, 'haveread');
+
+// Fetch books from want_to_read table
+$wantToReadBooks = fetchBooks($conn, $userId, 'want-to-read');
+
+// Close database connection
+$conn->close();
 ?>
 
 <!DOCTYPE html>
@@ -11,7 +56,7 @@ include_once 'body/header2.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Collection</title>
-    <link rel="stylesheet" href="css/style.css"> <!-- Adjust path as needed -->
+   
     <!-- Additional stylesheets or meta tags -->
     <style>
         /* Additional CSS specific to this page */
@@ -29,43 +74,85 @@ include_once 'body/header2.php';
             padding: 10px 0;
         }
         .collection-item img {
-            width: 100px; /* Adjust image width as needed */
+            width: 50px; /* Adjust image width as needed */
             height: auto;
         }
         .collection-item .details {
             flex: 1;
             margin-left: 20px; /* Adjust spacing between image and details */
         }
+        .book-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px; /* Adjust gap between grid items */
+        }
+        .book {
+            border: 0px solid #ccc;
+            padding: 10px;
+        }
+        .details h3 {
+            font-weight: normal; /* Remove bold from book title */
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Welcome to Your Collection</h1>
-        <p>Hello, <?php echo htmlspecialchars($username); ?>! Here's your collection:</p>
+        <p>Hello, <?php echo htmlspecialchars($_SESSION['username']); ?>! Here's your collection:</p>
 
         <!-- Books I Want to Read Section -->
-      
+        <div class="collection-section">
             <h2>Books I Want to Read</h2>
-
-            <br><br>
-           
-                </div>
-                <!-- Repeat for more items -->
+            <div class="book-grid">
+                <?php foreach ($wantToReadBooks as $book): ?>
+                    <div class="book">
+                        <img src="<?php echo $book['book-img']; ?>" alt="Book Cover">
+                        <div class="details">
+                            <h3><?php echo $book['book-title']; ?></h3>
+                           
+                        </div>
+                    </div>
+                <?php endforeach; ?>
             </div>
         </div>
 
         <!-- Books I Have Read Section -->
-      
+        <div class="collection-section">
             <h2>Books I Have Read</h2>
-            <br><br>
+            <div class="book-grid">
+                <?php foreach ($haveReadBooks as $book): ?>
+                    <div class="book">
+                        <img src="<?php echo $book['book-img']; ?>" alt="Book Cover">
+                        <div class="details">
+                            <h3><?php echo $book['book-title']; ?></h3>
+                         
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
 
         <!-- My Favorite Books Section -->
-     
+        <div class="collection-section">
             <h2>My Favorite Books</h2>
-            <br><br>
+            <div class="book-grid">
+                <?php foreach ($favoriteBooks as $book): ?>
+                    <div class="book">
+                        <img src="<?php echo $book['book-img']; ?>" alt="Book Cover">
+                        <div class="details">
+                            <h3><?php echo $book['book_title']; ?></h3>
+                            <!-- Book title not bold as per the requirement -->
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
     </div>
-    <div class="container"> <form method="post" action="userlogout.php"> <input type="submit" value="Logout" class="logout-button" style="background-color: #708ee6; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer;"> </form> </div>
-
+    <div class="container">
+        <form method="post" action="userlogout.php">
+            <input type="submit" value="Logout" class="logout-button" style="background-color: #708ee6; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer;">
+        </form>
+    </div>
     <?php include_once 'body/footer.php'; ?> <!-- Include footer -->
 </body>
 </html>

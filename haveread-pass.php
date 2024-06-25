@@ -1,42 +1,42 @@
 <?php
 
 include_once 'connection.php';
-
 session_start();
 
-if (isset($_SESSION['logging'])) {
-    include_once 'connection.php';
-
+if (isset($_SESSION['user_id'])) {
     // Retrieve the user's ID from the session
     $userId = $_SESSION['user_id'];
-   
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  
-    $bookImage = $_POST['bookImage'];
-    $bookTitle = $_POST['bookTitle'];
-    $bookAuthors = $_POST['bookAuthors'];
-    $bookPublishedDate = $_POST['bookPublishedDate'];
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        // Sanitize input data (optional, but recommended)
+        $bookImage = filter_var($_POST['bookImage'], FILTER_SANITIZE_STRING);
+        $bookTitle = filter_var($_POST['bookTitle'], FILTER_SANITIZE_STRING);
+        $bookAuthors = filter_var($_POST['bookAuthors'], FILTER_SANITIZE_STRING);
+        $bookPublishedDate = filter_var($_POST['bookPublishedDate'], FILTER_SANITIZE_STRING);
 
+        // Prepare SQL statement
+        $sql = "INSERT INTO `haveread` (`book-img`, `book-title`, `book-author`, `book-date`, `timestamp`, `user_id`) VALUES (?, ?, ?, ?, CURRENT_TIMESTAMP, ?)";
+        $stmt = $conn->prepare($sql);
 
-    $sql = "INSERT INTO `haveread` (`book_img`, `book_title`, `book_author`, `book_date`, `timestamp`, `user_id`) VALUES (?, ?, ?, ?, CURRENT_TIMESTAMP, ?)";
+        // Bind parameters
+        $stmt->bind_param("ssssi", $bookImage, $bookTitle, $bookAuthors, $bookPublishedDate, $userId);
 
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssssi", $bookImage, $bookTitle, $bookAuthors, $bookPublishedDate,$userId);
+        // Execute statement
+        if ($stmt->execute()) {
+            header("Location: haveread-view.php");
+            exit();
+        } else {
+            echo "Error: " . $sql . "<br>" . $conn->error;
+        }
 
-    if ($stmt->execute()) {
-      
-       header("Location: haveread-view.php");
-       exit();
-    } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
+        // Close statement and connection
+        $stmt->close();
+        $conn->close();
     }
-
-   
-    $stmt->close();
-
-    
-    $conn->close();
+} else {
+    // Redirect to login page if user ID is not set in session
+    header("Location: userlogin.html");
+    exit();
 }
-}
+
 ?>
