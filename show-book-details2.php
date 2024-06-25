@@ -1,3 +1,7 @@
+<?php
+// Include the header2.php file from the body folder
+include_once 'body/header2.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,7 +17,7 @@
             color: #FFD700;
             margin-top: 10px;
         }
-        .buttons{
+        .buttons {
             padding: 10px 20px;
             background-color: grey;
             color: white;
@@ -26,23 +30,17 @@
             background-color: green;
         }
     </style>
+    <script>
+        function submitFormAndRedirect(formId, redirectUrl) {
+            document.getElementById(formId).submit(); 
+            setTimeout(function() {
+                window.location.href = redirectUrl;
+            }, 500);
+        }
+    </script>
 </head>
-<script>
-    function submitFormAndRedirect(formId, redirectUrl) {
-        document.getElementById(formId).submit(); 
-        setTimeout(function() {
-            window.location.href = redirectUrl;
-        }, 500);
-    }
-</script>
 <body>
-<div class="header">
-    <div class="wrapper">
-        <img src="img/book-vault-logo.png" alt="Book Vault Logo" style="width: 250px; height: auto;">
-    
-    </div>
-</div>
-
+<br><br>
 <div class="flex font-serif max-w-xl mx-auto">
     <?php
     require('connection.php');
@@ -119,65 +117,63 @@
                             <input type="hidden" name="bookAuthors" value="<?php echo htmlspecialchars($bookAuthors); ?>">
                             <input type="hidden" name="bookPublishedDate" value="<?php echo htmlspecialchars($bookPublishedDate); ?>">
                             <button onclick="submitFormAndRedirect('wantToReadForm', 'toread-view.php')"
-class="flex-none w-32 h-32 border border-blue-900 rounded-xl p-4 transform transition-transform duration-200 hover
-"
-type="button">
-<img src="img/wanttoread.png" alt="Want to read" class="mx-auto h-8 w-8" />
-<div class="text-center font-bold">Want to read</div>
-</button>
-</form>
-<?php else: ?>
-    <form id="wantToReadForm" action="toread-pass.php" method="post">
-    <input type="hidden" name="bookImage" value="<?php echo htmlspecialchars($bookImage); ?>">
-    <input type="hidden" name="bookTitle" value="<?php echo htmlspecialchars($bookTitle); ?>">
-    <input type="hidden" name="bookAuthors" value="<?php echo htmlspecialchars($bookAuthors); ?>">
-    <input type="hidden" name="bookPublishedDate" value="<?php echo htmlspecialchars($bookPublishedDate); ?>">
-    </form>
-    <a  onclick="submitFormAndRedirect('wantToReadForm', 'toread-view.php')" id="want" class="flex-none w-32 h-32 border border-blue-900 rounded-xl p-4 transform transition-transform duration-200 hover:scale-110" onclick="addwant()">
-    <img src="img/wanttoread.png" alt="Want to read" class="mx-auto h-8 w-8" />
-    <div class="text-center font-bold">Want to read</div>
-
-    </a>
-<?php endif; ?>
-<?php if(isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] === true): ?>
-                    <!-- Similar logic for other buttons (Have read and Favourite) -->
-                <?php else: ?>
-                    <!-- Redirect to login page if not logged in -->
-                    <form id="haveReadForm" action="haveread-pass.php" method="post">
-                      <input type="hidden" name="bookImage" value="<?php echo htmlspecialchars($bookImage); ?>">
-                          <input type="hidden" name="bookTitle" value="<?php echo htmlspecialchars($bookTitle); ?>">
+                                class="flex-none w-32 h-32 border border-blue-900 rounded-xl p-4 transform transition-transform duration-200 hover cursor-pointer"
+                                type="button">
+                                <img src="img/wanttoread.png" alt="Want to read" class="mx-auto h-8 w-8" />
+                                <div class="text-center font-bold">Want to read</div>
+                            </button>
+                        </form>
+                    <?php else: ?>
+                        <form id="wantToReadForm" action="toread-pass.php" method="post">
+                            <input type="hidden" name="bookImage" value="<?php echo htmlspecialchars($bookImage); ?>">
+                            <input type="hidden" name="bookTitle" value="<?php echo htmlspecialchars($bookTitle); ?>">
                             <input type="hidden" name="bookAuthors" value="<?php echo htmlspecialchars($bookAuthors); ?>">
-                         <input type="hidden" name="bookPublishedDate" value="<?php echo htmlspecialchars($bookPublishedDate); ?>">
-                    </form>
-                    <a id="have" onclick="submitFormAndRedirect('haveReadForm', 'haveread-view.php')" class="flex-none w-32 h-32 border border-green-500 rounded-xl p-4 transform transition-transform duration-200 hover:scale-110" onclick="addhave()">
-                        <img src="img/haveread.png" alt="Have read" class="mx-auto h-8 w-8" />
-                        <div class="text-center font-bold">Have read</div>
-                    
-                    </a>
-                  
-                    <form id="favoriteForm" action="favourite.php" method="post">
-                    <input type="hidden" name="bookImage" value="<?php echo htmlspecialchars($bookImage); ?>">
-                    <input type="hidden" name="bookTitle" value="<?php echo htmlspecialchars($bookTitle); ?>">
-                     <input type="hidden" name="bookAuthors" value="<?php echo htmlspecialchars($bookAuthors); ?>">
-                    <input type="hidden" name="bookPublishedDate" value="<?php echo htmlspecialchars($bookPublishedDate); ?>">
-                   </form>
-                   <a  id="fav" onclick="submitFormAndRedirect('favoriteForm', 'favourite-view.php') " class="flex-none w-32 h-32 border border-red-500 rounded-xl p-4 transform transition-transform duration-200 hover:scale-110" onclick="addfave()">
-                        <img src="img/fav.png" alt="Favourite" class="mx-auto h-8 w-8" />
-                        <div class="text-center font-bold">Favourite</div>
-                    </a>
- 
-                <?php endif; ?>
+                            <input type="hidden" name="bookPublishedDate" value="<?php echo htmlspecialchars($bookPublishedDate); ?>">
+                        </form>
+                        <a  onclick="submitFormAndRedirect('wantToReadForm', 'toread-view.php')" id="want" class="flex-none w-32 h-32 border border-blue-900 rounded-xl p-4 transform transition-transform duration-200 hover:scale-110 cursor-pointer" onclick="addwant()">
+                            <img src="img/wanttoread.png" alt="Want to read" class="mx-auto h-8 w-8" />
+                            <div class="text-center font-bold">Want to read</div>
+                        </a>
+                    <?php endif; ?>
+
+                    <?php if(isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] === true): ?>
+                        <!-- Similar logic for other buttons (Have read and Favourite) -->
+                    <?php else: ?>
+                        <!-- Redirect to login page if not logged in -->
+                        <form id="haveReadForm" action="haveread-pass.php" method="post">
+                            <input type="hidden" name="bookImage" value="<?php echo htmlspecialchars($bookImage); ?>">
+                            <input type="hidden" name="bookTitle" value="<?php echo htmlspecialchars($bookTitle); ?>">
+                            <input type="hidden" name="bookAuthors" value="<?php echo htmlspecialchars($bookAuthors); ?>">
+                            <input type="hidden" name="bookPublishedDate" value="<?php echo htmlspecialchars($bookPublishedDate); ?>">
+                        </form>
+                        <a id="have" onclick="submitFormAndRedirect('haveReadForm', 'haveread-view.php')" class="flex-none w-32 h-32 border border-green-500 rounded-xl p-4 transform transition-transform duration-200 hover:scale-110 cursor-pointer" onclick="addhave()">
+                            <img src="img/haveread.png" alt="Have read" class="mx-auto h-8 w-8" />
+                            <div class="text-center font-bold">Have read</div>
+                        </a>
+
+                        <form id="favoriteForm" action="favourite.php" method="post">
+                            <input type="hidden" name="bookImage" value="<?php echo htmlspecialchars($bookImage); ?>">
+                            <input type="hidden" name="bookTitle" value="<?php echo htmlspecialchars($bookTitle); ?>">
+                            <input type="hidden" name="bookAuthors" value="<?php echo htmlspecialchars($bookAuthors); ?>">
+                            <input type="hidden" name="bookPublishedDate" value="<?php echo htmlspecialchars($bookPublishedDate); ?>">
+                        </form>
+                        <a  id="fav" onclick="submitFormAndRedirect('favoriteForm', 'favourite-view.php') " class="flex-none w-32 h-32 border border-red-500 rounded-xl p-4 transform transition-transform duration-200 hover:scale-110 cursor-pointer" onclick="addfave()">
+                            <img src="img/fav.png" alt="Favourite" class="mx-auto h-8 w-8" />
+                            <div class="text-center font-bold">Favourite</div>
+                        </a>
+                    <?php endif; ?>
                 </div>
-        </div>
-    <?php
+            </div>
+        <?php
+            } else {
+                echo '<p class="flex-auto p-6">Book details not found.</p>';
+            }
         } else {
-            echo '<p class="flex-auto p-6">Book details not found.</p>';
+            echo '<p class="flex-auto p-6">No book selected.</p>';
         }
-    } else {
-        echo '<p class="flex-auto p-6">No book selected.</p>';
-    }
-    ?>
+        ?>
 </div>
+
 <?php include("body/footer.php"); ?>
 </body>
 </html>
