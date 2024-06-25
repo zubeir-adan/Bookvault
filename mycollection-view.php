@@ -2,7 +2,7 @@
 // Include header file which might have session_start()
 include_once 'body/header2.php';
 
-// Check if session is active
+// Check if session is active (not needed if session_start() is in header2.php)
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
@@ -60,6 +60,11 @@ $conn->close();
     <!-- Additional stylesheets or meta tags -->
     <style>
         /* Additional CSS specific to this page */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
         .collection-section {
             margin-bottom: 30px;
         }
@@ -87,11 +92,24 @@ $conn->close();
             gap: 10px; /* Adjust gap between grid items */
         }
         .book {
-            border: 0px solid #ccc;
+            border: 1px solid #ccc;
             padding: 10px;
+            text-align: center;
         }
         .details h3 {
             font-weight: normal; /* Remove bold from book title */
+        }
+        .logout-button {
+            background-color: #708ee6;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .logout-button:hover {
+            background-color: #5c76c7;
         }
     </style>
 </head>
@@ -103,54 +121,64 @@ $conn->close();
         <!-- Books I Want to Read Section -->
         <div class="collection-section">
             <h2>Books I Want to Read</h2>
-            <div class="book-grid">
-                <?php foreach ($wantToReadBooks as $book): ?>
-                    <div class="book">
-                        <img src="<?php echo $book['book-img']; ?>" alt="Book Cover">
-                        <div class="details">
-                            <h3><?php echo $book['book-title']; ?></h3>
-                           
+            <?php if (!empty($wantToReadBooks)): ?>
+                <div class="book-grid">
+                    <?php foreach ($wantToReadBooks as $book): ?>
+                        <div class="book">
+                            <img src="<?php echo $book['book-img']; ?>" alt="Book Cover">
+                            <div class="details">
+                                <h3><?php echo $book['book-title']; ?></h3>
+                            </div>
                         </div>
-                    </div>
-                <?php endforeach; ?>
-            </div>
+                    <?php endforeach; ?>
+                </div>
+            <?php else: ?>
+                <p>No books added to 'Want to Read' list yet.</p>
+            <?php endif; ?>
         </div>
 
         <!-- Books I Have Read Section -->
         <div class="collection-section">
             <h2>Books I Have Read</h2>
-            <div class="book-grid">
-                <?php foreach ($haveReadBooks as $book): ?>
-                    <div class="book">
-                        <img src="<?php echo $book['book-img']; ?>" alt="Book Cover">
-                        <div class="details">
-                            <h3><?php echo $book['book-title']; ?></h3>
-                         
+            <?php if (!empty($haveReadBooks)): ?>
+                <div class="book-grid">
+                    <?php foreach ($haveReadBooks as $book): ?>
+                        <div class="book">
+                            <img src="<?php echo $book['book-img']; ?>" alt="Book Cover">
+                            <div class="details">
+                                <h3><?php echo $book['book-title']; ?></h3>
+                            </div>
                         </div>
-                    </div>
-                <?php endforeach; ?>
-            </div>
+                    <?php endforeach; ?>
+                </div>
+            <?php else: ?>
+                <p>No books recorded as 'Have Read' yet.</p>
+            <?php endif; ?>
         </div>
 
         <!-- My Favorite Books Section -->
         <div class="collection-section">
             <h2>My Favorite Books</h2>
-            <div class="book-grid">
-                <?php foreach ($favoriteBooks as $book): ?>
-                    <div class="book">
-                        <img src="<?php echo $book['book-img']; ?>" alt="Book Cover">
-                        <div class="details">
-                            <h3><?php echo $book['book_title']; ?></h3>
-                            <!-- Book title not bold as per the requirement -->
+            <?php if (!empty($favoriteBooks)): ?>
+                <div class="book-grid">
+                    <?php foreach ($favoriteBooks as $book): ?>
+                        <div class="book">
+                            <img src="<?php echo $book['book-img']; ?>" alt="Book Cover">
+                            <div class="details">
+                                <h3><?php echo $book['book_title']; ?></h3>
+                                <!-- Book title not bold as per the requirement -->
+                            </div>
                         </div>
-                    </div>
-                <?php endforeach; ?>
-            </div>
+                    <?php endforeach; ?>
+                </div>
+            <?php else: ?>
+                <p>No favorite books added yet.</p>
+            <?php endif; ?>
         </div>
     </div>
     <div class="container">
         <form method="post" action="userlogout.php">
-            <input type="submit" value="Logout" class="logout-button" style="background-color: #708ee6; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer;">
+            <input type="submit" value="Logout" class="logout-button">
         </form>
     </div>
     <?php include_once 'body/footer.php'; ?> <!-- Include footer -->
