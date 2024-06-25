@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Books to Read</title>
+    <title>Books I Want to Read</title>
     <link rel="stylesheet" href="css/style.css" type="text/css">
     
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
@@ -21,7 +21,7 @@
     </style>
 </head>
 <body>
-<?php include("body/header.php"); ?>
+<?php include("body/header2.php"); ?>
 
 <div class="max-w-xl mx-auto">
     <h2 class="text-3xl font-bold mt-8 mb-4">Books I want to read</h2>
@@ -62,6 +62,7 @@
         ?>
     </div>
 </div>
+<div class="container"> <form method="post" action="userlogout.php"> <input type="submit" value="Logout" class="logout-button" style="background-color: #708ee6; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer;"> </form> </div>
 
 <?php include("body/footer.php"); ?>
 </body>

@@ -1,5 +1,4 @@
 <?php
-
 // Include the header2.php file from the body folder
 include_once 'body/header2.php';
 ?>
@@ -10,8 +9,31 @@ include_once 'body/header2.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Analytics</title>
-    <link rel="stylesheet" href="css/style.css" type="text/css">
+    
     <!-- Include any additional stylesheets or meta tags -->
+    <style>
+        body {
+            font-family: Arial, sans-serif; /* Example font family */
+          
+            margin: 0;
+            padding: 0;
+        }
+        .main-content {
+            max-width: 800px; /* Adjust max-width as needed */
+            margin: auto; /* Center align content */
+            padding: 20px;
+          
+        
+        }
+        .main-content h1 {
+            font-size: 24px; /* Example heading font size */
+            margin-bottom: 10px;
+        }
+        .main-content p {
+            font-size: 16px; /* Example paragraph font size */
+            color: #666; /* Example text color */
+        }
+    </style>
 </head>
 <body>
     <!-- Header content is now included from header2.php -->
@@ -21,9 +43,7 @@ include_once 'body/header2.php';
         <p>This is your analytics view page content.</p>
         <!-- Replace with your actual analytics content -->
 
-        <p>Welcome, <?php echo $username; ?></p>
-        <!-- Display username or user information as needed -->
-
+      
     </div>
 
     <!-- Include any necessary JavaScript scripts -->

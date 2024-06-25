@@ -291,7 +291,7 @@ body {
         <div class="logo">
             <a href="homepage.php">
                 <img src="img/book-vault-logo.png" alt="Book Vault">
-            </a><br>
+            </a>
             <button class="search-icon" onclick="window.location.href='search2.php'">
                 <i class="fa-solid fa-magnifying-glass"></i>
                 <br><div style="color: #333;">Search</div>

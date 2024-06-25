@@ -163,7 +163,7 @@ if (isset($_SESSION['username'])) {
         </li>
     </ul>
     <div class="welcome">
-        <img src="img/userr.png" alt="User Image">
+        <img src="img/profileuser.png" alt="User Image">
         <span>Welcome, <?php echo htmlspecialchars($username); ?></span>
     </div>
 </div>
