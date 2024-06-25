@@ -148,7 +148,8 @@ $conn->close();
 <div class="menu">
     <div class="view-users" onclick="loadUsersTable()">VIEW USERS</div>
     <div class="add-user" onclick="toggleForm()">ADD USER</div>
-    <div class="edit-user-list">EDIT USER LIST</div>
+    <div class="edit-user-list" onclick="loadEditUserList()">EDIT USER LIST</div>
+
 </div>
 
 <div id="addUserFormContainer" class="form-container" style="display: none; text-align: center;">
@@ -210,6 +211,49 @@ $conn->close();
             console.error("Form container not found."); // Log an error if the form container element is not found
         }
     }
+
+    function loadEditUserList() {
+        var usersTableContainer = document.getElementById("usersTableContainer");
+        // Check if the edit user list is displayed
+        if (usersTableContainer.style.display === "block") {
+            // If displayed, hide it
+            usersTableContainer.style.display = "none";
+        } else {
+            // If hidden, load and display it
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "edituserlist.php", true);
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    document.getElementById("usersTableContainer").innerHTML = xhr.responseText;
+                }
+            };
+            xhr.send();
+            // Show the users table container
+            usersTableContainer.style.display = "block";
+            // Hide the Add User form if it's displayed
+            var formContainer = document.getElementById("addUserFormContainer");
+            if (formContainer.style.display === "block") {
+                formContainer.style.display = "none";
+            }
+        }
+    }
+
+    function deleteBook(userId, bookName, category) {
+    if (confirm('Are you sure you want to delete this book?')) {
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "deletebook.php", true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                alert('Book deleted successfully');
+                location.reload(); // Reload the user list
+            }
+        };
+        xhr.send("user_id=" + userId + "&book_name=" + encodeURIComponent(bookName) + "&category=" + encodeURIComponent(category));
+    }
+}
+
+
 </script>
 
  <!-- Logout Button -->
