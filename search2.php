@@ -2,14 +2,24 @@
 // Start the session at the beginning of the file
 session_start();
 
+include('connection.php');
+
 // Check if the user is logged in and the username is set in the session
 if (isset($_SESSION['username'])) {
     $username = $_SESSION['username'];
 } else {
-    // If the username is not set, you can redirect the user to the login page or set a default value
-    $username = 'Guest'; // or handle the error appropriately
-    // header('Location: login.php'); // Redirect to login page
-    // exit();
+    $username = 'Guest';
+}
+
+// Capture the search query
+if (isset($_GET['search']) && !empty($_GET['search'])) {
+    $query = $_GET['search'];
+
+    // Insert the search query into the search_history table
+    $stmt = $conn->prepare("INSERT INTO search_history (user_id, search_query) VALUES (?, ?)");
+    $stmt->bind_param("is", $_SESSION['user_id'], $query);
+    $stmt->execute();
+    $stmt->close();
 }
 ?>
 <!DOCTYPE html>

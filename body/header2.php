@@ -120,7 +120,7 @@ if (isset($_SESSION['username'])) {
 <body>
 <div class="header">
     <div class="logo">
-        <a href="homepage.php">
+        <a href="userloggedin.php">
             <img src="img/book-vault-logo.png" alt="Book Vault">
         </a>
         <button class="search-icon" onclick="window.location.href='search2.php'">
