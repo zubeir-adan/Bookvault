@@ -61,7 +61,7 @@ $conn->close();
     <style>
         /* Additional CSS specific to this page */
         .container {
-            max-width: 800px;
+            max-width: 1000px; /* Increased width */
             margin: 0 auto;
             padding: 20px;
         }
@@ -88,12 +88,12 @@ $conn->close();
         }
         .book-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px; /* Adjust gap between grid items */
+            grid-template-columns: repeat(5, 1fr); /* Adjust to 5 columns */
+            gap: 50px; /* Adjust gap between grid items */
         }
         .book {
             border: 1px solid #ccc;
-            padding: 10px;
+            padding: 5px;
             text-align: center;
         }
         .details h3 {
@@ -125,9 +125,9 @@ $conn->close();
                 <div class="book-grid">
                     <?php foreach ($wantToReadBooks as $book): ?>
                         <div class="book">
-                            <img src="<?php echo $book['book-img']; ?>" alt="Book Cover">
+                            <img src="<?php echo htmlspecialchars($book['book-img']); ?>" alt="Book Cover">
                             <div class="details">
-                                <h3><?php echo $book['book-title']; ?></h3>
+                                <h3><?php echo htmlspecialchars($book['book-title']); ?></h3>
                             </div>
                         </div>
                     <?php endforeach; ?>
@@ -144,9 +144,9 @@ $conn->close();
                 <div class="book-grid">
                     <?php foreach ($haveReadBooks as $book): ?>
                         <div class="book">
-                            <img src="<?php echo $book['book-img']; ?>" alt="Book Cover">
+                            <img src="<?php echo htmlspecialchars($book['book-img']); ?>" alt="Book Cover">
                             <div class="details">
-                                <h3><?php echo $book['book-title']; ?></h3>
+                                <h3><?php echo htmlspecialchars($book['book-title']); ?></h3>
                             </div>
                         </div>
                     <?php endforeach; ?>
@@ -163,9 +163,9 @@ $conn->close();
                 <div class="book-grid">
                     <?php foreach ($favoriteBooks as $book): ?>
                         <div class="book">
-                            <img src="<?php echo $book['book-img']; ?>" alt="Book Cover">
+                            <img src="<?php echo htmlspecialchars($book['book-img']); ?>" alt="Book Cover">
                             <div class="details">
-                                <h3><?php echo $book['book_title']; ?></h3>
+                                <h3><?php echo htmlspecialchars($book['book_title']); ?></h3>
                                 <!-- Book title not bold as per the requirement -->
                             </div>
                         </div>

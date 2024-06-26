@@ -20,7 +20,6 @@ $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $userId);
 $stmt->execute();
 $result = $stmt->get_result();
-
 ?>
 
 <!DOCTYPE html>
@@ -36,16 +35,17 @@ $result = $stmt->get_result();
         .book-container {
             display: flex;
             flex-wrap: wrap;
-            justify-content: space-between;
+            justify-content: flex-start; /* Changed from space-between to flex-start */
         }
         .book {
-            width: 48%; 
-            margin-bottom: 20px; 
+            width: 30%; 
+            margin: 0 1.5%; /* Added horizontal margin for spacing */
+            margin-bottom: 30px; 
         }
     </style>
 </head>
 <body>
-<div class="max-w-xl mx-auto">
+<div class="max-w-7xl mx-auto"> <!-- Changed max width for wider container -->
     <h2 class="text-3xl font-bold mt-8 mb-4">Books I want to read</h2>
     <div class="book-container">
         <?php
@@ -58,10 +58,10 @@ $result = $stmt->get_result();
                 ?>
                 <div class="book">
                     <div class="flex items-center">
-                        <img src="<?php echo $bookImage; ?>" alt="Book Cover" class="w-16 h-auto mr-4">
+                        <img src="<?php echo htmlspecialchars($bookImage); ?>" alt="Book Cover" class="w-16 h-auto mr-4">
                         <div>
-                            <h3 class="text-lg font-semibold"><?php echo $bookTitle; ?></h3>
-                            <p class="text-sm text-gray-500">By <?php echo $bookAuthors; ?> <br> Published Date: <?php echo $bookPublishedDate; ?></p>
+                            <h3 class="text-lg font-semibold"><?php echo htmlspecialchars($bookTitle); ?></h3>
+                            <p class="text-sm text-gray-500">By <?php echo htmlspecialchars($bookAuthors); ?> <br> Published Date: <?php echo htmlspecialchars($bookPublishedDate); ?></p>
                         </div>
                     </div>
                 </div>

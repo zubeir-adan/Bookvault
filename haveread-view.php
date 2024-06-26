@@ -4,18 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Books I've read</title>
-    <link rel="stylesheet" href="css/style.css" type="text/css">
-   
+    <link rel="stylesheet" href="css/styler.css" type="text/css">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <style>
-        
         .book-container {
             display: flex;
             flex-wrap: wrap;
-            justify-content: space-between;
+            justify-content: flex-start; /* Changed from space-between to flex-start */
         }
         .book {
-            width: 50%; 
+            width: 30%; 
+            margin: 0 1.5%; /* Added horizontal margin for spacing */
             margin-bottom: 30px; 
         }
     </style>
@@ -23,12 +22,10 @@
 <body>
 <?php include("body/header2.php"); ?>
 
-<div class="max-w-xl mx-auto">
+<div class="max-w-7xl mx-auto"> <!-- Changed max width for wider container -->
     <h2 class="text-3xl font-bold mt-8 mb-4">Books I've read</h2>
     <div class="book-container">
     <?php
-   
-
     include_once 'connection.php';
 
     if (isset($_SESSION['logging'])) {
@@ -91,7 +88,11 @@
     ?>
     </div>
 </div>
-<div class="container"> <form method="post" action="userlogout.php"> <input type="submit" value="Logout" class="logout-button" style="background-color: #708ee6; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer;"> </form> </div>
+<div class="container">
+    <form method="post" action="userlogout.php">
+        <input type="submit" value="Logout" class="logout-button" style="background-color: #708ee6; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer;">
+    </form>
+</div>
 <?php include("body/footer.php"); ?>
 </body>
 </html>
