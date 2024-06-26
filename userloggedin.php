@@ -9,16 +9,22 @@ if (isset($_SESSION['logging'])) {
     $userId = $_SESSION['user_id'];
     $username = $_SESSION['username'];
 
+    // Pagination settings
+    $limit = 10; // Number of books per page
+    $page = isset($_GET['page']) ? (int)$_GET['page'] : 1; // Get the current page number
+    $offset = ($page - 1) * $limit; // Calculate the offset for the SQL query
+
     // Initialize $recommendedBooks to avoid undefined variable issues
     $recommendedBooks = [];
+    $totalBooks = 0;
 
     // Get user preferences and recommendations
-    $page = isset($_GET['page']) ? (int)$_GET['page'] : 1; // Get the current page number
     $preferences = getUserPreferences($userId, $conn);
     if ($preferences) {
-        $recommendations = getBookRecommendations($preferences, $page);
+        $recommendations = getBookRecommendations($preferences, $page, $limit, $conn); // Pass limit for recommendations
         $recommendedBooks = $recommendations['books'];
-        $totalPages = $recommendations['totalPages'];
+        $totalBooks = $recommendations['totalBooks']; // Get the total number of books
+        $totalPages = ceil($totalBooks / $limit); // Calculate the total number of pages
     }
 ?>
 
@@ -194,6 +200,7 @@ if (isset($_SESSION['logging'])) {
             font-weight: normal;
         }
 
+       
         .pagination {
             margin: 20px 0;
             text-align: center;
@@ -201,15 +208,25 @@ if (isset($_SESSION['logging'])) {
 
         .pagination a {
             margin: 0 5px;
-            padding: 5px 10px;
+            padding: 8px 12px; /* Increase padding for larger clickable area */
             text-decoration: none;
-            border: 1px solid #ddd;
-            border-radius: 3px;
-            color: #333;
+            border: 1px solid #007bff; /* Border color for buttons */
+            border-radius: 4px;
+            color: #007bff; /* Text color */
+            transition: all 0.3s ease; /* Smooth transition effect */
+            font-size: 14px; /* Font size */
+            line-height: 1.5; /* Ensure consistent line height */
+        }
+
+        .pagination a:hover {
+            background-color: #007bff; /* Background color on hover */
+            color: #fff; /* Text color on hover */
+            transform: scale(1.1); /* Enlarge slightly on hover */
         }
 
         .pagination a.active {
-            background-color: #ddd;
+            background-color: #007bff; /* Active background color */
+            color: #fff; /* Active text color */
         }
 
     </style>
@@ -313,8 +330,10 @@ if (isset($_SESSION['logging'])) {
         <input type="submit" value="Logout" class="logout-button">
     </form>
 </div>
-<?php } else {
+<?php
+} else {
     header('Location: homepage.php');
+    exit();
 }
 ?>
 <?php include("body/footer.php")?>

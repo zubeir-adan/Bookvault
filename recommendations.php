@@ -1,5 +1,5 @@
 <?php
-function getBookRecommendations($preferences, $page = 1, $booksPerPage = 3) {
+function getBookRecommendations($preferences, $page = 1, $booksPerPage = 10) {
     $recommendedBooks = [];
     foreach ($preferences as $term) {
         $url = 'https://www.googleapis.com/books/v1/volumes?q=' . urlencode($term);
@@ -7,18 +7,20 @@ function getBookRecommendations($preferences, $page = 1, $booksPerPage = 3) {
         if ($response) {
             $data = json_decode($response, true);
             if (isset($data['items'])) {
-                $recommendedBooks = array_merge($recommendedBooks, array_slice($data['items'], 0, $booksPerPage));
+                $recommendedBooks = array_merge($recommendedBooks, $data['items']);
             }
         }
     }
 
-    // Implement pagination
+    // Calculate total books and pages
     $totalBooks = count($recommendedBooks);
-    $totalPages = ceil($totalBooks / ($booksPerPage * count($preferences)));
-    $offset = ($page - 1) * ($booksPerPage * count($preferences));
-    $paginatedBooks = array_slice($recommendedBooks, $offset, $booksPerPage * count($preferences));
+    $totalPages = ceil($totalBooks / $booksPerPage);
 
-    return ['books' => $paginatedBooks, 'totalPages' => $totalPages];
+    // Implement pagination
+    $offset = ($page - 1) * $booksPerPage;
+    $paginatedBooks = array_slice($recommendedBooks, $offset, $booksPerPage);
+
+    return ['books' => $paginatedBooks, 'totalBooks' => $totalBooks]; // Ensure 'totalBooks' is returned
 }
 
 function getUserPreferences($userId, $conn) {
