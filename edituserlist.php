@@ -10,20 +10,41 @@ if (!isset($_SESSION['logging']) || $_SESSION['logging'] !== true) {
 include_once 'connection.php';
 
 // Pagination variables
-$rowsPerPage = 16; // Number of rows per page
+$rowsPerPage = 10; // Number of rows per page
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1; // Current page number
 $start = ($page - 1) * $rowsPerPage; // Starting row for query
+
+// Updated SQL query to count total rows
+$sqlCount = "SELECT COUNT(*) AS count FROM (
+    SELECT users.user_id
+    FROM users 
+    JOIN favorite_books ON users.user_id = favorite_books.user_id
+    UNION ALL
+    SELECT users.user_id
+    FROM users 
+    JOIN haveread ON users.user_id = haveread.user_id
+    UNION ALL
+    SELECT users.user_id
+    FROM users 
+    JOIN `want-to-read` ON users.user_id = `want-to-read`.user_id
+) AS user_count";
+
+$resultCount = $conn->query($sqlCount);
+$row = $resultCount->fetch_assoc();
+$totalRows = $row['count'];
+
+$totalPages = ceil($totalRows / $rowsPerPage);
 
 // SQL query to fetch data with pagination
 $sql = "
     SELECT users.user_id, users.username, favorite_books.book_title AS book_name, 'Favorite' AS category 
     FROM users 
     JOIN favorite_books ON users.user_id = favorite_books.user_id
-    UNION
+    UNION ALL
     SELECT users.user_id, users.username, haveread.`book-title` AS book_name, 'Have Read' AS category 
     FROM users 
     JOIN haveread ON users.user_id = haveread.user_id
-    UNION
+    UNION ALL
     SELECT users.user_id, users.username, `want-to-read`.`book-title` AS book_name, 'Want to Read' AS category 
     FROM users 
     JOIN `want-to-read` ON users.user_id = `want-to-read`.user_id
@@ -98,43 +119,22 @@ if ($result->num_rows > 0) {
 
     echo '</table>';
 
-    // Pagination links
-    $sqlCount = "SELECT COUNT(*) AS count FROM (
-        SELECT users.user_id
-        FROM users 
-        JOIN favorite_books ON users.user_id = favorite_books.user_id
-        UNION
-        SELECT users.user_id
-        FROM users 
-        JOIN haveread ON users.user_id = haveread.user_id
-        UNION
-        SELECT users.user_id
-        FROM users 
-        JOIN `want-to-read` ON users.user_id = `want-to-read`.user_id
-    ) AS user_count";
-
-    $resultCount = $conn->query($sqlCount);
-    $row = $resultCount->fetch_assoc();
-    $totalRows = $row['count'];
-
-    $totalPages = ceil($totalRows / $rowsPerPage);
-
     // Pagination controls
     echo '<div class="pagination">';
     if ($page > 1) {
-        echo '<a href="adminloggedin.php?page=' . ($page - 1) . '">Previous</a>';
+        echo '<a href="#" onclick="loadEditUserList(' . ($page - 1) . '); return false;">Previous</a>';
     }
 
     for ($i = 1; $i <= $totalPages; $i++) {
         if ($i == $page) {
-            echo '<a href="#" class="active">' . $i . '</a>';
+            echo '<a href="#" class="active" onclick="return false;">' . $i . '</a>';
         } else {
-            echo '<a href="adminloggedin.php?page=' . $i . '">' . $i . '</a>';
+            echo '<a href="#" onclick="loadEditUserList(' . $i . '); return false;">' . $i . '</a>';
         }
     }
 
     if ($page < $totalPages) {
-        echo '<a href="adminloggedin.php?page=' . ($page + 1) . '">Next</a>';
+        echo '<a href="#" onclick="loadEditUserList(' . ($page + 1) . '); return false;">Next</a>';
     }
 
     echo '</div>';
