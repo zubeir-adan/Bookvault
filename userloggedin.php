@@ -319,47 +319,56 @@ if (isset($_SESSION['logging'])) {
 </div>
 
 <div class="container">
-    <?php
-    foreach ($recommendedBooks as $book) {
-        echo "<div class='book-container'>";
-        if (isset($book['volumeInfo']['imageLinks']['thumbnail'])) {
-            echo "<img src='" . htmlspecialchars($book['volumeInfo']['imageLinks']['thumbnail']) . "' alt='Book Cover'>";
-        } else {
-            echo "<img src='img/default.jpg' alt='Book image not found!' width='100' height='150'>";
-        }
-        if (isset($book['volumeInfo']['title'])) {
-            echo "<h4>" . htmlspecialchars($book['volumeInfo']['title']) . "</h4>";
-        } else {
-            echo "<h4>Title Not Available</h4>";
-        }
-        if (isset($book['volumeInfo']['authors'])) {
-            echo "<h6>Author(s): " . implode(", ", array_map('htmlspecialchars', $book['volumeInfo']['authors'])) . "</h6>";
-        } else {
-            echo "<h6>Author(s): Unknown</h6>";
-        }
-        if (isset($book['volumeInfo']['publishedDate'])) {
-            echo "<h6>Publish Year: " . htmlspecialchars($book['volumeInfo']['publishedDate']) . "</h6>";
-        } else {
-            echo "<h6>Publish Year: Unknown</h6>";
-        }
-        echo "</div>";
-    }
-    ?>
+    <?php foreach ($recommendedBooks as $book): ?>
+        <div class="book-container">
+            <a href="show-book-details2.php?book_id=<?php echo htmlspecialchars($book['id']); ?>">
+                <div class="book-image-container">
+                    <?php
+                    if (isset($book['volumeInfo']['imageLinks']['thumbnail'])) {
+                        echo "<img src='" . htmlspecialchars($book['volumeInfo']['imageLinks']['thumbnail']) . "' alt='Book Cover' class='book-image'>";
+                    } else {
+                        echo "<img src='img/default.jpg' alt='Book image not found!' class='book-image'>";
+                    }
+                    ?>
+                </div>
+            </a>
+            <div class="book-details">
+                <?php
+                if (isset($book['volumeInfo']['title'])) {
+                    echo "<h4>" . htmlspecialchars($book['volumeInfo']['title']) . "</h4>";
+                } else {
+                    echo "<h4>Title Not Available</h4>";
+                }
+                if (isset($book['volumeInfo']['authors'])) {
+                    echo "<h6>Author(s): " . implode(", ", array_map('htmlspecialchars', $book['volumeInfo']['authors'])) . "</h6>";
+                } else {
+                    echo "<h6>Author(s): Unknown</h6>";
+                }
+                if (isset($book['volumeInfo']['publishedDate'])) {
+                    echo "<h6>Publish Year: " . htmlspecialchars($book['volumeInfo']['publishedDate']) . "</h6>";
+                } else {
+                    echo "<h6>Publish Year: Unknown</h6>";
+                }
+                ?>
+            </div>
+        </div>
+    <?php endforeach; ?>
 </div>
 
 <?php if (!empty($recommendedBooks)) : ?>
-<div class="pagination">
-    <?php if ($page > 1): ?>
-        <a href="userloggedin.php?page=<?php echo $page - 1; ?>">Previous</a>
-    <?php endif; ?>
-    <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-        <a href="userloggedin.php?page=<?php echo $i; ?>" class="<?php echo $i === $page ? 'active' : ''; ?>"><?php echo $i; ?></a>
-    <?php endfor; ?>
-    <?php if ($page < $totalPages): ?>
-        <a href="userloggedin.php?page=<?php echo $page + 1; ?>">Next</a>
-    <?php endif; ?>
-</div>
+    <div class="pagination">
+        <?php if ($page > 1): ?>
+            <a href="userloggedin.php?page=<?php echo $page - 1; ?>">Previous</a>
+        <?php endif; ?>
+        <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+            <a href="userloggedin.php?page=<?php echo $i; ?>" class="<?php echo $i === $page ? 'active' : ''; ?>"><?php echo $i; ?></a>
+        <?php endfor; ?>
+        <?php if ($page < $totalPages): ?>
+            <a href="userloggedin.php?page=<?php echo $page + 1; ?>">Next</a>
+        <?php endif; ?>
+    </div>
 <?php endif; ?>
+
 
 <div class="container">
     <form method="post" action="userlogout.php">
