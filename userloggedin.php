@@ -25,6 +25,8 @@ if (isset($_SESSION['logging'])) {
         $recommendedBooks = $recommendations['books'];
         $totalBooks = $recommendations['totalBooks']; // Get the total number of books
         $totalPages = ceil($totalBooks / $limit); // Calculate the total number of pages
+    } else {
+        $totalPages = 0;
     }
 ?>
 
@@ -89,6 +91,28 @@ if (isset($_SESSION['logging'])) {
         }
 
         .search-icon:hover {
+            background-color: #e2e2e2;
+        }
+        .discover-icon {
+            margin-left: 20px;
+            cursor: pointer;
+            border: none;
+            background: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s;
+        }
+
+        .discover-icon i {
+            font-size: 20px;
+            color: black;
+        }
+
+        .discover-icon:hover {
             background-color: #e2e2e2;
         }
 
@@ -241,7 +265,13 @@ if (isset($_SESSION['logging'])) {
             <i class="fa-solid fa-magnifying-glass"></i>
             <br><div>Search</div>
         </button>
+
+        <button class="discover-icon" onclick="window.location.href='discover2.php'">
+            <i class="fa-solid fa-compass"></i>
+            <br><div>Discover</div>
+        </button>
     </div>
+    
     <ul class="nav">
         <li>
             <a href="analytics-view.php">
@@ -281,7 +311,11 @@ if (isset($_SESSION['logging'])) {
 </div>
 <div style="text-align: center;">
 <h2 style="font-family:Verdana, Geneva, Tahoma, sans-serif;">Recommendations</h2>
-<p>Based on your search history, we recommend the following books:</p>
+<?php if (empty($recommendedBooks)) : ?>
+    <p style="font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; font-size:large; ">Search for a book author of your choice to be recommended some of their reads.</p>
+<?php else : ?>
+    <p>Based on your search history, we recommend the following books:</p>
+<?php endif; ?>
 </div>
 
 <div class="container">
@@ -313,6 +347,7 @@ if (isset($_SESSION['logging'])) {
     ?>
 </div>
 
+<?php if (!empty($recommendedBooks)) : ?>
 <div class="pagination">
     <?php if ($page > 1): ?>
         <a href="userloggedin.php?page=<?php echo $page - 1; ?>">Previous</a>
@@ -324,6 +359,7 @@ if (isset($_SESSION['logging'])) {
         <a href="userloggedin.php?page=<?php echo $page + 1; ?>">Next</a>
     <?php endif; ?>
 </div>
+<?php endif; ?>
 
 <div class="container">
     <form method="post" action="userlogout.php">

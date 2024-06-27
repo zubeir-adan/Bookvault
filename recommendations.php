@@ -20,7 +20,10 @@ function getBookRecommendations($preferences, $page = 1, $booksPerPage = 10) {
     $offset = ($page - 1) * $booksPerPage;
     $paginatedBooks = array_slice($recommendedBooks, $offset, $booksPerPage);
 
-    return ['books' => $paginatedBooks, 'totalBooks' => $totalBooks]; // Ensure 'totalBooks' is returned
+    // Limit to a maximum of 4 books
+    $paginatedBooks = array_slice($paginatedBooks, 0, 4);
+
+    return ['books' => $paginatedBooks, 'totalBooks' => min($totalBooks, 4)]; // Ensure 'totalBooks' is limited to 4
 }
 
 function getUserPreferences($userId, $conn) {

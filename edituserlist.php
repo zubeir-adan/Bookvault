@@ -120,7 +120,7 @@ if ($result->num_rows > 0) {
     $totalPages = ceil($totalRows / $rowsPerPage);
 
     // Pagination controls
-    echo '<div class="paginatin">';
+    echo '<div class="pagination">';
     if ($page > 1) {
         echo '<a href="adminloggedin.php?page=' . ($page - 1) . '">Previous</a>';
     }
