@@ -90,7 +90,6 @@ $result = $stmt->get_result();
     </div>
 </div> 
  
-
 <?php include("body/footer.php"); ?>
 </body>
 </html>
