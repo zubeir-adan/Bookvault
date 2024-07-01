@@ -55,11 +55,12 @@ if (isset($_SESSION['user_id'])) {
             echo "All fields are required.";
             exit();
         }
+        $password_hash = password_hash($password, PASSWORD_DEFAULT);
     
         // Update user details
         $sql = "UPDATE users SET username = ?, email = ?, password_hash=? WHERE user_id = ?";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("sssi", $username, $email, $password,$userId);
+        $stmt->bind_param("sssi", $username, $email, $password_hash,$userId);
     
         if ($stmt->execute()) {
             echo "User details updated successfully.";

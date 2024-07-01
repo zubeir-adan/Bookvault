@@ -88,11 +88,7 @@
     ?>
     </div>
 </div>
-<div class="container">
-    <form method="post" action="userlogout.php">
-        <input type="submit" value="Logout" class="logout-button" style="background-color: #708ee6; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer;">
-    </form>
-</div>
+
 <?php include("body/footer.php"); ?>
 </body>
 </html>
