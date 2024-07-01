@@ -88,7 +88,7 @@ $result = $stmt->get_result();
         $conn->close();
         ?>
     </div>
-</div>
+</div> 
  
 <?php include("body/footer.php"); ?>
 </body>
