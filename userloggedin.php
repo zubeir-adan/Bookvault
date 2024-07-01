@@ -356,7 +356,7 @@ if (isset($_SESSION['logging'])) {
 </div>
 
 <?php if (!empty($recommendedBooks)) : ?>
-    <div class="pagination">
+    <div class="pagination">  
         <?php if ($page > 1): ?>
             <a href="userloggedin.php?page=<?php echo $page - 1; ?>">Previous</a>
         <?php endif; ?>
