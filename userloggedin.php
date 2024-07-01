@@ -252,6 +252,29 @@ if (isset($_SESSION['logging'])) {
             background-color: #007bff; /* Active background color */
             color: #fff; /* Active text color */
         }
+        .settings-menu {
+            display: none;
+            position: absolute;
+            top: 50px;
+            right: 0;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+        .settings-menu a {
+            display: block;
+            padding: 10px 20px;
+            text-decoration: none;
+            color: black;
+        }
+        .settings-menu a:hover {
+            background-color: grey;
+        }
+        .settings-button :hover{
+            background-color: grey;
+        }
 
     </style>
 </head>
@@ -307,6 +330,33 @@ if (isset($_SESSION['logging'])) {
     <div class="welcome">
         <img src="img/userr.png" alt="User Image">
         <span>Welcome, <?php echo $username; ?></span>
+        <img src="img/settings.png" id="settingsButton" class="bg-gray-800 text-white px-4 py-2 rounded">
+        <div id="settingsMenu" class="settings-menu">
+            <a href="#profile">Profile</a>
+            <a href="#account">Account</a>
+            <a href="#preferences">Preferences</a>
+            <a href="#logout">Logout</a>
+            <script>
+                 document.getElementById('settingsButton').addEventListener('click', function() {
+            var menu = document.getElementById('settingsMenu');
+            if (menu.style.display === 'none' || menu.style.display === '') {
+                menu.style.display = 'block';
+            } else {
+                menu.style.display = 'none';
+            }
+        });
+
+        document.addEventListener('click', function(event) {
+            var isClickInside = document.getElementById('settingsButton').contains(event.target) ||
+                                document.getElementById('settingsMenu').contains(event.target);
+
+            if (!isClickInside) {
+                document.getElementById('settingsMenu').style.display = 'none';
+            }
+        });
+            </script>
+        </div>
+    </div>
     </div>
 </div>
 <div style="text-align: center;">
