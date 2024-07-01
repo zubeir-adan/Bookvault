@@ -332,10 +332,8 @@ if (isset($_SESSION['logging'])) {
         <span>Welcome, <?php echo $username; ?></span>
         <img src="img/settings.png" id="settingsButton" class="bg-gray-800 text-white px-4 py-2 rounded">
         <div id="settingsMenu" class="settings-menu">
-            <a href="#profile">Profile</a>
             <a href="#account">Account</a>
-            <a href="#preferences">Preferences</a>
-            <a href="#logout">Logout</a>
+            <a href="userlogout.php">Logout</a>
             <script>
                  document.getElementById('settingsButton').addEventListener('click', function() {
             var menu = document.getElementById('settingsMenu');
@@ -420,11 +418,7 @@ if (isset($_SESSION['logging'])) {
 <?php endif; ?>
 
 
-<div class="container">
-    <form method="post" action="userlogout.php">
-        <input type="submit" value="Logout" class="logout-button">
-    </form>
-</div>
+
 <?php
 } else {
     header('Location: homepage.php');
