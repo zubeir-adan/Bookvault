@@ -332,7 +332,7 @@ if (isset($_SESSION['logging'])) {
         <span>Welcome, <?php echo $username; ?></span>
         <img src="img/settings.png" id="settingsButton" class="bg-gray-800 text-white px-4 py-2 rounded">
         <div id="settingsMenu" class="settings-menu">
-            <a href="#account">Account</a>
+            <a href="usereditdetails.php">Account</a>
             <a href="userlogout.php">Logout</a>
             <script>
                  document.getElementById('settingsButton').addEventListener('click', function() {
