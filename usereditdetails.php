@@ -29,10 +29,21 @@ if (isset($_SESSION['user_id'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit User Details</title>
+    <title>User Signup</title>
+    <link rel="stylesheet" type="text/css" href="decorate.css">  
+    <style>
+        h2{
+          margin-left:130px;
+        }
+        form{
+            align-items: center;
+        
+        }
+    </style>
 </head>
 <>
     <h2>My Details</h2>
-    <form method="post">
+    <form class="form" method="post">
         <label for="username">Username:</label>
         <input type="text" id="username" name="username" value="<?php echo htmlspecialchars($user['username']); ?>"><br><br>
         
