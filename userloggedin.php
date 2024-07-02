@@ -374,10 +374,57 @@ if (isset($_SESSION['logging'])) {
         <div class="modal-content">
             <span class="closeBtn">&times;</span>
             <form>
-                <label for="name">Name:</label>
-                <input type="text" id="name" name="name"><br><br>
+                <label for="name">Enter your password to proceed:</label>
+                <input type="text" id="pass" name="pass"><br><br>
                 <input type="submit" value="Submit">
             </form>
+            <?php
+require_once('connection.php');
+
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $password = $_POST['pass'];
+
+    if (isset($_SESSION['user_id'])) {
+        $userId = $_SESSION['user_id'];
+
+        // Retrieve the hashed password from the database
+        $sql = "SELECT password_hash FROM users WHERE user_id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $userId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $storedHashedPassword = $row['password'];
+
+            // Verify the password
+            if (password_verify($password, $storedHashedPassword)) {
+                // Password is correct
+                $_SESSION['loggedin'] = true;
+                
+                // Redirect to the desired page
+                header("Location: usereditdetails.php");
+                exit(); // Ensure no further code is executed after the redirect
+            } else {
+                echo "Invalid password.";
+            }
+        } else {
+            echo "User not found.";
+        }
+
+        $stmt->close();
+    } else {
+        echo "User not logged in.";
+    }
+} else {
+    echo "Invalid request method.";
+}
+
+$conn->close();
+?>
+
         </div>
         </div>    
           <a href="userlogout.php">Logout</a>
