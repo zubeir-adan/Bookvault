@@ -275,7 +275,43 @@ if (isset($_SESSION['logging'])) {
         .settings-button :hover{
             background-color: grey;
         }
+        /* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
 
+/* Modal Content/Box */
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button */
+.closeBtn {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.closeBtn:hover,
+.closeBtn:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
     </style>
 </head>
 <body>
@@ -332,8 +368,19 @@ if (isset($_SESSION['logging'])) {
         <span>Welcome, <?php echo $username; ?></span>
         <img src="img/settings.png" id="settingsButton" class="bg-gray-800 text-white px-4 py-2 rounded">
         <div id="settingsMenu" class="settings-menu">
-            <a href="usereditdetails.php">Account</a>
-            <a href="userlogout.php">Logout</a>
+            <a id="openFormBtn">Account</a>
+            <div id="formModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="closeBtn">&times;</span>
+            <form>
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name"><br><br>
+                <input type="submit" value="Submit">
+            </form>
+        </div>
+        </div>    
+          <a href="userlogout.php">Logout</a>
             <script>
                  document.getElementById('settingsButton').addEventListener('click', function() {
             var menu = document.getElementById('settingsMenu');
@@ -352,6 +399,31 @@ if (isset($_SESSION['logging'])) {
                 document.getElementById('settingsMenu').style.display = 'none';
             }
         });
+
+        var modal = document.getElementById("formModal");
+
+// Get the button that opens the modal
+var btn = document.getElementById("openFormBtn");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("closeBtn")[0];
+
+// When the user clicks the button, open the modal
+btn.onclick = function() {
+    modal.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+    modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
             </script>
         </div>
     </div>
