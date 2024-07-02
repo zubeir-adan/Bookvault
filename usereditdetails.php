@@ -37,7 +37,6 @@ if (isset($_SESSION['user_id'])) {
         }
         form{
             align-items: center;
-        
         }
     </style>
 </head>
