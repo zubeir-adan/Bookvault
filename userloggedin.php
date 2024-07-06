@@ -197,7 +197,7 @@ if (isset($_SESSION['logging'])) {
             background-color: rgba(255, 255, 255, 0.1); /* Reduced opacity */
             text-align: center;
             width: 200px;
-            height: 350px; /* Increased height for text content */
+            height: 300px; /* Increased height for text content */
             box-sizing: border-box; /* Include padding and border in the width and height */
             overflow: hidden; /* Ensure content stays within container */
             vertical-align: top;
