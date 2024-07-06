@@ -2,7 +2,7 @@
 // discover.php
 
 // Genres to search for
-$genres = ['romance', 'mystery', 'crime', 'horror', 'science fiction', 'thriller', 'suspense', 'westerns', 'historical', 'fantasy', 'comedy', 'autobiography', 'biography', 'arts and crafts', 'food and cooking', 'history', 'self help', 'wildlife', 'science', 'junior fiction', 'action and adventure', 'drama', 'poetry', 'religion and spirituality', 'travel', 'business and finance', 'technology', 'health and fitness', 'psychology', 'philosophy', 'education', 'music', 'art', 'sports', 'true crime', 'fashion', 'gardening', 'parenting', 'crafts and hobbies', 'humor', 'reference', 'diary', 'journal', 'encyclopedia', 'languages', 'law', 'mathematics', 'medical', 'nature', 'politics', 'social sciences', 'transportation', 'trivia', 'young adult', 'children', 'cooking', 'home improvement', 'photography', 'graphic novels', 'comic books', 'magazines', 'newspapers', 'plays', 'screenplays', 'short stories'];
+$genres = ['thriller','suspense', 'fantasy','historical', 'autobiography', 'self help', 'science', 'junior fiction', 'action', 'romance', 'poetry', 'technology', 'health and fitness', 'adventure','science fiction'];
 
 function fetchBooksByGenre($genre) {
     $url = 'https://www.googleapis.com/books/v1/volumes?q=subject:' . urlencode($genre);
