@@ -38,7 +38,7 @@ $result = $stmt->get_result();
             gap: 20px; /* Gap between books */
         }
         .book {
-            width: calc(25% - 20px); /* Adjusted width for 4 books per row with gap */
+            width: calc(20% - 20px); /* Adjusted width for 5 books per row with gap */
             margin-bottom: 20px;
             background-color: #f0f0f0; /* Just for visualization */
             padding: 10px; /* Just for visualization */
