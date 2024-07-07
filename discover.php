@@ -10,21 +10,32 @@ function fetchBooksByGenre($genre) {
     return json_decode($response, true);
 }
 
+// Pagination settings
+$genresPerPage = 5;
+$totalGenres = count($genres);
+$totalPages = ceil($totalGenres / $genresPerPage);
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+if ($page < 1) {
+    $page = 1;
+} elseif ($page > $totalPages) {
+    $page = $totalPages;
+}
+$startIndex = ($page - 1) * $genresPerPage;
+$currentGenres = array_slice($genres, $startIndex, $genresPerPage);
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
     <title style="text-align: center;">Discover</title>
     <style>
-       .header {
-    position: sticky;
-    top: 0;
-    background: #f7f7f8;
-    border-bottom: 3px solid #87CEEB;
-    z-index: 1000; /* Ensure it's above other content */
-}
-
-
+        .header {
+            position: sticky;
+            top: 0;
+            background: #f7f7f8;
+            border-bottom: 3px solid #87CEEB;
+            z-index: 1000;
+        }
         .header .nav li a {
             color: lightslategrey;
             display: block;
@@ -39,33 +50,27 @@ function fetchBooksByGenre($genre) {
             text-decoration: none;
             cursor: pointer;
         }
-
         body {
             font-family: Arial, sans-serif;
         }
-
         .genre-section {
             margin-bottom: 40px;
         }
-
         .genre-title {
             font-size: 24px;
             margin-bottom: 10px;
         }
-
         .carousel {
             display: flex;
-            overflow-x: scroll; /* Enable horizontal scrolling */
+            overflow-x: scroll;
             overflow-y: hidden;
             position: relative;
             width: 100%;
         }
-
         .carousel-inner {
             display: flex;
             transition: transform 0.5s ease;
         }
-
         .book {
             flex: 0 0 200px;
             margin: 10px;
@@ -74,11 +79,9 @@ function fetchBooksByGenre($genre) {
             padding: 10px;
             box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
             background-color: #f9f9f9;
-            /* New styles for cursor and hover effect */
             cursor: pointer;
             transition: transform 0.3s ease;
         }
-
         .book img {
             width: 150px;
             height: 200px;
@@ -86,28 +89,42 @@ function fetchBooksByGenre($genre) {
             padding: 5px;
             background-color: #fff;
         }
-
         .book-title {
             margin-top: 10px;
             word-wrap: break-word;
         }
-
-        /* Hover effect */
         .book:hover {
             transform: scale(1.05);
         }
-
         ::-webkit-scrollbar {
             width: 10px;
-            /* Adjust the width of the scrollbar */
             opacity: 0.5;
-            /* Adjust the opacity */
         }
-
         html {
             scrollbar-width: thin;
             scrollbar-color: transparent transparent;
-            /* Adjust the color */
+        }
+        .pagination {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .pagination a {
+            display: inline-block;
+            padding: 10px 15px;
+            margin: 0 5px;
+            background-color: #f7f7f8;
+            color: #333;
+            text-decoration: none;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .pagination a:hover {
+            background-color: #87CEEB;
+        }
+        .pagination a.active {
+            background-color: #87CEEB;
+            color: #fff;
         }
     </style>
 </head>
@@ -115,13 +132,12 @@ function fetchBooksByGenre($genre) {
 <div class="header">
     <div class="wrapper">
         <img src="img/book-vault-logo.png" alt="Book Vault Logo" style="width: 250px; height: auto;">
-    
     </div>
 </div>
 
 <h2 style="text-align: center;">Let's help you embark on your reading journey!</h2>
-<?php
- foreach ($genres as $genre): ?>
+
+<?php foreach ($currentGenres as $genre): ?>
     <div class="genre-section">
         <div class="genre-title"><?php echo ucfirst($genre); ?></div>
         <div class="carousel overflow-x-scroll" id="carousel-<?php echo $genre; ?>">
@@ -150,10 +166,26 @@ function fetchBooksByGenre($genre) {
         </div>
     </div>
 <?php endforeach; ?>
+
+<div class="pagination">
+    <?php if ($page > 1): ?>
+        <a href="discover.php?page=<?php echo $page - 1; ?>">Previous</a>
+    <?php endif; ?>
+
+    <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+        <a href="discover.php?page=<?php echo $i; ?>" class="<?php echo ($i == $page) ? 'active' : ''; ?>"><?php echo $i; ?></a>
+    <?php endfor; ?>
+
+    <?php if ($page < $totalPages): ?>
+        <a href="discover.php?page=<?php echo $page + 1; ?>">Next</a>
+    <?php endif; ?>
+</div>
+
 <?php include("body/footer.php"); ?>
+
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        <?php foreach ($genres as $genre): ?>
+        <?php foreach ($currentGenres as $genre): ?>
         const carousel<?php echo $genre; ?> = document.getElementById('carousel-<?php echo $genre; ?>');
         <?php endforeach; ?>
     });
