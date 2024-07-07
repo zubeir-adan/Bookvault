@@ -176,11 +176,7 @@ $conn->close();
             <?php endif; ?>
         </div>
     </div>
-    <div class="container">
-        <form method="post" action="userlogout.php">
-            <input type="submit" value="Logout" class="logout-button">
-        </form>
-    </div>
+   
     <?php include_once 'body/footer.php'; ?> <!-- Include footer -->
 </body>
 </html>

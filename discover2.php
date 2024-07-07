@@ -23,7 +23,7 @@ function fetchBooksByGenre($genre) {
 }
 
 // Pagination settings
-$genresPerPage = 10; // Adjust as needed
+$genresPerPage = 5; // Adjust as needed
 $totalGenres = count($genres);
 $totalPages = ceil($totalGenres / $genresPerPage);
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
