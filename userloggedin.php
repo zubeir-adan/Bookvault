@@ -30,12 +30,11 @@ if (isset($_SESSION['logging'])) {
         $totalPages = 0;
     }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>BookVault - Dashboard</title>
+    <title>Reader's Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
           integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
@@ -72,9 +71,21 @@ if (isset($_SESSION['logging'])) {
             border-radius: 50%;
             cursor: pointer; /* Add cursor pointer to indicate it's clickable */
         }
+
+        .book-container {
+            transition: transform 0.3s;
+        }
+        .book-container:hover {
+            transform: scale(1.05);
+        }
+        .book-container a {
+            text-decoration: none;
+            color: inherit;
+        }
     </style>
 </head>
-<body><div class="header">
+<body>
+<div class="header">
     <div class="logo">
         <a href="userloggedin.php">
             <img src="img/book-vault-logo.png" alt="Book Vault">
@@ -128,14 +139,14 @@ if (isset($_SESSION['logging'])) {
             <a href="usereditdetails.php">Account</a>
             <a href="userlogout.php">Logout</a>
         </div>
-        <span class="username">Hi, <?php echo $username; ?></span>
+        <span class="username">Hi, <?php echo htmlspecialchars($_SESSION['username']); ?></span>
     </div>
 </div>
 
 <div style="text-align: center;">
     <h2>Recommendations</h2>
     <?php if (empty($recommendedBooks)) : ?>
-        <p>No recommendations available based on your preferences.</p>
+        <p>To get you started on recommendations, Search for a book author of your choice.</p>
     <?php else : ?>
         <p>Based on your search history, we recommend the following books:</p>
     <?php endif; ?>
@@ -144,7 +155,7 @@ if (isset($_SESSION['logging'])) {
 <div class="container">
     <?php foreach ($recommendedBooks as $book): ?>
         <div class="book-container">
-            <a href="show-book-details2.php?book_id=<?php echo htmlspecialchars($book['id']); ?>">
+            <a href="show-book-details2.php?bookId=<?php echo urlencode($book['id']); ?>">
                 <div class="book-image-container">
                     <?php if (isset($book['volumeInfo']['imageLinks']['thumbnail'])) : ?>
                         <img src="<?php echo htmlspecialchars($book['volumeInfo']['imageLinks']['thumbnail']); ?>" alt="Book Cover" class="book-image">
@@ -152,15 +163,16 @@ if (isset($_SESSION['logging'])) {
                         <img src="img/default.jpg" alt="Book image not found!" class="book-image">
                     <?php endif; ?>
                 </div>
+                <div class="book-details">
+                    <h4><?php echo isset($book['volumeInfo']['title']) ? htmlspecialchars($book['volumeInfo']['title']) : "Title Not Available"; ?></h4>
+                    <h6>Author(s): <?php echo isset($book['volumeInfo']['authors']) ? implode(", ", array_map('htmlspecialchars', $book['volumeInfo']['authors'])) : "Unknown"; ?></h6>
+                    <h6>Publish Year: <?php echo isset($book['volumeInfo']['publishedDate']) ? htmlspecialchars($book['volumeInfo']['publishedDate']) : "Unknown"; ?></h6>
+                </div>
             </a>
-            <div class="book-details">
-                <h4><?php echo isset($book['volumeInfo']['title']) ? htmlspecialchars($book['volumeInfo']['title']) : "Title Not Available"; ?></h4>
-                <h6>Author(s): <?php echo isset($book['volumeInfo']['authors']) ? implode(", ", array_map('htmlspecialchars', $book['volumeInfo']['authors'])) : "Unknown"; ?></h6>
-                <h6>Publish Year: <?php echo isset($book['volumeInfo']['publishedDate']) ? htmlspecialchars($book['volumeInfo']['publishedDate']) : "Unknown"; ?></h6>
-            </div>
         </div>
     <?php endforeach; ?>
 </div>
+
 
 <div style="text-align: center; margin-top: 20px;">
     <div class="pagination">

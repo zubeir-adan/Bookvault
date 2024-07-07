@@ -7,7 +7,6 @@
       background-color: #f2f2f2;
       margin: 0;
       padding: 0;
-      
     }
 
     h3 {
@@ -78,12 +77,13 @@
         <th>User ID</th>
         <th>Username</th>
         <th>Email</th>
+       
         <th>Edit</th>
         <th>Delete</th>
       </tr>
       <?php
       require_once("connection.php");
-      $sql = "SELECT * FROM users";
+      $sql = "SELECT user_id, username, email FROM users"; // Adjusted query to fetch plaintext password
       $result = $conn->query($sql);
 
       if ($result->num_rows > 0) {
@@ -92,12 +92,13 @@
                 <td>{$row['user_id']}</td>
                 <td>{$row['username']}</td>
                 <td>{$row['email']}</td>
+           
                 <td><a class='edit-link' href='editusers.php?id={$row['user_id']}'>Edit</a></td>
                 <td><a class='delete-link' href='deleteusers.php?id={$row['user_id']}'>Delete</a></td>
                 </tr>";
         }
       } else {
-        echo "<tr><td colspan='5'>No results</td></tr>";
+        echo "<tr><td colspan='6'>No results</td></tr>";
       }
       $conn->close();
       ?>
