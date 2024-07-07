@@ -115,6 +115,7 @@ $currentGenres = array_slice($genres, $startIndex, $genresPerPage);
 <body>
 <?php include("body/header2.php"); ?>
 <h2 style="text-align: center;">Let's help you embark on your reading journey!</h2>
+<h3 style="text-align: center;">Over 60 genres to choose from</h3>
 
     <?php foreach ($currentGenres as $genre): ?>
         <div class="genre-section">
