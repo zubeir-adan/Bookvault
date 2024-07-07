@@ -341,7 +341,7 @@ body {
         </ul>
         <div class="welcome">
             <img src="img/userr.png" alt="User Image">
-            <span>Welcome, <?php echo $username; ?></span>
+            <span>Hi <?php echo $username; ?></span>
         </div>
     </div>
 <div class="book-list">
