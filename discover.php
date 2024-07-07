@@ -245,9 +245,12 @@ if (!empty($requestedGenre)) {
 <div class="header">
     <!-- Header content -->
     <div class="wrapper">
-        <img src="img/book-vault-logo.png" alt="Book Vault Logo" style="width: 250px; height: auto;">
+        <a href="homepage.php">
+            <img src="img/book-vault-logo.png" alt="Book Vault Logo" style="width: 250px; height: auto;">
+        </a>
     </div>
 </div>
+
 
 <div class="genre-container">
     <div class="arrow left" onclick="scrollGenres('left')">
