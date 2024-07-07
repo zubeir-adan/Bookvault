@@ -29,62 +29,80 @@ if (isset($_SESSION['user_id'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit User Details</title>
-    <title>User Signup</title>
-    <link rel="stylesheet" type="text/css" href="decorate.css">  
+    <link rel="stylesheet" type="text/css" href="decorate.css">
     <style>
-        h2{
-          margin-left:130px;
+        h2 {
+            margin-left: 130px;
         }
-        form{
+        form {
             align-items: center;
+        }
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+        }
+        .popup {
+            display: none;
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
         }
     </style>
 </head>
-<>
+<body>
     <h2>My Details</h2>
-    <form class="form" method="post">
+    <form class="form" method="post" id="editForm">
         <label for="username">Username:</label>
         <input type="text" id="username" name="username" value="<?php echo htmlspecialchars($user['username']); ?>"><br><br>
         
         <label for="email">Email:</label>
         <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($user['email']); ?>"><br><br>
 
-        <label for="pass">Password:</label>
-        <input type="pass" id="pass" name="pass" value="<?php echo htmlspecialchars($user['password_hash']); ?>"><br><br>
+        <label for="password">New Password:</label>
+        <input type="password" id="password" name="password" placeholder="Enter new password (optional)">
         
-        <input type="submit" value="Update">
+        <div class="popup" id="popup">User details updated successfully.</div>
+        <br><br>
+        <div class="button-container">
+            <button type="button" onclick="window.location.href='userloggedin.php'">Back to Home</button>
+            <input type="submit" value="Update">
+        </div>
     </form>
-    <?php
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $username = $_POST['username'];
-        $email = $_POST['email'];
-        $password=$_POST['pass'];
-    
-        // Validate the input (e.g., ensure no fields are empty)
-        if (empty($username) || empty($email)) {
-            echo "All fields are required.";
-            exit();
-        }
-        $password_hash = password_hash($password, PASSWORD_DEFAULT);
-    
-        // Update user details
-        $sql = "UPDATE users SET username = ?, email = ?, password_hash=? WHERE user_id = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("sssi", $username, $email, $password_hash,$userId);
-    
-        if ($stmt->execute()) {
-            echo "User details updated successfully.";
-            // Optionally redirect to a different page
-            // header("Location: profile.php");
-            // exit();
-        } else {
-            echo "Error: " . $stmt->error;
-        }
-    
-        $stmt->close();
-        $conn->close();
-    }
-    ?>
-    <button type="button" onclick="window.location.href='userloggedin.php'">Back to Home</button>
+
+    <script>
+        document.getElementById('editForm').addEventListener('submit', function(e) {
+            e.preventDefault(); // Prevent form submission to handle via JavaScript
+
+            var form = e.target;
+            var formData = new FormData(form);
+
+            fetch('update_user.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                var popup = document.getElementById('popup');
+                popup.innerText = data.message;
+                popup.style.display = 'block';
+                setTimeout(function() {
+                    popup.style.display = 'none';
+                    if (data.success) {
+                        location.reload(); // Reload the page to show updated details
+                    }
+                }, 3000);
+            })
+            .catch(error => {
+                var popup = document.getElementById('popup');
+                popup.innerText = "An error occurred: " + error;
+                popup.style.display = 'block';
+                setTimeout(function() {
+                    popup.style.display = 'none';
+                }, 3000);
+            });
+        });
+    </script>
 </body>
 </html>

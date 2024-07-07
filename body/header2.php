@@ -32,6 +32,7 @@ if (isset($_SESSION['username'])) {
     height: 100px;
 }
 
+
 .logo {
     display: flex;
     align-items: center;
@@ -41,13 +42,26 @@ if (isset($_SESSION['username'])) {
     height: 65px;
 }
 
-.search-icon, .discover-icon {
-    margin-left: 20px;
+.search-icon {
+    margin-left: 15px; /* Adjusted margin */
     cursor: pointer;
     border: none;
     background: none;
-    padding: 5px 10px;
-    border-radius: 4px;
+    padding: 5px 10px; /* Adjusted padding */
+    border-radius: 1px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s;
+}
+.discover-icon {
+    margin-left: 30px; /* Adjusted margin */
+    cursor: pointer;
+    border: none;
+    background: none;
+    padding: 5px 10px; /* Adjusted padding */
+    border-radius: 1px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -63,6 +77,7 @@ if (isset($_SESSION['username'])) {
 .search-icon:hover, .discover-icon:hover {
     background-color: #e2e2e2;
 }
+
 
 .nav {
     display: flex;
@@ -95,25 +110,45 @@ if (isset($_SESSION['username'])) {
     color: black;
 }
 
-.nav img {
-    margin-bottom: 5px;
+.dropdown {
+    position: relative;
+    display: inline-block;
+    margin-right: 0px;
 }
 
-.welcome {
-    display: flex;
-    align-items: center;
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    min-width: 160px;
+    padding: 10px;
+    right: 0;
+    top: 60px;
 }
 
-.welcome img {
-    width: 35px;
-    height: 35px;
+.dropdown-content a {
+    color: black;
+    padding: 5px 10px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+.dropdown.show .dropdown-content {
+    display: block;
+}
+
+.dropdown .user-image {
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
-    margin-right: 10px;
-}
-
-.welcome span {
-    font-size: 16px;
-    color: #333;
+    cursor: pointer;
+    /* Add cursor pointer to indicate it's clickable */
 }
 </style>
 </head>
@@ -164,11 +199,35 @@ if (isset($_SESSION['username'])) {
             </a>
         </li>
     </ul>
-    <div class="welcome">
-        <img src="img/profileuser.png" alt="User Image">
-        <span>Welcome, <?php echo htmlspecialchars($username); ?></span>
+    <div class="dropdown" id="dropdown">
+        <img src="img/userr.png" alt="User Image" class="user-image" onclick="toggleDropdown()">
+        <div class="dropdown-content" id="dropdownContent">
+            <a href="usereditdetails.php">Account</a>
+            <a href="userlogout.php">Logout</a>
+        </div>
+        <span class="username">Hi <?php echo $username; ?></span>
     </div>
 </div>
+
+<script>
+function toggleDropdown() {
+    var dropdown = document.getElementById('dropdown');
+    dropdown.classList.toggle('show');
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(event) {
+    if (!event.target.closest('.dropdown')) {
+        var dropdowns = document.getElementsByClassName('dropdown');
+        for (var i = 0; i < dropdowns.length; i++) {
+            var openDropdown = dropdowns[i];
+            if (openDropdown.classList.contains('show')) {
+                openDropdown.classList.remove('show');
+            }
+        }
+    }
+}
+</script>
 
 </body>
 </html>

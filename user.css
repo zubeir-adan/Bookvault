@@ -1,0 +1,207 @@
+/* CSS Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    margin: 0;
+    padding: 0;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #f8f8f8;
+    border-bottom: 2px solid #ddd;
+    height: 100px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    height: 65px;
+}
+
+.search-icon {
+    margin-left: 15px; /* Adjusted margin */
+    cursor: pointer;
+    border: none;
+    background: none;
+    padding: 5px 10px; /* Adjusted padding */
+    border-radius: 1px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s;
+}
+.discover-icon {
+    margin-left: 30px; /* Adjusted margin */
+    cursor: pointer;
+    border: none;
+    background: none;
+    padding: 5px 10px; /* Adjusted padding */
+    border-radius: 1px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s;
+}
+
+.search-icon i, .discover-icon i {
+    font-size: 20px;
+    color: black;
+}
+
+.search-icon:hover, .discover-icon:hover {
+    background-color: #e2e2e2;
+}
+
+.nav {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    background-color: #f8f8f8;
+    padding: 0;
+    flex-grow: 1;
+    justify-content: center;
+}
+
+.nav li {
+    margin-left: 10px; /* Adjusted margin */
+    text-align: center;
+}
+
+.nav a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: black;
+    padding: 10px; /* Adjusted padding */
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.nav a:hover {
+    background-color: #e2e2e2;
+    color: black;
+}
+
+.nav img {
+    margin-bottom: 5px;
+}
+
+.welcome {
+    position: relative;
+}
+
+#userImage {
+    display: block;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.settings-menu {
+    display: none;
+    position: absolute;
+    top: 60px; /* Adjust as needed */
+    right: 10px; /* Adjust as needed */
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    padding: 10px;
+}
+
+.settings-menu a {
+    display: block;
+    padding: 10px 20px;
+    text-decoration: none;
+    color: black;
+}
+
+.settings-menu a:hover {
+    background-color: #f2f2f2;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
+    padding: 20px;
+}
+
+.book-container {
+    display: inline-block;
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.1); /* Reduced opacity */
+    text-align: center;
+    width: 200px;
+    height: 300px; /* Increased height for text content */
+    box-sizing: border-box; /* Include padding and border in the width and height */
+    overflow: hidden; /* Ensure content stays within container */
+    vertical-align: top;
+}
+
+.book-container img {
+    width: 70%;
+    height: 60%; /* Maintain aspect ratio */
+    border-bottom: 1px solid #ddd; /* Add separator between image and text */
+    margin-bottom: 10px; /* Space between image and text */
+}
+
+.book-container h4, .book-container h6 {
+    margin: 5px 0; /* Add some margin to headings */
+    font-size: 14px; /* Adjust font size */
+    color: #333; /* Text color */
+}
+
+.book-container h4 {
+    font-weight: bold;
+}
+
+.book-container h6 {
+    font-weight: normal;
+}
+
+.pagination {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.pagination a {
+    color: black;
+    padding: 8px 16px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+    border: 1px solid #ddd;
+    margin: 0 2px;
+}
+
+.pagination a.active {
+    background-color: #4caf50;
+    color: white;
+    border: 1px solid #4caf50;
+}
+
+.pagination a:hover:not(.active) {
+    background-color: #ddd;
+}

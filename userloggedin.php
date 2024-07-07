@@ -1,6 +1,7 @@
 <?php
 session_start();
 
+// Check if the user is logged in
 if (isset($_SESSION['logging'])) {
     include_once 'connection.php';
     include_once 'recommendations.php';
@@ -31,295 +32,54 @@ if (isset($_SESSION['logging'])) {
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>BookVault - Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
           integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link rel="stylesheet" type="text/css" href="user.css">
     <style>
-        /* CSS Reset */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f2f2f2;
-            margin: 0;
-            padding: 0;
-        }
-
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 20px;
-            background-color: #f8f8f8;
-            border-bottom: 2px solid #ddd;
-            height: 100px;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-        }
-
-        .logo img {
-            height: 65px;
-        }
-
-        .search-icon {
-            margin-left: 20px;
-            cursor: pointer;
-            border: none;
-            background: none;
-            padding: 5px 10px;
-            border-radius: 4px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            transition: background-color 0.3s;
-        }
-
-        .search-icon i {
-            font-size: 20px;
-            color: black;
-        }
-
-        .search-icon:hover {
-            background-color: #e2e2e2;
-        }
-        .discover-icon {
-            margin-left: 20px;
-            cursor: pointer;
-            border: none;
-            background: none;
-            padding: 5px 10px;
-            border-radius: 4px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            transition: background-color 0.3s;
-        }
-
-        .discover-icon i {
-            font-size: 20px;
-            color: black;
-        }
-
-        .discover-icon:hover {
-            background-color: #e2e2e2;
-        }
-
-        .nav {
-            display: flex;
-            align-items: center;
-            list-style: none;
-            background-color: #f8f8f8;
-            padding: 0;
-            flex-grow: 1;
-            justify-content: center;
-        }
-
-        .nav li {
-            margin-left: 20px;
-            text-align: center;
-        }
-
-        .nav a {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-decoration: none;
-            color: black;
-            padding: 10px 15px;
-            border-radius: 4px;
-            transition: background-color 0.3s;
-        }
-
-        .nav a:hover {
-            background-color: #e2e2e2;
-            color: black;
-        }
-
-        .nav img {
-            margin-bottom: 5px;
-        }
-
-        .welcome {
-            display: flex;
-            align-items: center;
-        }
-
-        .welcome img {
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            margin-right: 10px;
-        }
-
-        .welcome span {
-            font-size: 16px;
-            color: #333;
-        }
-
-        .container {
-            text-align: center;
-        }
-
-        .logout-button {
-            background-color: #007bff;
-            color: #fff;
-            padding: 10px 20px;
-            text-decoration: none;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            margin-top: 20px;
-        }
-
-        .logout-button:hover {
-            background-color: #0056b3;
-        }
-
-        .book-container {
+        /* Add your custom styles here */
+        .dropdown {
+            position: relative;
             display: inline-block;
-            margin: 10px;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            background-color: rgba(255, 255, 255, 0.1); /* Reduced opacity */
-            text-align: center;
-            width: 200px;
-            height: 300px; /* Increased height for text content */
-            box-sizing: border-box; /* Include padding and border in the width and height */
-            overflow: hidden; /* Ensure content stays within container */
-            vertical-align: top;
+            margin-right: 0px;
         }
-
-        .book-container img {
-            width: 70%;
-            height: 60%; /* Maintain aspect ratio */
-            border-bottom: 1px solid #ddd; /* Add separator between image and text */
-            margin-bottom: 10px; /* Space between image and text */
-        }
-
-        .book-container h4, .book-container h6 {
-            margin: 5px 0; /* Add some margin to headings */
-            font-size: 14px; /* Adjust font size */
-            color: #333; /* Text color */
-        }
-
-        .book-container h4 {
-            font-weight: bold;
-        }
-
-        .book-container h6 {
-            font-weight: normal;
-        }
-
-       
-        .pagination {
-            margin: 20px 0;
-            text-align: center;
-        }
-
-        .pagination a {
-            margin: 0 5px;
-            padding: 8px 12px; /* Increase padding for larger clickable area */
-            text-decoration: none;
-            border: 1px solid #007bff; /* Border color for buttons */
-            border-radius: 4px;
-            color: #007bff; /* Text color */
-            transition: all 0.3s ease; /* Smooth transition effect */
-            font-size: 14px; /* Font size */
-            line-height: 1.5; /* Ensure consistent line height */
-        }
-
-        .pagination a:hover {
-            background-color: #007bff; /* Background color on hover */
-            color: #fff; /* Text color on hover */
-            transform: scale(1.1); /* Enlarge slightly on hover */
-        }
-
-        .pagination a.active {
-            background-color: #007bff; /* Active background color */
-            color: #fff; /* Active text color */
-        }
-        .settings-menu {
+        .dropdown-content {
             display: none;
             position: absolute;
-            top: 50px;
+            background-color: #f9f9f9;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            min-width: 160px;
+            padding: 10px;
             right: 0;
-            background-color: white;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
+            top: 50px;
         }
-        .settings-menu a {
-            display: block;
-            padding: 10px 20px;
-            text-decoration: none;
+        .dropdown-content a {
             color: black;
+            padding: 5px 10px;
+            text-decoration: none;
+            display: block;
         }
-        .settings-menu a:hover {
-            background-color: grey;
+        .dropdown-content a:hover { background-color: #f1f1f1; }
+        .dropdown.show .dropdown-content { display: block; }
+        .dropdown .user-image {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer; /* Add cursor pointer to indicate it's clickable */
         }
-        .settings-button :hover{
-            background-color: grey;
-        }
-        /* The Modal (background) */
-.modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-}
-
-/* Modal Content/Box */
-.modal-content {
-    background-color: #fefefe;
-    margin: 15% auto; /* 15% from the top and centered */
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%; /* Could be more or less, depending on screen size */
-}
-
-/* The Close Button */
-.closeBtn {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-}
-
-.closeBtn:hover,
-.closeBtn:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-}
     </style>
 </head>
-<body>
-<div class="header">
+<body><div class="header">
     <div class="logo">
         <a href="userloggedin.php">
             <img src="img/book-vault-logo.png" alt="Book Vault">
-        </a><br>
+        </a>
+        
         <button class="search-icon" onclick="window.location.href='search2.php'">
             <i class="fa-solid fa-magnifying-glass"></i>
             <br><div>Search</div>
@@ -330,7 +90,6 @@ if (isset($_SESSION['logging'])) {
             <br><div>Discover</div>
         </button>
     </div>
-    
     <ul class="nav">
         <li>
             <a href="analytics-view.php">
@@ -363,126 +122,23 @@ if (isset($_SESSION['logging'])) {
             </a>
         </li>
     </ul>
-    <div class="welcome">
-        <img src="img/userr.png" alt="User Image">
-        <span>Welcome, <?php echo $username; ?></span>
-        <img src="img/settings.png" id="settingsButton" class="bg-gray-800 text-white px-4 py-2 rounded">
-        <div id="settingsMenu" class="settings-menu">
-            <a id="openFormBtn">Account</a>
-            <div id="formModal" class="modal">
-        <!-- Modal content -->
-        <div class="modal-content">
-            <span class="closeBtn">&times;</span>
-            <form>
-                <label for="name">Enter your password to proceed:</label>
-                <input type="text" id="pass" name="pass"><br><br>
-                <input type="submit" value="Submit">
-            </form>
-            <?php
-require_once('connection.php');
-
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $password = $_POST['pass'];
-
-    if (isset($_SESSION['user_id'])) {
-        $userId = $_SESSION['user_id'];
-
-        // Retrieve the hashed password from the database
-        $sql = "SELECT password_hash FROM users WHERE user_id = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("i", $userId);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        
-        if ($result->num_rows > 0) {
-            $row = $result->fetch_assoc();
-            $storedHashedPassword = $row['password'];
-
-            // Verify the password
-            if (password_verify($password, $storedHashedPassword)) {
-                // Password is correct
-                $_SESSION['loggedin'] = true;
-                
-                // Redirect to the desired page
-                header("Location: usereditdetails.php");
-                exit(); // Ensure no further code is executed after the redirect
-            } else {
-                echo "Invalid password.";
-            }
-        } else {
-            echo "User not found.";
-        }
-
-        $stmt->close();
-    } else {
-        echo "User not logged in.";
-    }
-} else {
-    echo "Invalid request method.";
-}
-
-$conn->close();
-?>
-
+    <div class="dropdown" id="dropdown">
+        <img src="img/userr.png" alt="User Image" class="user-image" onclick="toggleDropdown()">
+        <div class="dropdown-content" id="dropdownContent">
+            <a href="usereditdetails.php">Account</a>
+            <a href="userlogout.php">Logout</a>
         </div>
-        </div>    
-          <a href="userlogout.php">Logout</a>
-            <script>
-                 document.getElementById('settingsButton').addEventListener('click', function() {
-            var menu = document.getElementById('settingsMenu');
-            if (menu.style.display === 'none' || menu.style.display === '') {
-                menu.style.display = 'block';
-            } else {
-                menu.style.display = 'none';
-            }
-        });
-
-        document.addEventListener('click', function(event) {
-            var isClickInside = document.getElementById('settingsButton').contains(event.target) ||
-                                document.getElementById('settingsMenu').contains(event.target);
-
-            if (!isClickInside) {
-                document.getElementById('settingsMenu').style.display = 'none';
-            }
-        });
-
-        var modal = document.getElementById("formModal");
-
-// Get the button that opens the modal
-var btn = document.getElementById("openFormBtn");
-
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("closeBtn")[0];
-
-// When the user clicks the button, open the modal
-btn.onclick = function() {
-    modal.style.display = "block";
-}
-
-// When the user clicks on <span> (x), close the modal
-span.onclick = function() {
-    modal.style.display = "none";
-}
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
-}
-            </script>
-        </div>
-    </div>
+        <span class="username">Hi, <?php echo $username; ?></span>
     </div>
 </div>
+
 <div style="text-align: center;">
-<h2 style="font-family:Verdana, Geneva, Tahoma, sans-serif;">Recommendations</h2>
-<?php if (empty($recommendedBooks)) : ?>
-    <p style="font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; font-size:large; ">Search for a book author of your choice to be recommended some of their reads.</p>
-<?php else : ?>
-    <p>Based on your search history, we recommend the following books:</p>
-<?php endif; ?>
+    <h2>Recommendations</h2>
+    <?php if (empty($recommendedBooks)) : ?>
+        <p>No recommendations available based on your preferences.</p>
+    <?php else : ?>
+        <p>Based on your search history, we recommend the following books:</p>
+    <?php endif; ?>
 </div>
 
 <div class="container">
@@ -490,53 +146,69 @@ window.onclick = function(event) {
         <div class="book-container">
             <a href="show-book-details2.php?book_id=<?php echo htmlspecialchars($book['id']); ?>">
                 <div class="book-image-container">
-                    <?php
-                    if (isset($book['volumeInfo']['imageLinks']['thumbnail'])) {
-                        echo "<img src='" . htmlspecialchars($book['volumeInfo']['imageLinks']['thumbnail']) . "' alt='Book Cover' class='book-image'>";
-                    } else {
-                        echo "<img src='img/default.jpg' alt='Book image not found!' class='book-image'>";
-                    }
-                    ?>
+                    <?php if (isset($book['volumeInfo']['imageLinks']['thumbnail'])) : ?>
+                        <img src="<?php echo htmlspecialchars($book['volumeInfo']['imageLinks']['thumbnail']); ?>" alt="Book Cover" class="book-image">
+                    <?php else : ?>
+                        <img src="img/default.jpg" alt="Book image not found!" class="book-image">
+                    <?php endif; ?>
                 </div>
             </a>
             <div class="book-details">
-                <?php
-                if (isset($book['volumeInfo']['title'])) {
-                    echo "<h4>" . htmlspecialchars($book['volumeInfo']['title']) . "</h4>";
-                } else {
-                    echo "<h4>Title Not Available</h4>";
-                }
-                if (isset($book['volumeInfo']['authors'])) {
-                    echo "<h6>Author(s): " . implode(", ", array_map('htmlspecialchars', $book['volumeInfo']['authors'])) . "</h6>";
-                } else {
-                    echo "<h6>Author(s): Unknown</h6>";
-                }
-                if (isset($book['volumeInfo']['publishedDate'])) {
-                    echo "<h6>Publish Year: " . htmlspecialchars($book['volumeInfo']['publishedDate']) . "</h6>";
-                } else {
-                    echo "<h6>Publish Year: Unknown</h6>";
-                }
-                ?>
+                <h4><?php echo isset($book['volumeInfo']['title']) ? htmlspecialchars($book['volumeInfo']['title']) : "Title Not Available"; ?></h4>
+                <h6>Author(s): <?php echo isset($book['volumeInfo']['authors']) ? implode(", ", array_map('htmlspecialchars', $book['volumeInfo']['authors'])) : "Unknown"; ?></h6>
+                <h6>Publish Year: <?php echo isset($book['volumeInfo']['publishedDate']) ? htmlspecialchars($book['volumeInfo']['publishedDate']) : "Unknown"; ?></h6>
             </div>
         </div>
     <?php endforeach; ?>
 </div>
 
-<?php if (!empty($recommendedBooks)) : ?>
-    <div class="pagination">  
-        <?php if ($page > 1): ?>
-            <a href="userloggedin.php?page=<?php echo $page - 1; ?>">Previous</a>
-        <?php endif; ?>
-        <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-            <a href="userloggedin.php?page=<?php echo $i; ?>" class="<?php echo $i === $page ? 'active' : ''; ?>"><?php echo $i; ?></a>
-        <?php endfor; ?>
-        <?php if ($page < $totalPages): ?>
-            <a href="userloggedin.php?page=<?php echo $page + 1; ?>">Next</a>
+<div style="text-align: center; margin-top: 20px;">
+    <div class="pagination">
+        <?php if ($totalPages > 1) : ?>
+            <?php if ($page > 1) : ?>
+                <a href="?page=<?php echo $page - 1; ?>">Previous</a>
+            <?php endif; ?>
+
+            <?php for ($i = 1; $i <= $totalPages; $i++) : ?>
+                <?php if ($i == $page) : ?>
+                    <span><?php echo $i; ?></span>
+                <?php else : ?>
+                    <a href="?page=<?php echo $i; ?>"><?php echo $i; ?></a>
+                <?php endif; ?>
+            <?php endfor; ?>
+
+            <?php if ($page < $totalPages) : ?>
+                <a href="?page=<?php echo $page + 1; ?>">Next</a>
+            <?php endif; ?>
         <?php endif; ?>
     </div>
-<?php endif; ?>
+</div>
+<br><br>
 
+<?php include("body/footer.php"); ?>
 
+<script>
+    function toggleDropdown() {
+        var dropdown = document.getElementById('dropdown');
+        dropdown.classList.toggle('show');
+    }
+
+    // Close the dropdown if the user clicks outside of it
+    window.onclick = function(event) {
+        if (!event.target.closest('.dropdown')) {
+            var dropdowns = document.getElementsByClassName('dropdown');
+            for (var i = 0; i < dropdowns.length; i++) {
+                var openDropdown = dropdowns[i];
+                if (openDropdown.classList.contains('show')) {
+                    openDropdown.classList.remove('show');
+                }
+            }
+        }
+    }
+</script>
+
+</body>
+</html>
 
 <?php
 } else {
@@ -544,6 +216,3 @@ window.onclick = function(event) {
     exit();
 }
 ?>
-<?php include("body/footer.php")?>
-</body>
-</html>
