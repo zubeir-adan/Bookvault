@@ -119,7 +119,7 @@ CREATE TABLE admin (
 CREATE TABLE favorite_books (
     id INT(11) NOT NULL AUTO_INCREMENT,
     user_id INT(11) NOT NULL,
-    book_img VARCHAR(255) NOT NULL,
+    book-img VARCHAR(255) NOT NULL,
     book_title VARCHAR(255) NOT NULL,
     timestamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id),
@@ -130,10 +130,10 @@ CREATE TABLE favorite_books (
 CREATE TABLE haveread (
     id INT(11) NOT NULL AUTO_INCREMENT,
     user_id INT(11) NOT NULL,
-    book_img VARCHAR(500) NOT NULL,
-    book_title VARCHAR(255) NOT NULL,
-    book_author VARCHAR(255) NOT NULL,
-    book_date VARCHAR(255) NOT NULL,
+    book-img VARCHAR(500) NOT NULL,
+    book-title VARCHAR(255) NOT NULL,
+    book-author VARCHAR(255) NOT NULL,
+    book-date VARCHAR(255) NOT NULL,
     timestamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id),
     INDEX (user_id)
@@ -159,13 +159,13 @@ CREATE TABLE users (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Create the want_to_read table
-CREATE TABLE want_to_read (
+CREATE TABLE want-to-read (
     id INT(11) NOT NULL AUTO_INCREMENT,
     user_id INT(11) NOT NULL,
-    book_img VARCHAR(200) NOT NULL,
-    book_title VARCHAR(200) NOT NULL,
-    book_author VARCHAR(200) NOT NULL,
-    book_date VARCHAR(200) NOT NULL,
+    book-img VARCHAR(200) NOT NULL,
+    book-title VARCHAR(200) NOT NULL,
+    book-author VARCHAR(200) NOT NULL,
+    book-date VARCHAR(200) NOT NULL,
     timestamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id),
     INDEX (user_id)
