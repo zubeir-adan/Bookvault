@@ -112,7 +112,14 @@ if ($result->num_rows > 0) {
                 <td>' . htmlspecialchars($row['username']) . '</td>
                 <td>' . htmlspecialchars($row['book_name']) . '</td>
                 <td>' . htmlspecialchars($row['category']) . '</td>
-                <td><button style="color: black; background-color: #e82727; padding: 8px 12px; border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.3s, color 0.3s;" onclick="deleteBook(' . htmlspecialchars($row['user_id']) . ', \'' . htmlspecialchars($row['book_name']) . '\', \'' . htmlspecialchars($row['category']) . '\')">DELETE</button></td>
+                <td>
+                    <form action="deletebook.php" method="post" onsubmit="return confirm(\'Are you sure you want to delete?\')">
+                        <input type="hidden" name="user_id" value="' . htmlspecialchars($row['user_id']) . '">
+                        <input type="hidden" name="book_name" value="' . htmlspecialchars($row['book_name']) . '">
+                        <input type="hidden" name="category" value="' . htmlspecialchars($row['category']) . '">
+                        <button style="color: black; background-color: #e82727; padding: 8px 12px; border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.3s, color 0.3s;" type="submit">DELETE</button>
+                    </form>
+                </td>
               </tr>';
         $counter++;
     }

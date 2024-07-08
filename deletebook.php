@@ -21,10 +21,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["user_id"]) && isset($_
         $column = 'book_title';
     } else if ($category == 'Have Read') {
         $table = 'haveread';
-        $column = 'book-title';
+        $column = '`book-title`';
     } else if ($category == 'Want to Read') {
-        $table = 'want-to-read';
-        $column = 'book-title';
+        $table = '`want-to-read`';
+        $column = '`book-title`';
     }
 
     // SQL query to delete the book from the determined table
@@ -36,6 +36,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["user_id"]) && isset($_
 
     if ($stmt->execute()) {
         echo "Book deleted successfully";
+        header("Location: adminloggedin.php");
+        exit();
     } else {
         echo "Error deleting book: " . $conn->error;
     }
