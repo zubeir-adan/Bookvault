@@ -1,3 +1,4 @@
+
 <?php
 session_start();
 
@@ -81,7 +82,7 @@ $conn->close();
             z-index: 1000;
             display: flex;
             justify-content: space-between;
-            align-items: center;
+         
             padding: 10px 20px;
         }
         body {
@@ -136,10 +137,10 @@ $conn->close();
 </head>
 <body>
 <div class="header">
-    <div class="wrapper">
-        <img src="img/book-vault-logo.png" alt="Book Vault Logo" style="width: 200px; height: auto; float: left;">
-     
-    </div>
+<div style="padding: 0;">
+    <img src="img/book-vault-logo.png" alt="Book Vault Logo" style="width: 200px; height: auto; float: left; margin-left: 0;">
+</div>
+
     <div class="welcome">
         Welcome, Admin <?php echo htmlspecialchars($adminName); ?>
     </div>
@@ -230,21 +231,6 @@ $conn->close();
     }
 }
 
-
-    function deleteBook(userId, bookName, category) {
-    if (confirm('Are you sure you want to delete this book?')) {
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", "deletebook.php", true);
-        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState == 4 && xhr.status == 200) {
-                alert('Book deleted successfully');
-                location.reload(); // Reload the user list
-            }
-        };
-        xhr.send("user_id=" + userId + "&book_name=" + encodeURIComponent(bookName) + "&category=" + encodeURIComponent(category));
-    }
-}
 
 
 </script>

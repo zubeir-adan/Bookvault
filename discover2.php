@@ -1,29 +1,35 @@
 <?php
-// discover.php
+// discover2.php
 
-// Genres to search for
+// Genres to search for (can be the same as in discover.php or different)
 $genres = [
-    'thriller', 'suspense', 'fantasy', 'historical', 'autobiography', 'self help',
-    'science', 'junior fiction', 'action', 'romance', 'poetry', 'technology', 
-    'health and fitness', 'adventure', 'science fiction', 'mystery', 'crime', 
-    'horror', 'westerns', 'comedy', 'biography', 'arts and crafts', 'food and cooking', 
-    'history', 'wildlife', 'drama', 'religion and spirituality', 'travel', 'business and finance', 
-    'psychology', 'philosophy', 'education', 'music', 'art', 'sports', 'true crime', 'fashion', 
-    'gardening', 'parenting', 'crafts and hobbies', 'humor', 'reference', 'diary', 'journal', 
-    'encyclopedia', 'languages', 'law', 'mathematics', 'medical', 'nature', 'politics', 
-    'social sciences', 'transportation', 'trivia', 'young adult', 'children', 'cooking', 
-    'home improvement', 'photography', 'graphic novels', 'comic books', 'magazines', 
-    'newspapers', 'plays', 'screenplays', 'short stories'
+    'action ','adventure', 'art', 'arts and crafts', 'autobiography', 'biography',
+    'business and finance', 'children', 'cooking', 'comic books', 'crafts and hobbies',
+    'crime', 'drama', 'education', 'encyclopedia', 'fashion',
+    'fantasy', 'food and cooking', 'gardening', 'graphic novels', 'health and fitness',
+    'historical', 'history', 'home improvement', 'horror', 'humor',
+    'junior fiction', 'languages', 'law', 'magazines', 'mathematics',
+    'medical', 'music', 'mystery', 'nature', 'newspapers',
+    'parenting', 'philosophy', 'photography', 'plays', 'poetry',
+    'politics', 'reference', 'religion and spirituality', 'romance', 'science',
+    'science fiction', 'screenplays', 'self help', 'short stories', 'social sciences',
+    'sports', 'spirituality', 'suspense', 'technology', 'thriller',
+    'transportation', 'travel', 'true crime', 'trivia', 'westerns',
+    'wildlife', 'young '
 ];
 
+// Sort genres alphabetically
+sort($genres);
+
+// Function to fetch books by genre from Google Books API (same as discover.php)
 function fetchBooksByGenre($genre) {
     $url = 'https://www.googleapis.com/books/v1/volumes?q=subject:' . urlencode($genre);
     $response = file_get_contents($url);
     return json_decode($response, true);
 }
 
-// Pagination settings
-$genresPerPage = 5; // Adjust as needed
+// Pagination settings (similar to discover.php)
+$genresPerPage = 5;
 $totalGenres = count($genres);
 $totalPages = ceil($totalGenres / $genresPerPage);
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
@@ -34,17 +40,92 @@ if ($page < 1) {
 }
 $startIndex = ($page - 1) * $genresPerPage;
 $currentGenres = array_slice($genres, $startIndex, $genresPerPage);
-?>
 
+// Check if a specific genre is requested (similar logic as discover.php)
+$requestedGenre = isset($_GET['genre']) ? strtolower($_GET['genre']) : '';
+
+// Find the page where the requested genre is located (similar logic as discover.php)
+if (!empty($requestedGenre)) {
+    $genreIndex = array_search($requestedGenre, array_map('strtolower', $genres));
+    if ($genreIndex !== false) {
+        $page = ceil(($genreIndex + 1) / $genresPerPage);
+        $startIndex = ($page - 1) * $genresPerPage;
+        $currentGenres = array_slice($genres, $startIndex, $genresPerPage);
+    }
+}
+?>
+<?php include("body/header2.php"); ?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Discover</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discover </title>
+  
     <style>
-        body {
-            font-family: Arial, sans-serif;
+        /* Genre container styles */
+        .genre-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0; /* Adjusted margin to remove the space */
+            position: relative;
+            padding: 10px 0;
+            background-color: skyblue;
         }
 
+        .genre-list {
+            display: flex;
+            overflow: hidden;
+            white-space: nowrap;
+            position: relative;
+            width: calc(100% - 60px);
+            padding: 10px;
+            background-color: skyblue;
+        }
+
+        .genre-item {
+            margin: 0 10px;
+            padding: 5px 10px;
+            color: black;
+            cursor: pointer;
+            text-decoration: none; /* Remove underline */
+            transition: color 0.3s ease; /* Smooth color transition */
+        }
+
+        .genre-item:hover {
+            color: yellow; /* Change text color on hover */
+        }
+
+        .arrow {
+            position: absolute;
+            top: 40%;
+            transform: translateY(-50%);
+            background-color: white;
+            border: 1px solid black;
+            border-radius: 70%;
+            width: 30px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000; /* Ensure arrows are above other content */
+        }
+
+        .arrow.left {
+            left: 20px; /* Adjust position from the left */
+            background-image: url('img/left.png'); /* Add left arrow image */
+            background-size: cover;
+        }
+
+        .arrow.right {
+            right: 10px; /* Adjust position from the right */
+            background-image: url('img/right.png'); /* Add right arrow image */
+            background-size: cover;
+        }
+
+        /* Section and carousel styles */
         .genre-section {
             margin-bottom: 40px;
         }
@@ -56,7 +137,7 @@ $currentGenres = array_slice($genres, $startIndex, $genresPerPage);
 
         .carousel {
             display: flex;
-            overflow-x: scroll; /* Enable horizontal scrolling */
+            overflow-x: scroll;
             overflow-y: hidden;
             position: relative;
             width: 100%;
@@ -75,7 +156,6 @@ $currentGenres = array_slice($genres, $startIndex, $genresPerPage);
             padding: 10px;
             box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
             background-color: #f9f9f9;
-            /* New styles for cursor and hover effect */
             cursor: pointer;
             transition: transform 0.3s ease;
         }
@@ -90,82 +170,139 @@ $currentGenres = array_slice($genres, $startIndex, $genresPerPage);
 
         .book-title {
             margin-top: 10px;
+            font-weight: bold;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            font-size: large;
             word-wrap: break-word;
         }
+        .book-published-date {
+            font-size: medium;
+            color: #666;
+        }
 
-        /* Hover effect */
         .book:hover {
             transform: scale(1.05);
         }
 
+        /* Pagination styles */
+        .pagination {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .pagination a {
+            display: inline-block;
+            padding: 10px 15px;
+            margin: 0 5px;
+            background-color: #f7f7f8;
+            color: #333;
+            text-decoration: none;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .pagination a:hover {
+            background-color: #87CEEB;
+        }
+
+        .pagination a.active {
+            background-color: #87CEEB;
+            color: #fff;
+        }
+
+        /* Scrollbar styles */
         ::-webkit-scrollbar {
             width: 10px;
-            /* Adjust the width of the scrollbar */
             opacity: 0.5;
-            /* Adjust the opacity */
         }
 
         html {
             scrollbar-width: thin;
             scrollbar-color: transparent transparent;
-            /* Adjust the color */
         }
     </style>
 </head>
 <body>
-<?php include("body/header2.php"); ?>
-<h2 style="text-align: center;">Let's help you embark on your reading journey!</h2>
-<h3 style="text-align: center;">Over 60 genres to choose from</h3>
 
-    <?php foreach ($currentGenres as $genre): ?>
-        <div class="genre-section">
-            <div class="genre-title"><?php echo ucfirst($genre); ?></div>
-            <div class="carousel" id="carousel-<?php echo $genre; ?>">
-                <div class="carousel-inner">
-                    <?php
-                    $books = fetchBooksByGenre($genre);
-                    if (!empty($books['items'])):
-                        foreach ($books['items'] as $book):
-                            $volumeInfo = $book['volumeInfo'];
-                            $title = $volumeInfo['title'];
-                            $thumbnail = isset($volumeInfo['imageLinks']['thumbnail']) ? $volumeInfo['imageLinks']['thumbnail'] : 'img/default.jpg';
-                            ?>
-                            <div class="book">
-                                <a href="show-book-details2.php?bookId=<?php echo urlencode($book['id']); ?>" style="text-decoration: none; color: inherit;">
-                                    <img src="<?php echo $thumbnail; ?>" alt="<?php echo htmlspecialchars($title); ?>">
-                                    <div class="book-title"><?php echo htmlspecialchars($title); ?></div>
-                                </a>
-                            </div>
-                        <?php
-                        endforeach;
-                    else:
-                        ?>
-                        <div>No books found for <?php echo htmlspecialchars($genre); ?></div>
-                    <?php endif; ?>
-                </div>
+<div class="genre-container">
+    <div class="arrow left" onclick="scrollGenres('left')">
+        <!-- Left arrow image (included in CSS) -->
+    </div>
+    <div class="genre-list">
+        <!-- Genre list (similar to discover.php) -->
+        <?php foreach ($genres as $genre): ?>
+            <?php $genreLink = "discover2.php?genre=" . urlencode(strtolower($genre)); ?>
+            <div class="genre-item">
+                <a href="<?php echo $genreLink; ?>"><?php echo ucfirst($genre); ?></a>
+            </div>
+        <?php endforeach; ?>
+    </div>
+    <div class="arrow right" onclick="scrollGenres('right')">
+        <!-- Right arrow image (included in CSS) -->
+    </div>
+</div>
+
+<h2 style="text-align: center;">Let's help you embark on your literaly journey</h2>
+<h2 style="text-align: center;">Over 60 genres to choose from</h2>
+
+<?php foreach ($currentGenres as $genre): ?>
+    <div class="genre-section" id="<?php echo strtolower($genre); ?>">
+        <div class="genre-title"><?php echo ucfirst($genre); ?></div>
+        <div class="carousel">
+            <div class="carousel-inner">
+                <?php
+                $books = fetchBooksByGenre($genre);
+                if (!empty($books['items'])):
+                    foreach ($books['items'] as $book):
+                        $volumeInfo = $book['volumeInfo'];
+                        $title = isset($volumeInfo['title']) ? $volumeInfo['title'] : 'Title Not Available';
+                        $authors = isset($volumeInfo['authors']) ? implode(', ', $volumeInfo['authors']) : 'Unknown';
+                        $publishedDate = isset($volumeInfo['publishedDate']) ? $volumeInfo['publishedDate'] : 'Unknown';
+                        $description = isset($volumeInfo['description']) ? $volumeInfo['description'] : 'No description available';
+                        $thumbnail = isset($volumeInfo['imageLinks']['thumbnail']) ? $volumeInfo['imageLinks']['thumbnail'] : 'img/default.jpg';
+                ?>
+                        <div class="book">
+                        <a href="show-book-details2.php?bookId=<?php echo urlencode($book['id']); ?>" style="text-decoration: none; color: inherit;">
+                            <img src="<?php echo $thumbnail; ?>" alt="<?php echo htmlspecialchars($title); ?>">
+                            <div class="book-title"><?php echo htmlspecialchars($title); ?></div><br>
+                            <div class="book-authors">Written by : <?php echo htmlspecialchars($authors); ?></div><br>
+                            <div class="book-published-date">Published in: <?php echo htmlspecialchars($publishedDate); ?></div>
+                        </div>
+                <?php
+                    endforeach;
+                else:
+                    echo "<p>No books found for this genre.</p>";
+                endif;
+                ?>
             </div>
         </div>
-    <?php endforeach; ?>
+    </div>
+<?php endforeach; ?>
 
-    <div style="text-align: center; margin-top: 20px;">
-    <!-- Pagination links -->
+<div class="pagination">
     <?php if ($page > 1): ?>
-        <a href="?page=<?php echo $page - 1; ?>" style="padding: 8px 12px; background-color: #f7f7f8; color: #333; text-decoration: none; border: 1px solid #ddd; border-radius: 5px; transition: background-color 0.3s ease;">Previous</a>
+        <a href="?page=<?php echo $page - 1; ?>">&laquo; Previous</a>
     <?php endif; ?>
-
     <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-        <?php if ($i == $page): ?>
-            <strong style="padding: 8px 12px; background-color: #87CEEB; color: #fff; text-decoration: none; border: 1px solid #ddd; border-radius: 5px;"><?php echo $i; ?></strong>
-        <?php else: ?>
-            <a href="?page=<?php echo $i; ?>" style="padding: 8px 12px; background-color: #f7f7f8; color: #333; text-decoration: none; border: 1px solid #ddd; border-radius: 5px; transition: background-color 0.3s ease;"><?php echo $i; ?></a>
-        <?php endif; ?>
+        <a href="?page=<?php echo $i; ?>" class="<?php echo $i === $page ? 'active' : ''; ?>"><?php echo $i; ?></a>
     <?php endfor; ?>
-
     <?php if ($page < $totalPages): ?>
-        <a href="?page=<?php echo $page + 1; ?>" style="padding: 8px 12px; background-color: #f7f7f8; color: #333; text-decoration: none; border: 1px solid #ddd; border-radius: 5px; transition: background-color 0.3s ease;">Next</a>
+        <a href="?page=<?php echo $page + 1; ?>">Next &raquo;</a>
     <?php endif; ?>
 </div>
-<br><br>
-    <?php include("body/footer.php"); ?>
+
+<script>
+function scrollGenres(direction) {
+    const genreList = document.querySelector('.genre-list');
+    const scrollAmount = 100; // Adjust as needed
+    if (direction === 'left') {
+        genreList.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+    } else if (direction === 'right') {
+        genreList.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    }
+}
+</script>
 </body>
 </html>
+<?php include("body/footer.php"); ?>
