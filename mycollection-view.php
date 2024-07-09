@@ -95,11 +95,12 @@ $conn->close();
             border: 1px solid #ccc;
             padding: 5px;
             text-align: center;
+            position: relative;
         }
         .details h3 {
             font-weight: normal; /* Remove bold from book title */
         }
-        .logout-button {
+        .logout-button, .delete-button {
             background-color: #708ee6;
             color: white;
             border: none;
@@ -108,8 +109,21 @@ $conn->close();
             font-size: 16px;
             cursor: pointer;
         }
-        .logout-button:hover {
+        .logout-button:hover{
             background-color: #5c76c7;
+        }
+        .delete-button:hover {
+            background-color: red;
+        }
+        .delete-button {
+            position: absolute;
+            bottom: 0px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 5px 20px; /* Adjusted padding to increase width */
+            font-size: 15px;
+            width: 100px; /* Adjust the width as needed */
+            margin-bottom: -10px;
         }
     </style>
 </head>
@@ -129,6 +143,12 @@ $conn->close();
                             <div class="details">
                                 <h3><?php echo htmlspecialchars($book['book-title']); ?></h3>
                             </div>
+                            <form method="post" action="deletebookuser.php">
+                                <input type="hidden" name="user_id" value="<?php echo $userId; ?>">
+                                <input type="hidden" name="book_name" value="<?php echo htmlspecialchars($book['book-title']); ?>">
+                                <input type="hidden" name="category" value="Want to Read">
+                                <button type="submit" class="delete-button">Delete</button>
+                            </form>
                         </div>
                     <?php endforeach; ?>
                 </div>
@@ -148,6 +168,12 @@ $conn->close();
                             <div class="details">
                                 <h3><?php echo htmlspecialchars($book['book-title']); ?></h3>
                             </div>
+                            <form method="post" action="deletebookuser.php">
+                                <input type="hidden" name="user_id" value="<?php echo $userId; ?>">
+                                <input type="hidden" name="book_name" value="<?php echo htmlspecialchars($book['book-title']); ?>">
+                                <input type="hidden" name="category" value="Have Read">
+                                <button type="submit" class="delete-button">Delete</button>
+                            </form>
                         </div>
                     <?php endforeach; ?>
                 </div>
@@ -166,8 +192,13 @@ $conn->close();
                             <img src="<?php echo htmlspecialchars($book['book-img']); ?>" alt="Book Cover">
                             <div class="details">
                                 <h3><?php echo htmlspecialchars($book['book_title']); ?></h3>
-                                <!-- Book title not bold as per the requirement -->
                             </div>
+                            <form method="post" action="deletebookuser.php">
+                                <input type="hidden" name="user_id" value="<?php echo $userId; ?>">
+                                <input type="hidden" name="book_name" value="<?php echo htmlspecialchars($book['book_title']); ?>">
+                                <input type="hidden" name="category" value="Favorite">
+                                <button type="submit" class="delete-button">Delete</button>
+                            </form>
                         </div>
                     <?php endforeach; ?>
                 </div>

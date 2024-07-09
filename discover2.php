@@ -8,7 +8,7 @@ $genres = [
     'crime', 'drama', 'education', 'encyclopedia', 'fashion',
     'fantasy', 'food and cooking', 'gardening', 'graphic novels', 'health and fitness',
     'historical', 'history', 'home improvement', 'horror', 'humor',
-    'junior fiction', 'languages', 'law', 'magazines', 'mathematics',
+    'junior fiction', 'languages', 'law', 'magazines', 'mathematics','manga',
     'medical', 'music', 'mystery', 'nature', 'newspapers',
     'parenting', 'philosophy', 'photography', 'plays', 'poetry',
     'politics', 'reference', 'religion and spirituality', 'romance', 'science',
