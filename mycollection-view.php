@@ -100,7 +100,7 @@ $conn->close();
         .details h3 {
             font-weight: normal; /* Remove bold from book title */
         }
-        .logout-button, .delete-button {
+        .logout-button {
             background-color: #708ee6;
             color: white;
             border: none;
@@ -114,6 +114,15 @@ $conn->close();
         }
         .delete-button:hover {
             background-color: red;
+        }
+        .delete-button {
+            background-color: cornsilk;
+            color: ash;
+            border: 2px;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
         }
         .delete-button {
             position: absolute;

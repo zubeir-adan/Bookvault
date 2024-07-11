@@ -319,7 +319,7 @@
     </section>
    
     <div class="about-us">
-        <h1>About Us</h1>
+        <h1 style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">About Us</h1>
         <p style="border-radius: 20px; padding: 20px; background-color: #f9f9f9;">
         BookVault is designed to be your personal assistant in enhancing and tracking your literary journey. Founded by two avid readers with a deep passion for literature, we understand the joys and challenges that come with a love for books. We created BookVault to quench the thirst for knowledge and adventure that every reader possesses. Our platform is built to cater to every aspect of your reading life.
         </p>

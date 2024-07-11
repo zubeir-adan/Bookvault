@@ -103,7 +103,7 @@ include_once 'body/header2.php';
             </div>
 
             <div class="flex-auto p-6">
-                <h1 class="mb-3 text-2xl leading-none text-slate-900"><?php echo $bookTitle; ?></h1>
+                <h1 class="mb-3 text-2xl leading-none text-slate-900"style="font-weight: bold;"><?php echo $bookTitle; ?></h1>
                 <div class="text-lg font-medium text-slate-500"><?php echo $bookGenre; ?></div><br>
                 <div class="text-lg font-medium text-slate-500"><?php echo $bookAuthors; ?></div><br>
                 <div class="text-xs leading-6 font-medium  text-slate-500">Publication Date : <?php echo $bookPublishedDate; ?></div><br>
@@ -159,7 +159,7 @@ include_once 'body/header2.php';
                             <input type="hidden" name="bookAuthors" value="<?php echo htmlspecialchars($bookAuthors); ?>">
                             <input type="hidden" name="bookPublishedDate" value="<?php echo htmlspecialchars($bookPublishedDate); ?>">
                         </form>
-                        <a  id="fav" onclick="submitFormAndRedirect('favoriteForm', 'favourite-view.php') " class="flex-none w-32 h-32 border border-red-500 rounded-xl p-4 transform transition-transform duration-200 hover:scale-110 cursor-pointer" onclick="addfave()">
+                        <a  id="fav" onclick="submitFormAndRedirect('favoriteForm', 'favourite-view.php') " class="flex-none w-32 h-32 border border-red-500 rounded-xl p-4 transform transition-transform duration-200 hover:scale-110 cursor-pointer">
                             <img src="img/fav.png" alt="Favourite" class="mx-auto h-8 w-8" />
                             <div class="text-center font-bold">Favourite</div>
                         </a>

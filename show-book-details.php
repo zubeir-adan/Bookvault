@@ -26,8 +26,10 @@
 <body>
 <div class="header">
     <div class="wrapper">
-        <img src="img/book-vault-logo.png" alt="Book Vault Logo" style="width: 250px; height: auto;">
-    
+    <a href="homepage.php" style="cursor: pointer;">
+   <img src="img/book-vault-logo.png" alt="Book Vault Logo" style="width: 250px; height: auto;">
+</a>
+
     </div>
 </div>
 

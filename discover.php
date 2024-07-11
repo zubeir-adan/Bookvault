@@ -3,16 +3,16 @@
 
 // Genres to search for
 $genres = [
-    'action and adventure', 'art', 'arts and crafts', 'autobiography', 'biography',
-    'business and finance', 'children', 'cooking', 'comic books', 'crafts and hobbies',
+    'action' , 'adventure', 'arts ', 'autobiography', 'biography',
+    'business ', 'children', 'cooking', 'comic ', 'crafts ',
     'crime', 'drama', 'education', 'encyclopedia', 'fashion',
-    'fantasy', 'food and cooking', 'gardening', 'graphic novels', 'health and fitness',
+    'fantasy','finance','fitness', 'food', 'gardening', 'graphic novels', 'health',
     'historical', 'history', 'home improvement', 'horror', 'humor',
-    'junior fiction', 'languages', 'law', 'magazines', 'mathematics',
+    'junior fiction', 'languages', 'law', 'magazines','manga', 'mathematics',
     'medical', 'music', 'mystery', 'nature', 'newspapers',
     'parenting', 'philosophy', 'photography', 'plays', 'poetry',
-    'politics', 'reference', 'religion and spirituality', 'romance', 'science',
-    'science fiction', 'screenplays', 'self help', 'short stories', 'social sciences',
+    'politics', 'reference', 'religion ', 'romance', 'science',
+    'science fiction', 'screenplays', 'self help', 'short story', 'social sciences',
     'sports', 'spirituality', 'suspense', 'technology', 'thriller',
     'transportation', 'travel', 'true crime', 'trivia', 'westerns',
     'wildlife', 'young '
@@ -193,11 +193,18 @@ if (!empty($requestedGenre)) {
             background-color: #fff;
         }
 
+       
         .book-title {
             margin-top: 10px;
+            font-weight: bold;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            font-size: large;
             word-wrap: break-word;
         }
-
+        .book-published-date {
+            font-size: medium;
+            color: #666;
+        }
         .book:hover {
             transform: scale(1.05);
         }
@@ -245,7 +252,7 @@ if (!empty($requestedGenre)) {
 <div class="header">
     <!-- Header content -->
     <div class="wrapper">
-        <a href="homepage.php">
+        <a href="homepage.php"style="cursor: pointer";>
             <img src="img/book-vault-logo.png" alt="Book Vault Logo" style="width: 250px; height: auto;">
         </a>
     </div>
@@ -271,6 +278,7 @@ if (!empty($requestedGenre)) {
 
 
 <h2 style="text-align: center;">Let's help you embark on your reading journey!</h2>
+<h2 style="text-align: center;">Over 60 genres to choose from</h2>
 
 <?php foreach ($currentGenres as $genre): ?>
     <div class="genre-section" id="<?php echo strtolower($genre); ?>">
@@ -296,8 +304,8 @@ if (!empty($requestedGenre)) {
                 ?>
                         <div class="book" onclick="location.href='show-book-details.php?bookId=<?php echo $bookId; ?>'">
                             <img src="<?php echo $bookImage; ?>" alt="Book Cover">
-                            <div class="book-title"><?php echo $title; ?></div>
-                            <div>By <?php echo $authors; ?></div>
+                            <div class="book-title"><?php echo $title; ?></div><br>
+                            <div>By <?php echo $authors; ?></div><br>
                             <div>Published: <?php echo $publishedDate; ?></div>
                          
                         </div>
@@ -343,3 +351,4 @@ if (!empty($requestedGenre)) {
 
 </body>
 </html>
+<?php include_once 'body/footer.php'; ?> 

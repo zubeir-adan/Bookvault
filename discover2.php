@@ -3,16 +3,16 @@
 
 // Genres to search for (can be the same as in discover.php or different)
 $genres = [
-    'action ','adventure', 'art', 'arts and crafts', 'autobiography', 'biography',
-    'business and finance', 'children', 'cooking', 'comic books', 'crafts and hobbies',
+    'action' , 'adventure', 'arts ', 'autobiography', 'biography',
+    'business ', 'children', 'cooking', 'comic ', 'crafts ',
     'crime', 'drama', 'education', 'encyclopedia', 'fashion',
-    'fantasy', 'food and cooking', 'gardening', 'graphic novels', 'health and fitness',
+    'fantasy','finance','fitness', 'food', 'gardening', 'graphic novels', 'health',
     'historical', 'history', 'home improvement', 'horror', 'humor',
-    'junior fiction', 'languages', 'law', 'magazines', 'mathematics','manga',
+    'junior fiction', 'languages', 'law', 'magazines','manga', 'mathematics',
     'medical', 'music', 'mystery', 'nature', 'newspapers',
     'parenting', 'philosophy', 'photography', 'plays', 'poetry',
-    'politics', 'reference', 'religion and spirituality', 'romance', 'science',
-    'science fiction', 'screenplays', 'self help', 'short stories', 'social sciences',
+    'politics', 'reference', 'religion ', 'romance', 'science',
+    'science fiction', 'screenplays', 'self help', 'short story', 'social sciences',
     'sports', 'spirituality', 'suspense', 'technology', 'thriller',
     'transportation', 'travel', 'true crime', 'trivia', 'westerns',
     'wildlife', 'young '
