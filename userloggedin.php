@@ -165,8 +165,8 @@ if (isset($_SESSION['logging'])) {
                 </div>
                 <div class="book-details">
                     <h4><?php echo isset($book['volumeInfo']['title']) ? htmlspecialchars($book['volumeInfo']['title']) : "Title Not Available"; ?></h4>
-                    <h6>Author(s): <?php echo isset($book['volumeInfo']['authors']) ? implode(", ", array_map('htmlspecialchars', $book['volumeInfo']['authors'])) : "Unknown"; ?></h6>
-                    <h6>Publish Year: <?php echo isset($book['volumeInfo']['publishedDate']) ? htmlspecialchars($book['volumeInfo']['publishedDate']) : "Unknown"; ?></h6>
+                    <h6>By: <?php echo isset($book['volumeInfo']['authors']) ? implode(", ", array_map('htmlspecialchars', $book['volumeInfo']['authors'])) : "Unknown"; ?></h6>
+                  
                 </div>
             </a>
         </div>
