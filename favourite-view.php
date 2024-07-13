@@ -63,6 +63,16 @@ $result = $stmt->get_result();
 <body>
 <div class="max-w-7xl mx-auto">
     <h2 class="text-3xl font-bold mt-8 mb-4">My Favourite Books</h2>
+    
+    <?php if (isset($_SESSION['message']) && $_SESSION['message']): ?>
+        <div id="message-box" class="message">
+            <?php
+            echo $_SESSION['message'];
+            unset($_SESSION['message']);
+            ?>
+        </div>
+    <?php endif; ?>
+
     <div class="book-container">
         <?php
         if ($result->num_rows > 0) {
