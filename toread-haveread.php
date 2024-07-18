@@ -29,6 +29,7 @@ if (isset($_SESSION['logging']) && isset($_SESSION['user_id'])) {
             $stmtDelete->execute();
 
 
+            
             $conn->commit();
 
 
