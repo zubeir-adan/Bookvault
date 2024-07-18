@@ -28,8 +28,9 @@ if (isset($_SESSION['logging']) && isset($_SESSION['user_id'])) {
             $stmtDelete->bind_param("ii", $bookId, $userId);
             $stmtDelete->execute();                    
             
-            $conn->commit();
             
+            $conn->commit();
+
             
             // Set session message
             $_SESSION['message'] = "Book has been added to Have Read category.";
