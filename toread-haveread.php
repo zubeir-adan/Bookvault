@@ -26,7 +26,7 @@ if (isset($_SESSION['logging']) && isset($_SESSION['user_id'])) {
             $stmtDelete = $conn->prepare($sqlDelete);
             $stmtDelete->bind_param("ii", $bookId, $userId);
             $stmtDelete->execute();
-
+  
             $conn->commit();
 
             // Set session message
