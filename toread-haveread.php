@@ -14,6 +14,7 @@ if (isset($_SESSION['logging']) && isset($_SESSION['user_id'])) {
         $bookAuthors = $_POST['bookAuthors'];
         $bookPublishedDate = $_POST['bookPublishedDate'];
 
+        
         // Move book from 'want-to-read' to 'have-read'
         $conn->begin_transaction();
         try {
