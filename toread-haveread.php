@@ -31,6 +31,7 @@ if (isset($_SESSION['logging']) && isset($_SESSION['user_id'])) {
         
 
             $conn->commit();
+            
 
 
             // Set session message
