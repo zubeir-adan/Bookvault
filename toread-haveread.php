@@ -35,7 +35,7 @@ if (isset($_SESSION['logging']) && isset($_SESSION['user_id'])) {
             $conn->rollback();
             // Handle exception
         }
-
+ 
         // Close statements
         $stmtInsert->close();
         $stmtDelete->close();
