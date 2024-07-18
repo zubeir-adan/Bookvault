@@ -28,6 +28,7 @@ if (isset($_SESSION['logging']) && isset($_SESSION['user_id'])) {
             $stmtDelete->bind_param("ii", $bookId, $userId);
             $stmtDelete->execute();
 
+            
 
             $conn->commit();
 
