@@ -20,7 +20,7 @@
     width: 100%;
     height: 0px; 
     background-color: #f8f9fa; 
-    padding: 50px 0;
+    padding:100px 0;
     text-align: center;
     font-size: 12px;
     box-shadow: 0px -2px 10px rgba(0, 0, 0, 0.1); 
