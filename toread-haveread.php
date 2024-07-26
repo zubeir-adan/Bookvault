@@ -14,6 +14,7 @@ if (isset($_SESSION['logging']) && isset($_SESSION['user_id'])) {
         $bookAuthors = $_POST['bookAuthors'];
         $bookPublishedDate = $_POST['bookPublishedDate'];
 
+        
         // Move book from 'want-to-read' to 'have-read'
         $conn->begin_transaction();
         try {
@@ -25,17 +26,19 @@ if (isset($_SESSION['logging']) && isset($_SESSION['user_id'])) {
             $sqlDelete = "DELETE FROM `want-to-read` WHERE `id` = ? AND `user_id` = ?";
             $stmtDelete = $conn->prepare($sqlDelete);
             $stmtDelete->bind_param("ii", $bookId, $userId);
-            $stmtDelete->execute();
-
+            $stmtDelete->execute();                    
+            
+            
             $conn->commit();
 
+            
             // Set session message
             $_SESSION['message'] = "Book has been added to Have Read category.";
         } catch (Exception $e) {
             $conn->rollback();
             // Handle exception
         }
-
+      
         // Close statements
         $stmtInsert->close();
         $stmtDelete->close();
